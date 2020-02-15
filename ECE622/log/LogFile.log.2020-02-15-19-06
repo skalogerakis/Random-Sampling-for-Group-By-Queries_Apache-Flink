@@ -1,0 +1,596 @@
+2020-02-15 19:06:37,944 [main] INFO  (TypeExtractor.java:1818) - class org.apache.flink.streaming.api.functions.source.TimestampedFileInputSplit does not contain a setter for field modificationTime
+2020-02-15 19:06:37,949 [main] INFO  (TypeExtractor.java:1857) - Class class org.apache.flink.streaming.api.functions.source.TimestampedFileInputSplit cannot be used as a POJO type because not all fields are valid POJO fields, and must be processed as GenericType. Please read the Flink documentation on "Data Types & Serialization" for details of the effect on performance.
+2020-02-15 19:06:38,256 [main] INFO  (LocalStreamEnvironment.java:108) - Running job on local embedded Flink mini cluster
+2020-02-15 19:06:38,805 [main] INFO  (MiniCluster.java:253) - Starting Flink Mini Cluster
+2020-02-15 19:06:38,808 [main] INFO  (MiniCluster.java:262) - Starting Metrics Registry
+2020-02-15 19:06:38,894 [main] INFO  (MetricRegistryImpl.java:114) - No metrics reporter configured, no metrics will be exposed/reported.
+2020-02-15 19:06:38,894 [main] INFO  (MiniCluster.java:266) - Starting RPC Service(s)
+2020-02-15 19:06:39,769 [flink-akka.actor.default-dispatcher-2] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-15 19:06:40,048 [main] INFO  (BootstrapTools.java:244) - Trying to start actor system at :0
+2020-02-15 19:06:40,136 [flink-metrics-2] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-15 19:06:40,164 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Starting remoting
+2020-02-15 19:06:40,311 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting started; listening on addresses :[akka.tcp://flink-metrics@127.0.1.1:45347]
+2020-02-15 19:06:40,355 [main] INFO  (BootstrapTools.java:256) - Actor system started at akka.tcp://flink-metrics@127.0.1.1:45347
+2020-02-15 19:06:40,372 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.metrics.dump.MetricQueryService at akka://flink-metrics/user/MetricQueryService .
+2020-02-15 19:06:40,389 [main] INFO  (MiniCluster.java:397) - Starting high-availability services
+2020-02-15 19:06:40,401 [main] INFO  (BlobServer.java:141) - Created BLOB server storage directory /tmp/blobStore-8d21844c-5e2f-4519-ab00-aea8d87435c5
+2020-02-15 19:06:40,405 [main] INFO  (BlobServer.java:203) - Started BLOB server at 0.0.0.0:33789 - max concurrent requests: 50 - max backlog: 1000
+2020-02-15 19:06:40,407 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-c65887e5-b6d1-4563-a627-0eba922178ff
+2020-02-15 19:06:40,409 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-2dbf4e1f-cb2b-4b09-97dc-c180414af108
+2020-02-15 19:06:40,409 [main] INFO  (MiniCluster.java:479) - Starting 1 TaskManger(s)
+2020-02-15 19:06:40,411 [main] INFO  (TaskManagerRunner.java:351) - Starting TaskManager with ResourceID: 337f9a0b-d755-46a3-8c9f-ff639cadbe1b
+2020-02-15 19:06:40,672 [main] INFO  (TaskManagerServices.java:519) - Temporary file directory '/tmp': total 439 GB, usable 336 GB (76.54% usable)
+2020-02-15 19:06:40,675 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-io-1e107705-da33-40da-91f0-8bc0f9147761 for spill files.
+2020-02-15 19:06:40,690 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-netty-shuffle-8f478338-4d75-42df-bb28-aaa9f8d731c5 for spill files.
+2020-02-15 19:06:40,807 [main] INFO  (NetworkBufferPool.java:140) - Allocated 191 MB for network buffer pool (number of memory segments: 6113, bytes per segment: 32768).
+2020-02-15 19:06:40,842 [main] INFO  (NettyShuffleEnvironment.java:283) - Starting the network environment and its components.
+2020-02-15 19:06:40,844 [main] INFO  (KvStateService.java:89) - Starting the kvState service and its components.
+2020-02-15 19:06:40,844 [main] INFO  (TaskManagerServices.java:364) - Limiting managed memory to 0.7 of the currently free heap space (1195 MB), memory will be allocated lazily.
+2020-02-15 19:06:40,859 [main] INFO  (TaskManagerConfiguration.java:197) - Messages have a max timeout of 10000 ms
+2020-02-15 19:06:40,877 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.taskexecutor.TaskExecutor at akka://flink/user/taskmanager_0 .
+2020-02-15 19:06:40,880 [TaskExecutorLocalStateStoresManager shutdown hook] INFO  (TaskExecutorLocalStateStoresManager.java:213) - Shutting down TaskExecutorLocalStateStoresManager.
+2020-02-15 19:06:40,891 [PermanentBlobCache shutdown hook] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-15 19:06:40,902 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:125) - Start job leader service.
+2020-02-15 19:06:40,902 [TransientBlobCache shutdown hook] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-15 19:06:40,905 [BlobServer shutdown hook] INFO  (BlobServer.java:340) - Stopped BLOB server at 0.0.0.0:33789
+2020-02-15 19:06:40,903 [flink-akka.actor.default-dispatcher-4] INFO  (FileCache.java:107) - User file cache uses directory /tmp/flink-dist-cache-fe68003c-68b5-4892-9e86-ae52f11f0c5e
+2020-02-15 19:06:40,918 [IOManagerAsync shutdown hook] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-io-1e107705-da33-40da-91f0-8bc0f9147761
+2020-02-15 19:06:51,844 [main] INFO  (TypeExtractor.java:1818) - class org.apache.flink.streaming.api.functions.source.TimestampedFileInputSplit does not contain a setter for field modificationTime
+2020-02-15 19:06:51,848 [main] INFO  (TypeExtractor.java:1857) - Class class org.apache.flink.streaming.api.functions.source.TimestampedFileInputSplit cannot be used as a POJO type because not all fields are valid POJO fields, and must be processed as GenericType. Please read the Flink documentation on "Data Types & Serialization" for details of the effect on performance.
+2020-02-15 19:06:52,152 [main] INFO  (LocalStreamEnvironment.java:108) - Running job on local embedded Flink mini cluster
+2020-02-15 19:06:52,649 [main] INFO  (MiniCluster.java:253) - Starting Flink Mini Cluster
+2020-02-15 19:06:52,652 [main] INFO  (MiniCluster.java:262) - Starting Metrics Registry
+2020-02-15 19:06:52,711 [main] INFO  (MetricRegistryImpl.java:114) - No metrics reporter configured, no metrics will be exposed/reported.
+2020-02-15 19:06:52,711 [main] INFO  (MiniCluster.java:266) - Starting RPC Service(s)
+2020-02-15 19:06:53,474 [flink-akka.actor.default-dispatcher-3] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-15 19:06:53,673 [main] INFO  (BootstrapTools.java:244) - Trying to start actor system at :0
+2020-02-15 19:06:53,750 [flink-metrics-2] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-15 19:06:53,771 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Starting remoting
+2020-02-15 19:06:53,934 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting started; listening on addresses :[akka.tcp://flink-metrics@127.0.1.1:46591]
+2020-02-15 19:06:53,976 [main] INFO  (BootstrapTools.java:256) - Actor system started at akka.tcp://flink-metrics@127.0.1.1:46591
+2020-02-15 19:06:53,982 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.metrics.dump.MetricQueryService at akka://flink-metrics/user/MetricQueryService .
+2020-02-15 19:06:53,997 [main] INFO  (MiniCluster.java:397) - Starting high-availability services
+2020-02-15 19:06:54,009 [main] INFO  (BlobServer.java:141) - Created BLOB server storage directory /tmp/blobStore-313838d7-8461-4bfe-8d87-0f720b844058
+2020-02-15 19:06:54,014 [main] INFO  (BlobServer.java:203) - Started BLOB server at 0.0.0.0:33951 - max concurrent requests: 50 - max backlog: 1000
+2020-02-15 19:06:54,017 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-efaa86d8-f88e-405d-a92b-fc3e21edb76b
+2020-02-15 19:06:54,019 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-d297cb8d-0703-428b-bf14-cc5044a7241c
+2020-02-15 19:06:54,019 [main] INFO  (MiniCluster.java:479) - Starting 1 TaskManger(s)
+2020-02-15 19:06:54,022 [main] INFO  (TaskManagerRunner.java:351) - Starting TaskManager with ResourceID: a8acab89-03a7-41b9-b832-119b00272296
+2020-02-15 19:06:54,138 [main] INFO  (TaskManagerServices.java:519) - Temporary file directory '/tmp': total 439 GB, usable 336 GB (76.54% usable)
+2020-02-15 19:06:54,141 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-io-d371db5d-4b1c-4d4c-8490-1acd928a7e17 for spill files.
+2020-02-15 19:06:54,150 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-netty-shuffle-a8ed22b1-8c23-4deb-bd49-5dab1f8fd1dc for spill files.
+2020-02-15 19:06:54,246 [main] INFO  (NetworkBufferPool.java:140) - Allocated 191 MB for network buffer pool (number of memory segments: 6113, bytes per segment: 32768).
+2020-02-15 19:06:54,252 [main] INFO  (NettyShuffleEnvironment.java:283) - Starting the network environment and its components.
+2020-02-15 19:06:54,253 [main] INFO  (KvStateService.java:89) - Starting the kvState service and its components.
+2020-02-15 19:06:54,253 [main] INFO  (TaskManagerServices.java:364) - Limiting managed memory to 0.7 of the currently free heap space (1195 MB), memory will be allocated lazily.
+2020-02-15 19:06:54,261 [main] INFO  (TaskManagerConfiguration.java:197) - Messages have a max timeout of 10000 ms
+2020-02-15 19:06:54,269 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.taskexecutor.TaskExecutor at akka://flink/user/taskmanager_0 .
+2020-02-15 19:06:54,282 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:125) - Start job leader service.
+2020-02-15 19:06:54,283 [flink-akka.actor.default-dispatcher-4] INFO  (FileCache.java:107) - User file cache uses directory /tmp/flink-dist-cache-94e3783f-1ab7-45fe-8e40-c3a6a365695e
+2020-02-15 19:06:54,317 [main] INFO  (RestServerEndpoint.java:136) - Starting rest endpoint.
+2020-02-15 19:06:54,508 [main] WARN  (WebMonitorUtils.java:87) - Log file environment variable 'log.file' is not set.
+2020-02-15 19:06:54,509 [main] WARN  (WebMonitorUtils.java:93) - JobManager log files are unavailable in the web dashboard. Log file location not found in environment variable 'log.file' or configuration key 'Key: 'web.log.path' , default: null (fallback keys: [{key=jobmanager.web.log.path, isDeprecated=true}])'.
+2020-02-15 19:06:54,518 [main] INFO  (DispatcherRestEndpoint.java:113) - Failed to load web based job submission extension. Probable reason: flink-runtime-web is not in the classpath.
+2020-02-15 19:06:54,691 [main] INFO  (RestServerEndpoint.java:233) - Rest endpoint listening at localhost:33969
+2020-02-15 19:06:54,693 [main] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.dispatcher.DispatcherRestEndpoint@3afae281 @ http://localhost:33969
+2020-02-15 19:06:54,695 [mini-cluster-io-thread-1] INFO  (WebMonitorEndpoint.java:712) - http://localhost:33969 was granted leadership with leaderSessionID=f71a61b3-e159-4cb0-aaf5-50486cdc7faf
+2020-02-15 19:06:54,695 [mini-cluster-io-thread-1] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader http://localhost:33969 , session=f71a61b3-e159-4cb0-aaf5-50486cdc7faf
+2020-02-15 19:06:54,712 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.resourcemanager.StandaloneResourceManager at akka://flink/user/resourcemanager .
+2020-02-15 19:06:54,728 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.dispatcher.StandaloneDispatcher at akka://flink/user/dispatcher .
+2020-02-15 19:06:54,739 [flink-akka.actor.default-dispatcher-4] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.resourcemanager.StandaloneResourceManager@794b49f3 @ akka://flink/user/resourcemanager
+2020-02-15 19:06:54,741 [flink-akka.actor.default-dispatcher-4] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.dispatcher.StandaloneDispatcher@78b9fd @ akka://flink/user/dispatcher
+2020-02-15 19:06:54,743 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:925) - ResourceManager akka://flink/user/resourcemanager was granted leadership with fencing token b9269656ab3f9d38dee54e920bde40d3
+2020-02-15 19:06:54,744 [main] INFO  (MiniCluster.java:362) - Flink Mini Cluster started successfully
+2020-02-15 19:06:54,746 [flink-akka.actor.default-dispatcher-3] INFO  (SlotManagerImpl.java:219) - Starting the SlotManager.
+2020-02-15 19:06:54,757 [flink-akka.actor.default-dispatcher-4] INFO  (Dispatcher.java:884) - Dispatcher akka://flink/user/dispatcher was granted leadership with fencing token 15e4c8fb-dd7e-4033-8455-2873cd4f7fc0
+2020-02-15 19:06:54,758 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:716) - Recovering all persisted jobs.
+2020-02-15 19:06:54,760 [flink-akka.actor.default-dispatcher-5] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/dispatcher , session=15e4c8fb-dd7e-4033-8455-2873cd4f7fc0
+2020-02-15 19:06:54,761 [flink-akka.actor.default-dispatcher-2] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/resourcemanager , session=dee54e92-0bde-40d3-b926-9656ab3f9d38
+2020-02-15 19:06:54,772 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:991) - Connecting to ResourceManager akka://flink/user/resourcemanager(b9269656ab3f9d38dee54e920bde40d3).
+2020-02-15 19:06:54,778 [flink-akka.actor.default-dispatcher-5] INFO  (RetryingRegistration.java:155) - Resolved ResourceManager address, beginning registration
+2020-02-15 19:06:54,778 [flink-akka.actor.default-dispatcher-5] INFO  (RetryingRegistration.java:204) - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-02-15 19:06:54,782 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:264) - Received JobGraph submission 9909d3a715f416d2f3ae26d3ba0218f5 (Streaming for Random Sampling).
+2020-02-15 19:06:54,783 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:321) - Submitting job 9909d3a715f416d2f3ae26d3ba0218f5 (Streaming for Random Sampling).
+2020-02-15 19:06:54,788 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:717) - Registering TaskManager with ResourceID a8acab89-03a7-41b9-b832-119b00272296 (akka://flink/user/taskmanager_0) at ResourceManager
+2020-02-15 19:06:54,793 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutorToResourceManagerConnection.java:100) - Successful registration at resource manager akka://flink/user/resourcemanager under registration id 5fdd859781adfb36e24a5ead156927c6.
+2020-02-15 19:06:54,807 [flink-akka.actor.default-dispatcher-4] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.jobmaster.JobMaster at akka://flink/user/jobmanager_1 .
+2020-02-15 19:06:54,817 [flink-akka.actor.default-dispatcher-4] INFO  (JobMaster.java:242) - Initializing job Streaming for Random Sampling (9909d3a715f416d2f3ae26d3ba0218f5).
+2020-02-15 19:06:54,838 [flink-akka.actor.default-dispatcher-4] INFO  (LegacyScheduler.java:171) - Using restart strategy NoRestartStrategy for Streaming for Random Sampling (9909d3a715f416d2f3ae26d3ba0218f5).
+2020-02-15 19:06:54,856 [flink-akka.actor.default-dispatcher-4] INFO  (ExecutionGraph.java:519) - Job recovers via failover strategy: full graph restart
+2020-02-15 19:06:54,874 [flink-akka.actor.default-dispatcher-4] INFO  (ExecutionGraphBuilder.java:204) - Running initialization on master for job Streaming for Random Sampling (9909d3a715f416d2f3ae26d3ba0218f5).
+2020-02-15 19:06:54,875 [flink-akka.actor.default-dispatcher-4] INFO  (ExecutionGraphBuilder.java:222) - Successfully ran initialization on master in 0 ms.
+2020-02-15 19:06:54,918 [flink-akka.actor.default-dispatcher-4] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:54,929 [flink-akka.actor.default-dispatcher-4] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.jobmaster.JobManagerRunner@5accb73b @ akka://flink/user/jobmanager_1
+2020-02-15 19:06:54,930 [mini-cluster-io-thread-2] INFO  (JobManagerRunner.java:313) - JobManager runner for job Streaming for Random Sampling (9909d3a715f416d2f3ae26d3ba0218f5) was granted leadership with session id 1e66e15c-63b4-4497-932e-24e9518d6339 at akka://flink/user/jobmanager_1.
+2020-02-15 19:06:54,933 [flink-akka.actor.default-dispatcher-2] INFO  (JobMaster.java:712) - Starting execution of job Streaming for Random Sampling (9909d3a715f416d2f3ae26d3ba0218f5) under job master id 932e24e9518d63391e66e15c63b44497.
+2020-02-15 19:06:54,934 [flink-akka.actor.default-dispatcher-2] INFO  (ExecutionGraph.java:1325) - Job Streaming for Random Sampling (9909d3a715f416d2f3ae26d3ba0218f5) switched from state CREATED to RUNNING.
+2020-02-15 19:06:54,938 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,955 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:369) - Cannot serve slot request, no ResourceManager connected. Adding as pending request [SlotRequestId{67a65864fe8e41d4783a059f231a81f4}]
+2020-02-15 19:06:54,962 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,964 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,964 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,965 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,965 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,965 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,966 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,966 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:54,967 [jobmanager-future-thread-1] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/jobmanager_1 , session=1e66e15c-63b4-4497-932e-24e9518d6339
+2020-02-15 19:06:54,968 [flink-akka.actor.default-dispatcher-2] INFO  (JobMaster.java:936) - Connecting to ResourceManager akka://flink/user/resourcemanager(b9269656ab3f9d38dee54e920bde40d3)
+2020-02-15 19:06:54,970 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:155) - Resolved ResourceManager address, beginning registration
+2020-02-15 19:06:54,971 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:204) - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-02-15 19:06:54,973 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:306) - Registering job manager 932e24e9518d63391e66e15c63b44497@akka://flink/user/jobmanager_1 for job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:54,979 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:661) - Registered job manager 932e24e9518d63391e66e15c63b44497@akka://flink/user/jobmanager_1 for job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:54,983 [flink-akka.actor.default-dispatcher-4] INFO  (JobMaster.java:958) - JobManager successfully registered at ResourceManager, leader id: b9269656ab3f9d38dee54e920bde40d3.
+2020-02-15 19:06:54,983 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{67a65864fe8e41d4783a059f231a81f4}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:54,985 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 9909d3a715f416d2f3ae26d3ba0218f5 with allocation id 59a924f7307bd3576de0138232174db1.
+2020-02-15 19:06:54,989 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request 59a924f7307bd3576de0138232174db1 for job 9909d3a715f416d2f3ae26d3ba0218f5 from resource manager with leader id b9269656ab3f9d38dee54e920bde40d3.
+2020-02-15 19:06:54,990 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for 59a924f7307bd3576de0138232174db1.
+2020-02-15 19:06:54,990 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:193) - Add job 9909d3a715f416d2f3ae26d3ba0218f5 for job leader monitoring.
+2020-02-15 19:06:54,993 [mini-cluster-io-thread-4] INFO  (JobLeaderService.java:333) - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 1e66e15c-63b4-4497-932e-24e9518d6339.
+2020-02-15 19:06:54,994 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:155) - Resolved JobManager address, beginning registration
+2020-02-15 19:06:54,994 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:204) - Registration at JobManager attempt 1 (timeout=100ms)
+2020-02-15 19:06:54,998 [flink-akka.actor.default-dispatcher-2] INFO  (JobLeaderService.java:382) - Successful registration at job manager akka://flink/user/jobmanager_1 for job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:54,999 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1227) - Establish JobManager connection for job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:55,004 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:55,020 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{92b9a7a7d11f76b1b7b638892578b2a8}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:55,022 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{b5f198ca53e223ad8d69265e8355ce84}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:55,022 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 9909d3a715f416d2f3ae26d3ba0218f5 with allocation id 6ead53f95455f983871d34b2b13d331d.
+2020-02-15 19:06:55,023 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:822) - Receive slot request 6ead53f95455f983871d34b2b13d331d for job 9909d3a715f416d2f3ae26d3ba0218f5 from resource manager with leader id b9269656ab3f9d38dee54e920bde40d3.
+2020-02-15 19:06:55,023 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{9849773de6b8707aa0524c671413f091}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:55,023 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:834) - Allocated slot for 6ead53f95455f983871d34b2b13d331d.
+2020-02-15 19:06:55,024 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:55,023 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 9909d3a715f416d2f3ae26d3ba0218f5 with allocation id 7d92e9e63bc670154a0ff7f1088ee430.
+2020-02-15 19:06:55,025 [flink-akka.actor.default-dispatcher-5] INFO  (TaskSlotTable.java:242) - Activate slot 59a924f7307bd3576de0138232174db1.
+2020-02-15 19:06:55,026 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:629) - Received repeated offer for slot [59a924f7307bd3576de0138232174db1]. Ignoring.
+2020-02-15 19:06:55,027 [flink-akka.actor.default-dispatcher-3] INFO  (TaskSlotTable.java:242) - Activate slot 6ead53f95455f983871d34b2b13d331d.
+2020-02-15 19:06:55,027 [flink-akka.actor.default-dispatcher-3] INFO  (TaskSlotTable.java:242) - Activate slot 59a924f7307bd3576de0138232174db1.
+2020-02-15 19:06:55,027 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:822) - Receive slot request 7d92e9e63bc670154a0ff7f1088ee430 for job 9909d3a715f416d2f3ae26d3ba0218f5 from resource manager with leader id b9269656ab3f9d38dee54e920bde40d3.
+2020-02-15 19:06:55,028 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:834) - Allocated slot for 7d92e9e63bc670154a0ff7f1088ee430.
+2020-02-15 19:06:55,028 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:55,027 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 9909d3a715f416d2f3ae26d3ba0218f5 with allocation id a9390a0d0dd13c776499655d62913c93.
+2020-02-15 19:06:55,029 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:822) - Receive slot request a9390a0d0dd13c776499655d62913c93 for job 9909d3a715f416d2f3ae26d3ba0218f5 from resource manager with leader id b9269656ab3f9d38dee54e920bde40d3.
+2020-02-15 19:06:55,029 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:834) - Allocated slot for a9390a0d0dd13c776499655d62913c93.
+2020-02-15 19:06:55,030 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:55,030 [flink-akka.actor.default-dispatcher-3] INFO  (TaskSlotTable.java:242) - Activate slot 7d92e9e63bc670154a0ff7f1088ee430.
+2020-02-15 19:06:55,033 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,034 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Source: Custom File Source (1/1) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,040 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,040 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (1/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,042 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,043 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (2/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,043 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,043 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (3/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,044 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,044 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (4/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,044 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,045 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Keyed Aggregation -> Sink: Print to Std. Out (1/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,046 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,047 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Keyed Aggregation -> Sink: Print to Std. Out (2/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,047 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,048 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Keyed Aggregation -> Sink: Print to Std. Out (3/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,049 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:55,049 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Keyed Aggregation -> Sink: Print to Std. Out (4/4) (attempt #0) to a8acab89-03a7-41b9-b832-119b00272296 @ localhost (dataPort=-1)
+2020-02-15 19:06:55,049 [flink-akka.actor.default-dispatcher-3] INFO  (SlotPoolImpl.java:629) - Received repeated offer for slot [7d92e9e63bc670154a0ff7f1088ee430]. Ignoring.
+2020-02-15 19:06:55,083 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Source: Custom File Source (1/1).
+2020-02-15 19:06:55,084 [Source: Custom File Source (1/1)] INFO  (Task.java:958) - Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,085 [Source: Custom File Source (1/1)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) [DEPLOYING]
+2020-02-15 19:06:55,092 [Source: Custom File Source (1/1)] INFO  (Task.java:593) - Loading JAR files for task Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) [DEPLOYING].
+2020-02-15 19:06:55,093 [Source: Custom File Source (1/1)] INFO  (Task.java:619) - Registering task at network: Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) [DEPLOYING].
+2020-02-15 19:06:55,111 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (1/4).
+2020-02-15 19:06:55,125 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,125 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) [DEPLOYING]
+2020-02-15 19:06:55,125 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) [DEPLOYING].
+2020-02-15 19:06:55,130 [Source: Custom File Source (1/1)] INFO  (Task.java:958) - Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,130 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) [DEPLOYING].
+2020-02-15 19:06:55,139 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,139 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (2/4).
+2020-02-15 19:06:55,140 [Source: Custom File Source (1/1)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,147 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,147 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) [DEPLOYING]
+2020-02-15 19:06:55,147 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) [DEPLOYING].
+2020-02-15 19:06:55,149 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,149 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,150 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,152 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (3/4).
+2020-02-15 19:06:55,153 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) [DEPLOYING].
+2020-02-15 19:06:55,157 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,158 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) [DEPLOYING]
+2020-02-15 19:06:55,158 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) [DEPLOYING].
+2020-02-15 19:06:55,159 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) [DEPLOYING].
+2020-02-15 19:06:55,164 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,165 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,165 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,173 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,174 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,173 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (4/4).
+2020-02-15 19:06:55,174 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,183 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Keyed Aggregation -> Sink: Print to Std. Out (1/4).
+2020-02-15 19:06:55,188 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,188 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) [DEPLOYING]
+2020-02-15 19:06:55,189 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) [DEPLOYING].
+2020-02-15 19:06:55,189 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) [DEPLOYING].
+2020-02-15 19:06:55,191 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,191 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) [DEPLOYING]
+2020-02-15 19:06:55,191 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:593) - Loading JAR files for task Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) [DEPLOYING].
+2020-02-15 19:06:55,192 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:619) - Registering task at network: Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) [DEPLOYING].
+2020-02-15 19:06:55,193 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,193 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,193 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,200 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,201 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,200 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Keyed Aggregation -> Sink: Print to Std. Out (2/4).
+2020-02-15 19:06:55,201 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,212 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,212 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) [DEPLOYING]
+2020-02-15 19:06:55,213 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:593) - Loading JAR files for task Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) [DEPLOYING].
+2020-02-15 19:06:55,213 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:619) - Registering task at network: Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) [DEPLOYING].
+2020-02-15 19:06:55,214 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Keyed Aggregation -> Sink: Print to Std. Out (3/4).
+2020-02-15 19:06:55,214 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,224 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Keyed Aggregation -> Sink: Print to Std. Out (4/4).
+2020-02-15 19:06:55,224 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,225 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) [DEPLOYING]
+2020-02-15 19:06:55,225 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:593) - Loading JAR files for task Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) [DEPLOYING].
+2020-02-15 19:06:55,225 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,226 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:619) - Registering task at network: Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) [DEPLOYING].
+2020-02-15 19:06:55,225 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,227 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,232 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot a9390a0d0dd13c776499655d62913c93.
+2020-02-15 19:06:55,233 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 7d92e9e63bc670154a0ff7f1088ee430.
+2020-02-15 19:06:55,233 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,234 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,240 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:55,240 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) [DEPLOYING]
+2020-02-15 19:06:55,241 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:593) - Loading JAR files for task Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) [DEPLOYING].
+2020-02-15 19:06:55,241 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:619) - Registering task at network: Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) [DEPLOYING].
+2020-02-15 19:06:55,242 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,242 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:55,242 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:55,286 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2020-02-15 19:06:55,289 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=2).
+2020-02-15 19:06:55,289 [Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:178) - No state to restore for the ContinuousFileMonitoringFunction.
+2020-02-15 19:06:55,291 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=1).
+2020-02-15 19:06:55,291 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=3).
+2020-02-15 19:06:55,300 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (FileSystem.java:1071) - Hadoop is not in the classpath/dependencies. The extended set of supported File Systems via Hadoop is not available.
+2020-02-15 19:06:55,309 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (HeapKeyedStateBackend.java:140) - Initializing heap keyed state backend with stream factory.
+2020-02-15 19:06:55,310 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (HeapKeyedStateBackend.java:140) - Initializing heap keyed state backend with stream factory.
+2020-02-15 19:06:55,310 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [0] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 0 + 4797
+2020-02-15 19:06:55,310 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (HeapKeyedStateBackend.java:140) - Initializing heap keyed state backend with stream factory.
+2020-02-15 19:06:55,309 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (HeapKeyedStateBackend.java:140) - Initializing heap keyed state backend with stream factory.
+2020-02-15 19:06:55,741 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [1] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 4797 + 4797
+2020-02-15 19:06:55,741 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [2] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 9594 + 4797
+2020-02-15 19:06:55,741 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [3] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 14391 + 4796
+2020-02-15 19:06:55,747 [Source: Custom File Source (1/1)] INFO  (Task.java:958) - Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,748 [Source: Custom File Source (1/1)] INFO  (Task.java:804) - Freeing task resources for Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae).
+2020-02-15 19:06:55,748 [Source: Custom File Source (1/1)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) [FINISHED]
+2020-02-15 19:06:55,752 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Source: Custom File Source 8b2f6b4f0b870febe21407c7752f26ae.
+2020-02-15 19:06:55,759 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (8b2f6b4f0b870febe21407c7752f26ae) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,803 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,803 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce).
+2020-02-15 19:06:55,804 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) [FINISHED]
+2020-02-15 19:06:55,804 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map 6179d06d05626f148153f893b1912cce.
+2020-02-15 19:06:55,805 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,805 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd).
+2020-02-15 19:06:55,805 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) [FINISHED]
+2020-02-15 19:06:55,806 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (6179d06d05626f148153f893b1912cce) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,806 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map c2cdcf3cba1844f35f00a409bbfb6cbd.
+2020-02-15 19:06:55,806 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (c2cdcf3cba1844f35f00a409bbfb6cbd) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,815 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,815 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd).
+2020-02-15 19:06:55,815 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,815 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0).
+2020-02-15 19:06:55,815 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) [FINISHED]
+2020-02-15 19:06:55,816 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) [FINISHED]
+2020-02-15 19:06:55,817 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,817 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:804) - Freeing task resources for Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227).
+2020-02-15 19:06:55,817 [Keyed Aggregation -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) [FINISHED]
+2020-02-15 19:06:55,818 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,818 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:804) - Freeing task resources for Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6).
+2020-02-15 19:06:55,818 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map 21cc86666d73fd9e571246dc453a09bd.
+2020-02-15 19:06:55,818 [Keyed Aggregation -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) [FINISHED]
+2020-02-15 19:06:55,818 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map 9c91f2246614552f8f0dc770396520b0.
+2020-02-15 19:06:55,819 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Keyed Aggregation -> Sink: Print to Std. Out 3d6f92bf84dd45178a880f7ca82cd227.
+2020-02-15 19:06:55,819 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,819 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:804) - Freeing task resources for Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b).
+2020-02-15 19:06:55,820 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Keyed Aggregation -> Sink: Print to Std. Out f020a4fce4a451e81b56e5e088a90df6.
+2020-02-15 19:06:55,820 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:958) - Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,820 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:804) - Freeing task resources for Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a).
+2020-02-15 19:06:55,821 [Keyed Aggregation -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) [FINISHED]
+2020-02-15 19:06:55,820 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (21cc86666d73fd9e571246dc453a09bd) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,820 [Keyed Aggregation -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) [FINISHED]
+2020-02-15 19:06:55,821 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (9c91f2246614552f8f0dc770396520b0) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,822 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (4/4) (3d6f92bf84dd45178a880f7ca82cd227) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,821 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Keyed Aggregation -> Sink: Print to Std. Out 6fb118a29b739cf384bc3fc92c6d294a.
+2020-02-15 19:06:55,823 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Keyed Aggregation -> Sink: Print to Std. Out f796c233f5475ec8a931dee98b50770b.
+2020-02-15 19:06:55,826 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (3/4) (f020a4fce4a451e81b56e5e088a90df6) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,827 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (2/4) (6fb118a29b739cf384bc3fc92c6d294a) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,828 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Keyed Aggregation -> Sink: Print to Std. Out (1/4) (f796c233f5475ec8a931dee98b50770b) switched from RUNNING to FINISHED.
+2020-02-15 19:06:55,828 [flink-akka.actor.default-dispatcher-5] INFO  (ExecutionGraph.java:1325) - Job Streaming for Random Sampling (9909d3a715f416d2f3ae26d3ba0218f5) switched from state RUNNING to FINISHED.
+2020-02-15 19:06:55,828 [flink-akka.actor.default-dispatcher-5] INFO  (CheckpointCoordinator.java:329) - Stopping checkpoint coordinator for job 9909d3a715f416d2f3ae26d3ba0218f5.
+2020-02-15 19:06:55,829 [flink-akka.actor.default-dispatcher-5] INFO  (StandaloneCompletedCheckpointStore.java:97) - Shutting down
+2020-02-15 19:06:55,839 [flink-akka.actor.default-dispatcher-4] INFO  (Dispatcher.java:774) - Job 9909d3a715f416d2f3ae26d3ba0218f5 reached globally terminal state FINISHED.
+2020-02-15 19:06:55,839 [main] INFO  (MiniCluster.java:416) - Shutting down Flink Mini Cluster
+2020-02-15 19:06:55,840 [main] INFO  (RestServerEndpoint.java:290) - Shutting down rest endpoint.
+2020-02-15 19:06:55,840 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:354) - Stopping TaskExecutor akka://flink/user/taskmanager_0.
+2020-02-15 19:06:55,840 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1064) - Close ResourceManager connection af0b60db50fc31de77247061f43bd921.
+2020-02-15 19:06:55,840 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:809) - Closing TaskExecutor connection a8acab89-03a7-41b9-b832-119b00272296 because: The TaskExecutor is shutting down.
+2020-02-15 19:06:55,843 [flink-akka.actor.default-dispatcher-3] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-15 19:06:55,843 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutorLocalStateStoresManager.java:213) - Shutting down TaskExecutorLocalStateStoresManager.
+2020-02-15 19:06:55,844 [flink-akka.actor.default-dispatcher-5] INFO  (JobMaster.java:338) - Stopping the JobMaster for job Streaming for Random Sampling(9909d3a715f416d2f3ae26d3ba0218f5).
+2020-02-15 19:06:55,845 [flink-akka.actor.default-dispatcher-5] INFO  (SlotPoolImpl.java:228) - Suspending SlotPool.
+2020-02-15 19:06:55,846 [flink-akka.actor.default-dispatcher-5] INFO  (JobMaster.java:1006) - Close ResourceManager connection af0b60db50fc31de77247061f43bd921: JobManager is shutting down..
+2020-02-15 19:06:55,846 [flink-akka.actor.default-dispatcher-5] INFO  (SlotPoolImpl.java:249) - Stopping SlotPool.
+2020-02-15 19:06:55,846 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:780) - Disconnect job manager 932e24e9518d63391e66e15c63b44497@akka://flink/user/jobmanager_1 for job 9909d3a715f416d2f3ae26d3ba0218f5 from the resource manager.
+2020-02-15 19:06:55,853 [flink-akka.actor.default-dispatcher-3] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-io-d371db5d-4b1c-4d4c-8490-1acd928a7e17
+2020-02-15 19:06:55,853 [flink-akka.actor.default-dispatcher-3] INFO  (NettyShuffleEnvironment.java:304) - Shutting down the network environment and its components.
+2020-02-15 19:06:55,856 [flink-akka.actor.default-dispatcher-3] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-netty-shuffle-a8ed22b1-8c23-4deb-bd49-5dab1f8fd1dc
+2020-02-15 19:06:55,857 [flink-akka.actor.default-dispatcher-3] INFO  (KvStateService.java:119) - Shutting down the kvState service and its components.
+2020-02-15 19:06:55,857 [flink-akka.actor.default-dispatcher-3] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-15 19:06:55,857 [flink-akka.actor.default-dispatcher-3] INFO  (FileCache.java:153) - removed file cache directory /tmp/flink-dist-cache-94e3783f-1ab7-45fe-8e40-c3a6a365695e
+2020-02-15 19:06:55,858 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:394) - Stopped TaskExecutor akka://flink/user/taskmanager_0.
+2020-02-15 19:06:55,966 [ForkJoinPool.commonPool-worker-1] INFO  (WebMonitorEndpoint.java:688) - Removing cache directory /tmp/flink-web-ui
+2020-02-15 19:06:55,967 [ForkJoinPool.commonPool-worker-1] INFO  (RestServerEndpoint.java:299) - Shut down complete.
+2020-02-15 19:06:55,975 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:503) - Shut down cluster because application is in CANCELED, diagnostics DispatcherResourceManagerComponent has been closed..
+2020-02-15 19:06:55,976 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:220) - Stopping dispatcher akka://flink/user/dispatcher.
+2020-02-15 19:06:55,977 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:696) - Stopping all currently running jobs of dispatcher akka://flink/user/dispatcher.
+2020-02-15 19:06:55,979 [flink-akka.actor.default-dispatcher-5] INFO  (SlotManagerImpl.java:284) - Closing the SlotManager.
+2020-02-15 19:06:55,979 [flink-akka.actor.default-dispatcher-3] INFO  (StackTraceSampleCoordinator.java:220) - Shutting down stack trace sample coordinator.
+2020-02-15 19:06:55,980 [flink-akka.actor.default-dispatcher-5] INFO  (SlotManagerImpl.java:247) - Suspending the SlotManager.
+2020-02-15 19:06:56,037 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:229) - Stopped dispatcher akka://flink/user/dispatcher.
+2020-02-15 19:06:56,039 [flink-akka.actor.default-dispatcher-3] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-15 19:06:56,067 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Shutting down remote daemon.
+2020-02-15 19:06:56,068 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remote daemon shut down; proceeding with flushing remote transports.
+2020-02-15 19:06:56,096 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting shut down.
+2020-02-15 19:06:56,170 [flink-metrics-2] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-15 19:06:56,171 [flink-metrics-2] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.
+2020-02-15 19:06:56,184 [flink-akka.actor.default-dispatcher-3] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-15 19:06:56,185 [flink-akka.actor.default-dispatcher-3] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-15 19:06:56,186 [flink-akka.actor.default-dispatcher-3] INFO  (BlobServer.java:340) - Stopped BLOB server at 0.0.0.0:33951
+2020-02-15 19:06:56,186 [flink-akka.actor.default-dispatcher-3] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.
+2020-02-15 19:06:56,187 [main] INFO  (TypeExtractor.java:1818) - class org.apache.flink.streaming.api.functions.source.TimestampedFileInputSplit does not contain a setter for field modificationTime
+2020-02-15 19:06:56,187 [main] INFO  (TypeExtractor.java:1857) - Class class org.apache.flink.streaming.api.functions.source.TimestampedFileInputSplit cannot be used as a POJO type because not all fields are valid POJO fields, and must be processed as GenericType. Please read the Flink documentation on "Data Types & Serialization" for details of the effect on performance.
+2020-02-15 19:06:56,193 [main] INFO  (LocalStreamEnvironment.java:108) - Running job on local embedded Flink mini cluster
+2020-02-15 19:06:56,194 [main] INFO  (MiniCluster.java:253) - Starting Flink Mini Cluster
+2020-02-15 19:06:56,194 [main] INFO  (MiniCluster.java:262) - Starting Metrics Registry
+2020-02-15 19:06:56,195 [main] INFO  (MetricRegistryImpl.java:114) - No metrics reporter configured, no metrics will be exposed/reported.
+2020-02-15 19:06:56,195 [main] INFO  (MiniCluster.java:266) - Starting RPC Service(s)
+2020-02-15 19:06:56,216 [flink-akka.actor.default-dispatcher-3] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-15 19:06:56,237 [main] INFO  (BootstrapTools.java:244) - Trying to start actor system at :0
+2020-02-15 19:06:56,258 [flink-metrics-2] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-15 19:06:56,273 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Starting remoting
+2020-02-15 19:06:56,297 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting started; listening on addresses :[akka.tcp://flink-metrics@127.0.1.1:43151]
+2020-02-15 19:06:56,321 [main] INFO  (BootstrapTools.java:256) - Actor system started at akka.tcp://flink-metrics@127.0.1.1:43151
+2020-02-15 19:06:56,322 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.metrics.dump.MetricQueryService at akka://flink-metrics/user/MetricQueryService .
+2020-02-15 19:06:56,323 [main] INFO  (MiniCluster.java:397) - Starting high-availability services
+2020-02-15 19:06:56,323 [main] INFO  (BlobServer.java:141) - Created BLOB server storage directory /tmp/blobStore-902abeac-8ad0-4d8a-b5b6-11a632b51977
+2020-02-15 19:06:56,324 [main] INFO  (BlobServer.java:203) - Started BLOB server at 0.0.0.0:37497 - max concurrent requests: 50 - max backlog: 1000
+2020-02-15 19:06:56,335 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-12c6fe28-59b3-4402-aa01-423671c3f136
+2020-02-15 19:06:56,336 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-ab7f99b7-d5da-4ada-aaae-4495b2c98b74
+2020-02-15 19:06:56,339 [main] INFO  (MiniCluster.java:479) - Starting 1 TaskManger(s)
+2020-02-15 19:06:56,339 [main] INFO  (TaskManagerRunner.java:351) - Starting TaskManager with ResourceID: c445a0d3-dfe0-4761-8c82-7ad9acd4db46
+2020-02-15 19:06:56,415 [main] INFO  (TaskManagerServices.java:519) - Temporary file directory '/tmp': total 439 GB, usable 336 GB (76.54% usable)
+2020-02-15 19:06:56,416 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-io-4fe79af6-4d27-4647-ab1d-de9af9482fdd for spill files.
+2020-02-15 19:06:56,424 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-netty-shuffle-a90545d6-5705-48f4-b3af-f7c60d9eba25 for spill files.
+2020-02-15 19:06:56,464 [main] INFO  (NetworkBufferPool.java:140) - Allocated 191 MB for network buffer pool (number of memory segments: 6113, bytes per segment: 32768).
+2020-02-15 19:06:56,465 [main] INFO  (NettyShuffleEnvironment.java:283) - Starting the network environment and its components.
+2020-02-15 19:06:56,465 [main] INFO  (KvStateService.java:89) - Starting the kvState service and its components.
+2020-02-15 19:06:56,465 [main] INFO  (TaskManagerServices.java:364) - Limiting managed memory to 0.7 of the currently free heap space (1196 MB), memory will be allocated lazily.
+2020-02-15 19:06:56,465 [main] INFO  (TaskManagerConfiguration.java:197) - Messages have a max timeout of 10000 ms
+2020-02-15 19:06:56,466 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.taskexecutor.TaskExecutor at akka://flink/user/taskmanager_2 .
+2020-02-15 19:06:56,467 [flink-akka.actor.default-dispatcher-2] INFO  (JobLeaderService.java:125) - Start job leader service.
+2020-02-15 19:06:56,467 [flink-akka.actor.default-dispatcher-2] INFO  (FileCache.java:107) - User file cache uses directory /tmp/flink-dist-cache-292213bc-5aed-4bda-b3ad-c4c4d6dca3fd
+2020-02-15 19:06:56,468 [main] INFO  (RestServerEndpoint.java:136) - Starting rest endpoint.
+2020-02-15 19:06:56,469 [main] WARN  (WebMonitorUtils.java:87) - Log file environment variable 'log.file' is not set.
+2020-02-15 19:06:56,470 [main] WARN  (WebMonitorUtils.java:93) - JobManager log files are unavailable in the web dashboard. Log file location not found in environment variable 'log.file' or configuration key 'Key: 'web.log.path' , default: null (fallback keys: [{key=jobmanager.web.log.path, isDeprecated=true}])'.
+2020-02-15 19:06:56,470 [main] INFO  (DispatcherRestEndpoint.java:113) - Failed to load web based job submission extension. Probable reason: flink-runtime-web is not in the classpath.
+2020-02-15 19:06:56,474 [main] INFO  (RestServerEndpoint.java:233) - Rest endpoint listening at localhost:39489
+2020-02-15 19:06:56,474 [main] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.dispatcher.DispatcherRestEndpoint@74abbb @ http://localhost:39489
+2020-02-15 19:06:56,476 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.resourcemanager.StandaloneResourceManager at akka://flink/user/resourcemanager .
+2020-02-15 19:06:56,477 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.dispatcher.StandaloneDispatcher at akka://flink/user/dispatcher .
+2020-02-15 19:06:56,478 [flink-akka.actor.default-dispatcher-2] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.resourcemanager.StandaloneResourceManager@5d2ad6c3 @ akka://flink/user/resourcemanager
+2020-02-15 19:06:56,480 [main] INFO  (MiniCluster.java:362) - Flink Mini Cluster started successfully
+2020-02-15 19:06:56,481 [mini-cluster-io-thread-1] INFO  (WebMonitorEndpoint.java:712) - http://localhost:39489 was granted leadership with leaderSessionID=f5e6a752-d083-417c-9461-1ded866e3c36
+2020-02-15 19:06:56,480 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:925) - ResourceManager akka://flink/user/resourcemanager was granted leadership with fencing token 857c46c566f4636c7e2810c98ba54b87
+2020-02-15 19:06:56,484 [flink-akka.actor.default-dispatcher-3] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.dispatcher.StandaloneDispatcher@57648b72 @ akka://flink/user/dispatcher
+2020-02-15 19:06:56,485 [flink-akka.actor.default-dispatcher-2] INFO  (SlotManagerImpl.java:219) - Starting the SlotManager.
+2020-02-15 19:06:56,491 [flink-akka.actor.default-dispatcher-3] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/resourcemanager , session=7e2810c9-8ba5-4b87-857c-46c566f4636c
+2020-02-15 19:06:56,491 [flink-akka.actor.default-dispatcher-2] INFO  (Dispatcher.java:884) - Dispatcher akka://flink/user/dispatcher was granted leadership with fencing token 8e11a536-baa1-48fd-9c0c-2a8f3e4dc958
+2020-02-15 19:06:56,491 [mini-cluster-io-thread-1] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader http://localhost:39489 , session=f5e6a752-d083-417c-9461-1ded866e3c36
+2020-02-15 19:06:56,491 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:716) - Recovering all persisted jobs.
+2020-02-15 19:06:56,492 [flink-akka.actor.default-dispatcher-2] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/dispatcher , session=8e11a536-baa1-48fd-9c0c-2a8f3e4dc958
+2020-02-15 19:06:56,494 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:991) - Connecting to ResourceManager akka://flink/user/resourcemanager(857c46c566f4636c7e2810c98ba54b87).
+2020-02-15 19:06:56,496 [flink-akka.actor.default-dispatcher-4] INFO  (RetryingRegistration.java:155) - Resolved ResourceManager address, beginning registration
+2020-02-15 19:06:56,497 [flink-akka.actor.default-dispatcher-4] INFO  (RetryingRegistration.java:204) - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-02-15 19:06:56,497 [flink-akka.actor.default-dispatcher-2] INFO  (Dispatcher.java:264) - Received JobGraph submission 3fcb68189a5ab64e75281370206cb870 (Streaming for Random Sampling 2).
+2020-02-15 19:06:56,497 [flink-akka.actor.default-dispatcher-2] INFO  (Dispatcher.java:321) - Submitting job 3fcb68189a5ab64e75281370206cb870 (Streaming for Random Sampling 2).
+2020-02-15 19:06:56,501 [flink-akka.actor.default-dispatcher-3] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.jobmaster.JobMaster at akka://flink/user/jobmanager_3 .
+2020-02-15 19:06:56,501 [flink-akka.actor.default-dispatcher-3] INFO  (JobMaster.java:242) - Initializing job Streaming for Random Sampling 2 (3fcb68189a5ab64e75281370206cb870).
+2020-02-15 19:06:56,502 [flink-akka.actor.default-dispatcher-3] INFO  (LegacyScheduler.java:171) - Using restart strategy NoRestartStrategy for Streaming for Random Sampling 2 (3fcb68189a5ab64e75281370206cb870).
+2020-02-15 19:06:56,503 [flink-akka.actor.default-dispatcher-3] INFO  (ExecutionGraph.java:519) - Job recovers via failover strategy: full graph restart
+2020-02-15 19:06:56,503 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:717) - Registering TaskManager with ResourceID c445a0d3-dfe0-4761-8c82-7ad9acd4db46 (akka://flink/user/taskmanager_2) at ResourceManager
+2020-02-15 19:06:56,503 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutorToResourceManagerConnection.java:100) - Successful registration at resource manager akka://flink/user/resourcemanager under registration id a09be35f47dcd78cb42a744c5df5f038.
+2020-02-15 19:06:56,504 [flink-akka.actor.default-dispatcher-3] INFO  (ExecutionGraphBuilder.java:204) - Running initialization on master for job Streaming for Random Sampling 2 (3fcb68189a5ab64e75281370206cb870).
+2020-02-15 19:06:56,504 [flink-akka.actor.default-dispatcher-3] INFO  (ExecutionGraphBuilder.java:222) - Successfully ran initialization on master in 0 ms.
+2020-02-15 19:06:56,506 [flink-akka.actor.default-dispatcher-3] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:56,506 [flink-akka.actor.default-dispatcher-3] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.jobmaster.JobManagerRunner@6564407a @ akka://flink/user/jobmanager_3
+2020-02-15 19:06:56,508 [mini-cluster-io-thread-1] INFO  (JobManagerRunner.java:313) - JobManager runner for job Streaming for Random Sampling 2 (3fcb68189a5ab64e75281370206cb870) was granted leadership with session id 8fae3719-220c-4de6-af20-90d148ad6d7e at akka://flink/user/jobmanager_3.
+2020-02-15 19:06:56,508 [flink-akka.actor.default-dispatcher-3] INFO  (JobMaster.java:712) - Starting execution of job Streaming for Random Sampling 2 (3fcb68189a5ab64e75281370206cb870) under job master id af2090d148ad6d7e8fae3719220c4de6.
+2020-02-15 19:06:56,508 [flink-akka.actor.default-dispatcher-3] INFO  (ExecutionGraph.java:1325) - Job Streaming for Random Sampling 2 (3fcb68189a5ab64e75281370206cb870) switched from state CREATED to RUNNING.
+2020-02-15 19:06:56,509 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:56,509 [flink-akka.actor.default-dispatcher-3] INFO  (SlotPoolImpl.java:369) - Cannot serve slot request, no ResourceManager connected. Adding as pending request [SlotRequestId{475183af758cd35f9a6e70da50886422}]
+2020-02-15 19:06:56,509 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:56,510 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:56,510 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:56,510 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) switched from CREATED to SCHEDULED.
+2020-02-15 19:06:56,510 [jobmanager-future-thread-1] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/jobmanager_3 , session=8fae3719-220c-4de6-af20-90d148ad6d7e
+2020-02-15 19:06:56,511 [flink-akka.actor.default-dispatcher-3] INFO  (JobMaster.java:936) - Connecting to ResourceManager akka://flink/user/resourcemanager(857c46c566f4636c7e2810c98ba54b87)
+2020-02-15 19:06:56,511 [flink-akka.actor.default-dispatcher-3] INFO  (RetryingRegistration.java:155) - Resolved ResourceManager address, beginning registration
+2020-02-15 19:06:56,512 [flink-akka.actor.default-dispatcher-3] INFO  (RetryingRegistration.java:204) - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-02-15 19:06:56,512 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:306) - Registering job manager af2090d148ad6d7e8fae3719220c4de6@akka://flink/user/jobmanager_3 for job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,513 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:661) - Registered job manager af2090d148ad6d7e8fae3719220c4de6@akka://flink/user/jobmanager_3 for job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,516 [flink-akka.actor.default-dispatcher-3] INFO  (JobMaster.java:958) - JobManager successfully registered at ResourceManager, leader id: 857c46c566f4636c7e2810c98ba54b87.
+2020-02-15 19:06:56,517 [flink-akka.actor.default-dispatcher-3] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{475183af758cd35f9a6e70da50886422}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:56,517 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 3fcb68189a5ab64e75281370206cb870 with allocation id 837c2ead7cd08a180e4cc457b47cecd7.
+2020-02-15 19:06:56,517 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:822) - Receive slot request 837c2ead7cd08a180e4cc457b47cecd7 for job 3fcb68189a5ab64e75281370206cb870 from resource manager with leader id 857c46c566f4636c7e2810c98ba54b87.
+2020-02-15 19:06:56,520 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:834) - Allocated slot for 837c2ead7cd08a180e4cc457b47cecd7.
+2020-02-15 19:06:56,520 [flink-akka.actor.default-dispatcher-2] INFO  (JobLeaderService.java:193) - Add job 3fcb68189a5ab64e75281370206cb870 for job leader monitoring.
+2020-02-15 19:06:56,521 [mini-cluster-io-thread-4] INFO  (JobLeaderService.java:333) - Try to register at job manager akka://flink/user/jobmanager_3 with leader id 8fae3719-220c-4de6-af20-90d148ad6d7e.
+2020-02-15 19:06:56,521 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:155) - Resolved JobManager address, beginning registration
+2020-02-15 19:06:56,522 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:204) - Registration at JobManager attempt 1 (timeout=100ms)
+2020-02-15 19:06:56,523 [flink-akka.actor.default-dispatcher-3] INFO  (JobLeaderService.java:382) - Successful registration at job manager akka://flink/user/jobmanager_3 for job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,523 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1227) - Establish JobManager connection for job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,524 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,524 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{d94b4a92fe41625ac4dc5eeb2f076af6}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:56,525 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 3fcb68189a5ab64e75281370206cb870 with allocation id 7d6854cab44ea872c6020bc8283c5d22.
+2020-02-15 19:06:56,525 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{d5fd90eb4b432ef850d8082d942ac4b0}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:56,526 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request 7d6854cab44ea872c6020bc8283c5d22 for job 3fcb68189a5ab64e75281370206cb870 from resource manager with leader id 857c46c566f4636c7e2810c98ba54b87.
+2020-02-15 19:06:56,526 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 3fcb68189a5ab64e75281370206cb870 with allocation id f5eb7e4d8d78dbedad67e07a47119240.
+2020-02-15 19:06:56,526 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{dbb3504b21a07e5140445c1253a55a43}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-15 19:06:56,527 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 3fcb68189a5ab64e75281370206cb870 with allocation id e6dffcc57649ce692163c802f7877d73.
+2020-02-15 19:06:56,526 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for 7d6854cab44ea872c6020bc8283c5d22.
+2020-02-15 19:06:56,527 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,528 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:629) - Received repeated offer for slot [837c2ead7cd08a180e4cc457b47cecd7]. Ignoring.
+2020-02-15 19:06:56,528 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request f5eb7e4d8d78dbedad67e07a47119240 for job 3fcb68189a5ab64e75281370206cb870 from resource manager with leader id 857c46c566f4636c7e2810c98ba54b87.
+2020-02-15 19:06:56,528 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for f5eb7e4d8d78dbedad67e07a47119240.
+2020-02-15 19:06:56,528 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,528 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 837c2ead7cd08a180e4cc457b47cecd7.
+2020-02-15 19:06:56,529 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request e6dffcc57649ce692163c802f7877d73 for job 3fcb68189a5ab64e75281370206cb870 from resource manager with leader id 857c46c566f4636c7e2810c98ba54b87.
+2020-02-15 19:06:56,529 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for e6dffcc57649ce692163c802f7877d73.
+2020-02-15 19:06:56,529 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,530 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 837c2ead7cd08a180e4cc457b47cecd7.
+2020-02-15 19:06:56,530 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 7d6854cab44ea872c6020bc8283c5d22.
+2020-02-15 19:06:56,530 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:629) - Received repeated offer for slot [837c2ead7cd08a180e4cc457b47cecd7]. Ignoring.
+2020-02-15 19:06:56,530 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:629) - Received repeated offer for slot [7d6854cab44ea872c6020bc8283c5d22]. Ignoring.
+2020-02-15 19:06:56,531 [flink-akka.actor.default-dispatcher-5] INFO  (TaskSlotTable.java:242) - Activate slot 837c2ead7cd08a180e4cc457b47cecd7.
+2020-02-15 19:06:56,531 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:629) - Received repeated offer for slot [7d6854cab44ea872c6020bc8283c5d22]. Ignoring.
+2020-02-15 19:06:56,531 [flink-akka.actor.default-dispatcher-5] INFO  (TaskSlotTable.java:242) - Activate slot 7d6854cab44ea872c6020bc8283c5d22.
+2020-02-15 19:06:56,531 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:629) - Received repeated offer for slot [f5eb7e4d8d78dbedad67e07a47119240]. Ignoring.
+2020-02-15 19:06:56,531 [flink-akka.actor.default-dispatcher-5] INFO  (TaskSlotTable.java:242) - Activate slot f5eb7e4d8d78dbedad67e07a47119240.
+2020-02-15 19:06:56,532 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:56,532 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:713) - Deploying Source: Custom File Source (1/1) (attempt #0) to c445a0d3-dfe0-4761-8c82-7ad9acd4db46 @ localhost (dataPort=-1)
+2020-02-15 19:06:56,538 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:56,539 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (1/4) (attempt #0) to c445a0d3-dfe0-4761-8c82-7ad9acd4db46 @ localhost (dataPort=-1)
+2020-02-15 19:06:56,541 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:592) - Received task Source: Custom File Source (1/1).
+2020-02-15 19:06:56,545 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:56,545 [Source: Custom File Source (1/1)] INFO  (Task.java:958) - Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:56,546 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (2/4) (attempt #0) to c445a0d3-dfe0-4761-8c82-7ad9acd4db46 @ localhost (dataPort=-1)
+2020-02-15 19:06:56,546 [Source: Custom File Source (1/1)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) [DEPLOYING]
+2020-02-15 19:06:56,546 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (1/4).
+2020-02-15 19:06:56,548 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:56,549 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (3/4) (attempt #0) to c445a0d3-dfe0-4761-8c82-7ad9acd4db46 @ localhost (dataPort=-1)
+2020-02-15 19:06:56,549 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) switched from SCHEDULED to DEPLOYING.
+2020-02-15 19:06:56,549 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:713) - Deploying Split Reader: Custom File Source -> Flat Map (4/4) (attempt #0) to c445a0d3-dfe0-4761-8c82-7ad9acd4db46 @ localhost (dataPort=-1)
+2020-02-15 19:06:56,551 [Source: Custom File Source (1/1)] INFO  (Task.java:593) - Loading JAR files for task Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) [DEPLOYING].
+2020-02-15 19:06:56,551 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:56,552 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) [DEPLOYING]
+2020-02-15 19:06:56,552 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) [DEPLOYING].
+2020-02-15 19:06:56,552 [Source: Custom File Source (1/1)] INFO  (Task.java:619) - Registering task at network: Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) [DEPLOYING].
+2020-02-15 19:06:56,553 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (2/4).
+2020-02-15 19:06:56,553 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) [DEPLOYING].
+2020-02-15 19:06:56,553 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:56,553 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 7d6854cab44ea872c6020bc8283c5d22.
+2020-02-15 19:06:56,553 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) [DEPLOYING]
+2020-02-15 19:06:56,553 [Source: Custom File Source (1/1)] INFO  (Task.java:958) - Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,553 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot f5eb7e4d8d78dbedad67e07a47119240.
+2020-02-15 19:06:56,554 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot e6dffcc57649ce692163c802f7877d73.
+2020-02-15 19:06:56,554 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,554 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) [DEPLOYING].
+2020-02-15 19:06:56,554 [Source: Custom File Source (1/1)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:56,555 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,555 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) [DEPLOYING].
+2020-02-15 19:06:56,556 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (4/4).
+2020-02-15 19:06:56,557 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,558 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:56,564 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:56,565 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Split Reader: Custom File Source -> Flat Map (3/4).
+2020-02-15 19:06:56,565 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,566 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:56,566 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) [DEPLOYING]
+2020-02-15 19:06:56,566 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,566 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) switched from CREATED to DEPLOYING.
+2020-02-15 19:06:56,568 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2020-02-15 19:06:56,566 [Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:178) - No state to restore for the ContinuousFileMonitoringFunction.
+2020-02-15 19:06:56,569 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=1).
+2020-02-15 19:06:56,569 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) [DEPLOYING].
+2020-02-15 19:06:56,568 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) [DEPLOYING]
+2020-02-15 19:06:56,570 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:593) - Loading JAR files for task Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) [DEPLOYING].
+2020-02-15 19:06:56,570 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) [DEPLOYING].
+2020-02-15 19:06:56,570 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:619) - Registering task at network: Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) [DEPLOYING].
+2020-02-15 19:06:56,572 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,573 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,573 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:56,580 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,581 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) switched from DEPLOYING to RUNNING.
+2020-02-15 19:06:56,581 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [0] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 0 + 4797
+2020-02-15 19:06:56,581 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-15 19:06:56,585 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [1] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 4797 + 4797
+2020-02-15 19:06:56,587 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [2] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 9594 + 4797
+2020-02-15 19:06:56,587 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=3).
+2020-02-15 19:06:56,588 [Legacy Source Thread - Source: Custom File Source (1/1)] INFO  (ContinuousFileMonitoringFunction.java:247) - Forwarding split: [3] file:/home/skalogerakis/Downloads/openaq.csv mod@ 1581777389000 : 14391 + 4796
+2020-02-15 19:06:56,589 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (ContinuousFileReaderOperator.java:115) - No state to restore for the ContinuousFileReaderOperator (taskIdx=2).
+2020-02-15 19:06:56,593 [Source: Custom File Source (1/1)] INFO  (Task.java:958) - Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,593 [Source: Custom File Source (1/1)] INFO  (Task.java:804) - Freeing task resources for Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355).
+2020-02-15 19:06:56,593 [Source: Custom File Source (1/1)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) [FINISHED]
+2020-02-15 19:06:56,594 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Source: Custom File Source d494e2fff01426cd72cc52d7e5a9e355.
+2020-02-15 19:06:56,596 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom File Source (1/1) (d494e2fff01426cd72cc52d7e5a9e355) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,636 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,636 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,637 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77).
+2020-02-15 19:06:56,636 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7).
+2020-02-15 19:06:56,637 [Split Reader: Custom File Source -> Flat Map (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) [FINISHED]
+2020-02-15 19:06:56,637 [Split Reader: Custom File Source -> Flat Map (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) [FINISHED]
+2020-02-15 19:06:56,640 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map 9dea3a3a76db23df60f9ee48ce88ae77.
+2020-02-15 19:06:56,641 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map e04efe853d623d77efca5e98d82eeaf7.
+2020-02-15 19:06:56,642 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (2/4) (9dea3a3a76db23df60f9ee48ce88ae77) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,643 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (1/4) (e04efe853d623d77efca5e98d82eeaf7) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,653 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,653 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a).
+2020-02-15 19:06:56,654 [Split Reader: Custom File Source -> Flat Map (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) [FINISHED]
+2020-02-15 19:06:56,654 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:958) - Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,654 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map f4afa634d3ac3f3b384b7cf1ba1b2e8a.
+2020-02-15 19:06:56,655 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:804) - Freeing task resources for Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c).
+2020-02-15 19:06:56,657 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (4/4) (f4afa634d3ac3f3b384b7cf1ba1b2e8a) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,660 [Split Reader: Custom File Source -> Flat Map (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) [FINISHED]
+2020-02-15 19:06:56,662 [flink-akka.actor.default-dispatcher-5] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FINISHED to JobManager for task Split Reader: Custom File Source -> Flat Map 9b9e19483d4d9dba135efac07493fd6c.
+2020-02-15 19:06:56,664 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Split Reader: Custom File Source -> Flat Map (3/4) (9b9e19483d4d9dba135efac07493fd6c) switched from RUNNING to FINISHED.
+2020-02-15 19:06:56,665 [flink-akka.actor.default-dispatcher-5] INFO  (ExecutionGraph.java:1325) - Job Streaming for Random Sampling 2 (3fcb68189a5ab64e75281370206cb870) switched from state RUNNING to FINISHED.
+2020-02-15 19:06:56,665 [flink-akka.actor.default-dispatcher-5] INFO  (CheckpointCoordinator.java:329) - Stopping checkpoint coordinator for job 3fcb68189a5ab64e75281370206cb870.
+2020-02-15 19:06:56,666 [flink-akka.actor.default-dispatcher-5] INFO  (StandaloneCompletedCheckpointStore.java:97) - Shutting down
+2020-02-15 19:06:56,671 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:774) - Job 3fcb68189a5ab64e75281370206cb870 reached globally terminal state FINISHED.
+2020-02-15 19:06:56,671 [main] INFO  (MiniCluster.java:416) - Shutting down Flink Mini Cluster
+2020-02-15 19:06:56,672 [flink-akka.actor.default-dispatcher-3] INFO  (JobMaster.java:338) - Stopping the JobMaster for job Streaming for Random Sampling 2(3fcb68189a5ab64e75281370206cb870).
+2020-02-15 19:06:56,672 [main] INFO  (RestServerEndpoint.java:290) - Shutting down rest endpoint.
+2020-02-15 19:06:56,672 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:354) - Stopping TaskExecutor akka://flink/user/taskmanager_2.
+2020-02-15 19:06:56,673 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1064) - Close ResourceManager connection 29e28f4032b50328a5fce587c76e5b55.
+2020-02-15 19:06:56,674 [flink-akka.actor.default-dispatcher-2] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-15 19:06:56,675 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutorLocalStateStoresManager.java:213) - Shutting down TaskExecutorLocalStateStoresManager.
+2020-02-15 19:06:56,675 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:809) - Closing TaskExecutor connection c445a0d3-dfe0-4761-8c82-7ad9acd4db46 because: The TaskExecutor is shutting down.
+2020-02-15 19:06:56,675 [flink-akka.actor.default-dispatcher-3] INFO  (SlotPoolImpl.java:228) - Suspending SlotPool.
+2020-02-15 19:06:56,676 [flink-akka.actor.default-dispatcher-3] INFO  (JobMaster.java:1006) - Close ResourceManager connection 29e28f4032b50328a5fce587c76e5b55: JobManager is shutting down..
+2020-02-15 19:06:56,677 [flink-akka.actor.default-dispatcher-3] INFO  (SlotPoolImpl.java:249) - Stopping SlotPool.
+2020-02-15 19:06:56,677 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:780) - Disconnect job manager af2090d148ad6d7e8fae3719220c4de6@akka://flink/user/jobmanager_3 for job 3fcb68189a5ab64e75281370206cb870 from the resource manager.
+2020-02-15 19:06:56,691 [flink-akka.actor.default-dispatcher-2] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-io-4fe79af6-4d27-4647-ab1d-de9af9482fdd
+2020-02-15 19:06:56,692 [flink-akka.actor.default-dispatcher-2] INFO  (NettyShuffleEnvironment.java:304) - Shutting down the network environment and its components.
+2020-02-15 19:06:56,696 [flink-akka.actor.default-dispatcher-2] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-netty-shuffle-a90545d6-5705-48f4-b3af-f7c60d9eba25
+2020-02-15 19:06:56,696 [ForkJoinPool.commonPool-worker-1] INFO  (WebMonitorEndpoint.java:688) - Removing cache directory /tmp/flink-web-ui
+2020-02-15 19:06:56,697 [ForkJoinPool.commonPool-worker-1] INFO  (RestServerEndpoint.java:299) - Shut down complete.
+2020-02-15 19:06:56,698 [flink-akka.actor.default-dispatcher-2] INFO  (KvStateService.java:119) - Shutting down the kvState service and its components.
+2020-02-15 19:06:56,698 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:503) - Shut down cluster because application is in CANCELED, diagnostics DispatcherResourceManagerComponent has been closed..
+2020-02-15 19:06:56,700 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:220) - Stopping dispatcher akka://flink/user/dispatcher.
+2020-02-15 19:06:56,700 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:696) - Stopping all currently running jobs of dispatcher akka://flink/user/dispatcher.
+2020-02-15 19:06:56,701 [flink-akka.actor.default-dispatcher-4] INFO  (SlotManagerImpl.java:284) - Closing the SlotManager.
+2020-02-15 19:06:56,701 [flink-akka.actor.default-dispatcher-4] INFO  (SlotManagerImpl.java:247) - Suspending the SlotManager.
+2020-02-15 19:06:56,698 [flink-akka.actor.default-dispatcher-2] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-15 19:06:56,701 [flink-akka.actor.default-dispatcher-3] INFO  (StackTraceSampleCoordinator.java:220) - Shutting down stack trace sample coordinator.
+2020-02-15 19:06:56,703 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:229) - Stopped dispatcher akka://flink/user/dispatcher.
+2020-02-15 19:06:56,705 [flink-akka.actor.default-dispatcher-2] INFO  (FileCache.java:153) - removed file cache directory /tmp/flink-dist-cache-292213bc-5aed-4bda-b3ad-c4c4d6dca3fd
+2020-02-15 19:06:56,706 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:394) - Stopped TaskExecutor akka://flink/user/taskmanager_2.
+2020-02-15 19:06:56,707 [flink-akka.actor.default-dispatcher-2] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-15 19:06:56,715 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Shutting down remote daemon.
+2020-02-15 19:06:56,717 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remote daemon shut down; proceeding with flushing remote transports.
+2020-02-15 19:06:56,732 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting shut down.
+2020-02-15 19:06:56,746 [flink-metrics-2] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-15 19:06:56,748 [flink-metrics-2] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.
+2020-02-15 19:06:56,754 [flink-akka.actor.default-dispatcher-5] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-15 19:06:56,755 [flink-akka.actor.default-dispatcher-5] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-15 19:06:56,756 [flink-akka.actor.default-dispatcher-5] INFO  (BlobServer.java:340) - Stopped BLOB server at 0.0.0.0:37497
+2020-02-15 19:06:56,756 [flink-akka.actor.default-dispatcher-5] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.
