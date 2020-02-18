@@ -12,12 +12,19 @@ import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.runtime.checkpoint.MasterTriggerRestoreHook;
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
+import org.apache.flink.streaming.api.windowing.assigners.GlobalWindows;
+import org.apache.flink.streaming.api.windowing.triggers.EventTimeTrigger;
+import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
+import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.streaming.api.windowing.triggers.EventTimeTrigger;
 
 
 public class RandomSampling {
@@ -29,6 +36,7 @@ public class RandomSampling {
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
 
         //DataStream<Tuple2<String, Float>> csvInput = env.readTextFile("/home/skalogerakis/TUC_Projects/TUC_Advanced_Database_Systems/MyDocs/openaq_Bosnia.csv")
@@ -55,7 +63,14 @@ public class RandomSampling {
                 .keyBy(0)
                 .process(new CalcImplementation());
 
-        sum.print();
+        DataStream<ImplementationFields> output = sum
+                .assignTimestampsAndWatermarks(new TimestampAssigner())
+                .keyBy(0)
+                .window(GlobalWindows.create())
+                .trigger(EventTimeTrigger.create())
+                .reduce(new MyReduceFunction(), new MyProcessWindowFunction());
+
+        //sum.print();
 
 
 
@@ -129,6 +144,33 @@ public class RandomSampling {
         public double var;
         public double mean;
         //public long lastModified;
+    }
+
+    private static class TimestampAssigner extends AscendingTimestampExtractor<ScoreEvent> {
+
+        @Override
+        public long extractAscendingTimestamp(ScoreEvent input) {
+            return input.getTimestamp();
+        }
+    }
+
+    private static class MyReduceFunction implements ReduceFunction<SensorReading> {
+
+        public SensorReading reduce(SensorReading r1, SensorReading r2) {
+            return r1.value() > r2.value() ? r2 : r1;
+        }
+    }
+
+    private static class MyProcessWindowFunction
+            extends ProcessWindowFunction<SensorReading, Tuple2<Long, SensorReading>, String, TimeWindow> {
+
+        public void process(String key,
+                            KeyedProcessFunction.Context context,
+                            Iterable<SensorReading> minReadings,
+                            Collector<Tuple2<Long, SensorReading>> out) {
+            SensorReading min = minReadings.iterator().next();
+            out.collect(new Tuple2<Long, SensorReading>(context.window().getStart(), min));
+        }
     }
 
     /**
