@@ -1,12 +1,15 @@
 package tuc;
 
+import jdk.nashorn.internal.objects.Global;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
+import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.state.ListState;
 import org.apache.flink.api.common.state.ListStateDescriptor;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.*;
@@ -15,16 +18,15 @@ import org.apache.flink.runtime.checkpoint.MasterTriggerRestoreHook;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
-import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.AssignerWithPunctuatedWatermarks;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
-import org.apache.flink.streaming.api.windowing.assigners.GlobalWindows;
-import org.apache.flink.streaming.api.windowing.triggers.EventTimeTrigger;
-import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
+
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.util.Collector;
-import org.apache.flink.util.OutputTag;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.api.windowing.triggers.EventTimeTrigger;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class RandomSampling {
@@ -33,23 +35,51 @@ public class RandomSampling {
 
     public static void main(String[] args) throws Exception {
 
+        String inputTopic = "flinkInput2";
+        String outputTopic = "flink_output";
+        String consumerGroup = "KafkaCsvProducer";
+        String address = "localhost:9092";
+        String pattern = "^\\bEndOfStream\\b$";
+
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
 
+        Pattern r = Pattern.compile(pattern);
+
+        FlinkKafkaConsumer<String> flinkKafkaConsumer = createStringConsumerForTopic(
+                inputTopic, address, consumerGroup);
+
+//        flinkKafkaConsumer.assignTimestampsAndWatermarks()
+//        DataStream<String> stringInputStream = env
+//                .addSource(flinkKafkaConsumer);
+//
+//        stringInputStream
+//                .map(new WordsCapitalizer());
 
         //DataStream<Tuple2<String, Float>> csvInput = env.readTextFile("/home/skalogerakis/TUC_Projects/TUC_Advanced_Database_Systems/MyDocs/openaq_Bosnia.csv")
 
         //This is for data input purposes only. TODO replace that with Kafka implementation
         //Current way data are transformed Tuple2<String, Float>
-        DataStream<Tuple2<String, Double>> input = env.readTextFile("/home/skalogerakis/Downloads/openaq.csv")
+        //DataStream<Tuple2<String, Double>> input = env.readTextFile("/home/skalogerakis/Downloads/openaq.csv")
+        DataStream<Tuple2<String, Double>> input = env.addSource(flinkKafkaConsumer)
                 .flatMap(new FlatMapFunction<String, Tuple2<String, Double>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple2<String, Double>> out)
                             throws Exception {
                         String[] words = value.split(",");
-                        Tuple2<String, Double> temp1 = new Tuple2<>(words[0], Double.parseDouble(words[6]));
+                        Matcher m = r.matcher(words[0]);
+                        Tuple2<String, Double> temp1;
+                        //System.out.println("ERROREOER " + words[0]);
+                        if(m.matches()){
+
+                            temp1 = new Tuple2<>(words[0], 0.0D);
+                        }else{
+                            temp1 = new Tuple2<>(words[0], Double.parseDouble(words[6]));
+
+                        }
+                        System.out.println(temp1);
                         out.collect(temp1);
                     }
                 });
@@ -62,26 +92,18 @@ public class RandomSampling {
         DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
                 .keyBy(0)
                 .process(new CalcImplementation());
+                //.assignTimestampsAndWatermarks(new MyTimestampsAndWatermarks());
 
-        DataStream<ImplementationFields> output = sum
-                .assignTimestampsAndWatermarks(new TimestampAssigner())
-                .keyBy(0)
-                .window(GlobalWindows.create())
-                .trigger(EventTimeTrigger.create())
-                .reduce(new MyReduceFunction(), new MyProcessWindowFunction());
+        sum.print();
+        //TOOD try this https://training.ververica.com/exercises/carSegments.html
 
-        //sum.print();
-
-
-
-        //Using side stream
-//        SingleOutputStreamOperator<Tuple3<String, Float,Float>> sum = input
+//        DataStream<Tuple5<String,Double,Double,Double,Double>> fin = sum
 //                .keyBy(0)
+//                .window(Time.seconds(30))
+//                .reduce();
+                //.trigger(new SegmentingOutOfOrderTrigger())
 //                .process(new CalcImplementation());
 
-
-
-        //sum.print();
 
         //DataStream<String> sideOutputStream = sum.getSideOutput(outputTag);
 
@@ -90,48 +112,6 @@ public class RandomSampling {
         env.execute("Streaming for Random Sampling");
 
     }
-
-//    //TODO add mean and variance
-//    public static class CalcImplementation extends RichFlatMapFunction<Tuple2<String, Float>, Tuple3<String, Float, Float>> {
-//
-//        /**
-//         * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
-//         */
-//        private transient ValueState<Tuple3<String, Float,Float>> sum;
-//
-//        @Override
-//        public void flatMap(Tuple2<String, Float> input, Collector<Tuple3<String, Float, Float>> out) throws Exception {
-//
-//            // access the state value
-//            Tuple3<String, Float,Float> currentSum = sum.value();
-//
-//            if(currentSum == null){
-//                currentSum = Tuple3.of(input.f0,0.0F,0.0F);
-//            }
-//            // update the count
-//            currentSum.f2++;
-//            // add the second field of the input value
-//            currentSum.f1 += input.f1;
-//
-//            // update the state
-//            sum.update(currentSum);
-//
-//            out.collect(new Tuple3<>(input.f0, currentSum.f1,currentSum.f2));
-//        }
-//
-//        //Initialization inside ValueStateDescriptor is Deprecated. Must check null case and initialize in flatMap function
-//        @Override
-//        public void open(Configuration config) {
-//
-//            //StateDescriptor holds name and characteristics of state
-//            ValueStateDescriptor<Tuple3<String, Float,Float>> descriptor = new ValueStateDescriptor<>(
-//                            "sum", // the state name
-//                            TypeInformation.of(new TypeHint<Tuple3<String, Float,Float>>() {})); // type information
-//                            //Tuple3.of("",0.0F,0.0F)); // default value of the state, if nothing was set
-//            sum = getRuntimeContext().getState(descriptor);     //Access state using getRuntimeContext()
-//        }
-//
-//    }
 
     /**
      * Alternative way to store data handled in state
@@ -144,33 +124,6 @@ public class RandomSampling {
         public double var;
         public double mean;
         //public long lastModified;
-    }
-
-    private static class TimestampAssigner extends AscendingTimestampExtractor<ScoreEvent> {
-
-        @Override
-        public long extractAscendingTimestamp(ScoreEvent input) {
-            return input.getTimestamp();
-        }
-    }
-
-    private static class MyReduceFunction implements ReduceFunction<SensorReading> {
-
-        public SensorReading reduce(SensorReading r1, SensorReading r2) {
-            return r1.value() > r2.value() ? r2 : r1;
-        }
-    }
-
-    private static class MyProcessWindowFunction
-            extends ProcessWindowFunction<SensorReading, Tuple2<Long, SensorReading>, String, TimeWindow> {
-
-        public void process(String key,
-                            KeyedProcessFunction.Context context,
-                            Iterable<SensorReading> minReadings,
-                            Collector<Tuple2<Long, SensorReading>> out) {
-            SensorReading min = minReadings.iterator().next();
-            out.collect(new Tuple2<Long, SensorReading>(context.window().getStart(), min));
-        }
     }
 
     /**
@@ -240,6 +193,66 @@ public class RandomSampling {
 
     }
 
+    public static FlinkKafkaConsumer<String> createStringConsumerForTopic(
+            String topic, String kafkaAddress, String kafkaGroup ) {
+
+        Properties props = new Properties();
+        props.setProperty("bootstrap.servers", kafkaAddress);
+        props.setProperty("group.id",kafkaGroup);
+        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(
+                topic, new SimpleStringSchema(), props);
+
+        return consumer;
+    }
+
+    public static class WordsCapitalizer implements MapFunction<String, String> {
+        @Override
+        public String map(String s) {
+            System.out.println(s.toUpperCase());
+            return s.toUpperCase();
+        }
+    }
+
+//    public static class SegmentingOutOfOrderTrigger extends Trigger<Tuple5<String,Double,Double,Double,Double>, GlobalWindow> {
+//
+//        @Override
+//        public TriggerResult onElement(Tuple5<String,Double,Double,Double,Double> event, long timestamp, GlobalWindow window, TriggerContext context) throws Exception {
+//
+//            // if this is a stop event, set a timer
+//            if (event.speed == 0.0) {
+//                context.registerEventTimeTimer(event.timestamp);
+//            }
+//
+//            return TriggerResult.CONTINUE;
+//        }
+//
+//        @Override
+//        public TriggerResult onEventTime(long time, GlobalWindow window, TriggerContext ctx) {
+//            return TriggerResult.FIRE;
+//        }
+//
+//        @Override
+//        public TriggerResult onProcessingTime(long time, GlobalWindow window, TriggerContext ctx) {
+//            return TriggerResult.CONTINUE;
+//        }
+//
+//        @Override
+//        public void clear(GlobalWindow window, TriggerContext ctx) {
+//        }
+//    }
+//
+//    public static class ConnectedCarAssigner implements AssignerWithPunctuatedWatermarks<Tuple5<String,Double,Double,Double,Double>> {
+//        @Override
+//        public long extractTimestamp(Tuple5<String,Double,Double,Double,Double> event, long previousElementTimestamp) {
+//            return event.timestamp;
+//        }
+//
+//        @Override
+//        public Watermark checkAndGetNextWatermark(Tuple5<String,Double,Double,Double,Double> event, long extractedTimestamp) {
+//            // simply emit a watermark with every event
+//            return new Watermark(extractedTimestamp - 30000);
+//        }
+//    }
 
 
 }

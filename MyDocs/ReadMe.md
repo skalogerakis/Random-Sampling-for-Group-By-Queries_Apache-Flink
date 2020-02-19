@@ -63,6 +63,31 @@ Flink Project
 	./flink run /home/skalogerakis/TUC_Projects/TUC_Advanced_Database_Systems/ECE622/target/ECE622-1.0-SNAPSHOT.jar
 
 
+Apache Kafka
+
+-Go ro kafka file directory and execute the following
+
+-Window 1:
+	bin/zookeeper-server-start.sh config/zookeeper.properties
+	(Start Zookeeper server)
+-Window 2:
+	bin/kafka-server-start.sh config/server.properties
+	(Start Kafka server)
+-Window 3:
+	bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+	(created Topic with name test in that case)
+	
+	-Send messages
+		bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+	-View messages
+		Open window 4 and execute for topic test:
+		bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+
+
+-See all topics created
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+	
 
 
 
