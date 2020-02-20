@@ -60,6 +60,12 @@ public class CSV_Parser {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaBrokerEndpoint);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        //Set acknowledgements for producer requests.
+        props.put("acks", "all");
+        props.put(ProducerConfig.ACKS_CONFIG, "all");
+        //If the request fails, the producer can automatically retry,
+        //props.put("retries", 0);
+        props.put(ProducerConfig.RETRIES_CONFIG, 0);
 
         KafkaProducer<String, String> producer = null;
 
@@ -94,6 +100,8 @@ public class CSV_Parser {
              * Final message sent after our stream terminated
              */
             finalProducer.send(new ProducerRecord<>(KafkaTopic, "EndOfStream"));
+            finalProducer.flush();
+            finalProducer.close();
         }catch (IOException io){
             //Exception occured
             LOGGER.log(Level.SEVERE, "Exception occured",io);

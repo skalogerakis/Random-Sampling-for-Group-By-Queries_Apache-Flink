@@ -9,7 +9,6 @@ import org.apache.flink.api.common.state.ListState;
 import org.apache.flink.api.common.state.ListStateDescriptor;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
-import org.apache.flink.api.common.time.Time;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.*;
@@ -22,8 +21,13 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.AssignerWithPunctuatedWatermarks;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 
+import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
+import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.util.Collector;
+
+import javax.naming.Context;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +39,7 @@ public class RandomSampling {
 
     public static void main(String[] args) throws Exception {
 
-        String inputTopic = "flinkInput2";
+        String inputTopic = "csvtokafka";
         String outputTopic = "flink_output";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
@@ -44,12 +48,15 @@ public class RandomSampling {
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
+        //env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
+        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         Pattern r = Pattern.compile(pattern);
 
         FlinkKafkaConsumer<String> flinkKafkaConsumer = createStringConsumerForTopic(
                 inputTopic, address, consumerGroup);
+        //TODO enable that
+        //flinkKafkaConsumer.setStartFromEarliest();
 
 //        flinkKafkaConsumer.assignTimestampsAndWatermarks()
 //        DataStream<String> stringInputStream = env
@@ -79,7 +86,7 @@ public class RandomSampling {
                             temp1 = new Tuple2<>(words[0], Double.parseDouble(words[6]));
 
                         }
-                        System.out.println(temp1);
+                        //System.out.println(temp1);
                         out.collect(temp1);
                     }
                 });
@@ -89,22 +96,20 @@ public class RandomSampling {
 
         //KeyedProcessFunction implementation
         //                  key   sum   count   mean   var
+        //TODO previous
         DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
                 .keyBy(0)
                 .process(new CalcImplementation());
-                //.assignTimestampsAndWatermarks(new MyTimestampsAndWatermarks());
+
 
         sum.print();
-        //TOOD try this https://training.ververica.com/exercises/carSegments.html
 
-//        DataStream<Tuple5<String,Double,Double,Double,Double>> fin = sum
+//        DataStream<Tuple4<String,Double,Double,Double>> sum = input
 //                .keyBy(0)
-//                .window(Time.seconds(30))
-//                .reduce();
-                //.trigger(new SegmentingOutOfOrderTrigger())
-//                .process(new CalcImplementation());
-
-
+//                .timeWindow(Time.seconds(10))
+//                .process(new CalcImplementation1())
+//                ;
+//        sum.print();
         //DataStream<String> sideOutputStream = sum.getSideOutput(outputTag);
 
         //sideOutputStream.print();
@@ -192,6 +197,98 @@ public class RandomSampling {
         }
 
     }
+
+
+    public static class CalcImplementation1 extends ProcessWindowFunction<Tuple2<String, Double>, Tuple4<String, Double, Double,Double> ,Tuple, TimeWindow> {
+
+        /**
+         * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
+         */
+        // private transient ValueState<Tuple7<String, Double,Double,Double,Double,Double,Double>> sum;
+        //private transient ValueState<ImplementationFields> sum;
+        private transient ValueState<Tuple7<String, Double,Double,Double,Double,Double,Double>> state;
+
+        //@Override
+        public void process(Tuple key, Context ctx, Iterable<Tuple2<String, Double>> input, Collector<Tuple4<String, Double, Double,Double>> out) throws Exception {
+
+            // access the state value
+            // Tuple7<String, Double,Double,Double,Double,Double,Double> currentSum = sum.value();
+            //ImplementationFields currentSum = sum.value();
+            //
+
+            Tuple7<String, Double,Double,Double,Double,Double,Double> st=state.value();
+
+            if(st == null){                    //KEY                  COUNT MEAN MEAN2 SUM  SUM2 SD
+                st = Tuple7.of(input.iterator().next().getField(0),0.0D,0.0D,0.0D,0.0D,0.0D,0.0D);
+            }
+
+           /* Double count=0.0D;
+            Double sum=0.0D;
+            Double sum2=0.0D;
+            Double mean=0.0D;
+            Double mean2=0.0D;
+            Double sd=0.0D;*/
+
+            for (Tuple2<String, Double> in: input) {
+                st=state.value();
+                if(st == null){   //KEY COUNT MEAN MEAN2 SUM  SUM2 SD
+                    st = Tuple7.of(in.f0,0.0D,0.0D,0.0D,0.0D,0.0D,0.0D);
+                }
+                // count++;
+                st.f1++;
+
+                st.f4 += (double) in.f1;
+                // sum+= (double) in.f1;
+                //System.out.println("sum=" + sum);
+                st.f5 += Math.pow((double) in.f1, 2);
+                //sum2+= Math.pow((double) in.f1, 2);
+
+                st.f2 = st.f4 / st.f1;
+                // mean =sum/count;
+
+                st.f3 = st.f5 / st.f1;
+                // mean2=sum2/count;
+
+                st.f6 = Math.sqrt((st.f3 - Math.pow(st.f2, 2)));
+                // sd =Math.sqrt((mean2 - Math.pow(mean, 2)));
+
+
+                //System.out.println(in.f0+" :"+"mean=" + mean +" sd=" +sd +"COUNT="+count);
+                state.update(st);
+            }
+
+            out.collect(new Tuple4<String,Double,Double,Double>(input.iterator().next().getField(0),st.f2,st.f6,st.f1));
+            //out.collect(new Tuple3<String,Double,Double>(input.iterator().next().getField(0),mean,sd));
+            //}
+
+
+            // System.out.println("sd=");
+
+        }
+
+
+
+
+
+
+
+        //Initialization inside ValueStateDescriptor is Deprecated. Must check null case and initialize in flatMap function
+        @Override
+        public void open(Configuration config) {
+
+            //StateDescriptor holds name and characteristics of state
+            ValueStateDescriptor<Tuple7<String, Double,Double,Double,Double,Double,Double>> descriptor = new ValueStateDescriptor<>(
+                    "sum", // the state name
+                    TypeInformation.of(new TypeHint<Tuple7<String, Double,Double,Double,Double,Double,Double>>() {})); // type information
+            state = getRuntimeContext().getState(descriptor);//Access state using getRuntimeContext()
+
+
+        }
+
+
+
+    }
+
 
     public static FlinkKafkaConsumer<String> createStringConsumerForTopic(
             String topic, String kafkaAddress, String kafkaGroup ) {

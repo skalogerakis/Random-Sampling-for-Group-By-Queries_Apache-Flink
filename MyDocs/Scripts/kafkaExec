@@ -1,0 +1,21 @@
+#!/bin/sh
+
+#Works in gnome-terminal
+#First start zookeeper server
+gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/zookeeper-server-start.sh /home/skalogerakis/kafka_2.12-2.4.0/config/zookeeper.properties;exec bash"
+
+sleep 2
+
+#Then start kafka server
+gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-server-start.sh /home/skalogerakis/kafka_2.12-2.4.0/config/server.properties;exec bash"
+
+sleep 10
+
+#Create new topic with name csvtokafka in localhost:9092
+gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic csvtokafka;exec bash"
+
+sleep 10
+
+#Open and view messages in a new terminal
+gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic csvtokafka --from-beginning;exec bash"
+
