@@ -31,6 +31,8 @@ import org.apache.flink.streaming.connectors.kafka.internals.KeyedSerializationS
 import org.apache.flink.util.Collector;
 
 import javax.naming.Context;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,14 +46,21 @@ public class RandomSampling {
 
     public static void main(String[] args) throws Exception {
 
-        String inputTopic = "csvtokafka";
+        String inputTopic = "csvtokafka2";
         String outputTopic = "flink_output";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
         String pattern = "^\\bEndOfStream\\b$";
 
+        String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
+        String keys = "location,parameter";
+        //List<Integer> integerList = null;
+
+
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+        env.setParallelism(4);
 
         //TODO check what is going on with time
         env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
@@ -59,13 +68,15 @@ public class RandomSampling {
 
         Pattern r = Pattern.compile(pattern);
 
+        List<Integer> integerList = keyEval(example,keys);
+
         /**
          * IMPORTANT: Messages sent by a kafka producer to a particular topic partition will be appended in the order they are sent.
          */
         FlinkKafkaConsumer<String> flinkKafkaConsumer = createStringConsumerForTopic(
                 inputTopic, address, consumerGroup);
         //TODO enable that
-        //flinkKafkaConsumer.setStartFromEarliest();
+        flinkKafkaConsumer.setStartFromEarliest();
 
 //        FlinkKafkaProducer producer = new FlinkKafkaProducer<String>(
 //                outputTopic,
@@ -85,22 +96,29 @@ public class RandomSampling {
         //This is for data input purposes only. TODO replace that with Kafka implementation
         //Current way data are transformed Tuple2<String, Float>
         //DataStream<Tuple2<String, Double>> input = env.readTextFile("/home/skalogerakis/Downloads/openaq.csv")
+        //TODO a tuple3 implementation in DummyClass
+        //List<Integer> finalIntegerList = integerList;
         DataStream<Tuple2<String, Double>> input = env.addSource(flinkKafkaConsumer)
-                .flatMap(new FlatMapFunction<String, Tuple2<String, Double>>() {
+                .flatMap(new FlatMapFunction<String, Tuple2<String,Double>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple2<String, Double>> out)
                             throws Exception {
                         String[] words = value.split(",");
-                        Matcher m = r.matcher(words[0]);
-                        Tuple2<String, Double> temp1;
+                        //Matcher m = r.matcher(words[0]);
+                        Tuple2<String,Double> temp1;
                         //System.out.println("ERROREOER " + words[0]);
-                        if(m.matches()){
-
-                            temp1 = new Tuple2<>(words[0], 0.0D);
-                        }else{
-                            temp1 = new Tuple2<>(words[0], Double.parseDouble(words[6]));
-
+                        //if(m.matches()){
+                        List<String> tempString = new ArrayList<String>();;
+                        for(int i = 0; i< integerList.size(); i++){
+                            tempString.add(words[integerList.get(i)]);
                         }
+                        String finaltem = String.join(",",tempString);
+
+                           // temp1 = new Tuple2<>(words[0]+","+words[5],0.0D);
+                        //}else{
+                            temp1 = new Tuple2<>(finaltem,Double.parseDouble(words[6]));
+
+                        //}
                         //System.out.println(temp1);
                         out.collect(temp1);
                     }
@@ -111,39 +129,40 @@ public class RandomSampling {
          * TODO INIT version without window
          */
 
-//        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
-//                .keyBy(0)
-//                .process(new CalcImplementation());
+        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
+                .keyBy(0)
+                .process(new CalcImplementation());
+        sum.print();
 
         /**
          * New version with window
          * TODO check if we want to add timestamps and watermarks
          */
         //TODO MUST REMOVE LAST DUMMY ELEMENT
-        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> sum = input
-                .keyBy(0)
-                .timeWindow(Time.seconds(30))
-                .process(new CalcImplemWindow())
-                ;
-        sum.print();
-
-        DataStream<Tuple2<String, Double>> finsum = sum
-                .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,Double>, Tuple2<String, Double>>() {
-                    @Override
-                    public void flatMap(Tuple6<String,Double,Double,Double,Double,Double> value, Collector<Tuple2<String, Double>> out)
-                            throws Exception {
-                        //String[] words = value.split(",");
-                        Tuple2<String, Double> temp1 = new Tuple2<>("Total", value.f4);
-
-                        out.collect(temp1);
-                    }
-                })
-                .keyBy(0)
-                .timeWindow(Time.seconds(30))
-                .sum(1);
-
-
-        finsum.print();
+//        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> sum = input
+//                .keyBy(0)
+//                .timeWindow(Time.seconds(30))
+//                .process(new CalcImplemWindow())
+//                ;
+//        sum.print();
+//
+//        DataStream<Tuple2<String, Double>> finsum = sum
+//                .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,Double>, Tuple2<String, Double>>() {
+//                    @Override
+//                    public void flatMap(Tuple6<String,Double,Double,Double,Double,Double> value, Collector<Tuple2<String, Double>> out)
+//                            throws Exception {
+//                        //String[] words = value.split(",");
+//                        Tuple2<String, Double> temp1 = new Tuple2<>("Total", value.f4);
+//
+//                        out.collect(temp1);
+//                    }
+//                })
+//                .keyBy(0)
+//                .timeWindow(Time.seconds(30))
+//                .sum(1);
+//
+//
+//        finsum.print();
         //execute program to see action
         env.execute("Streaming for Random Sampling");
 
@@ -174,7 +193,25 @@ public class RandomSampling {
 //        return new FlinkKafkaProducer<>(kafkaAddress,
 //                topic, new SimpleStringSchema(),props);
 //    }
+    //TODO add checks when wrong input
+    public static List<Integer> keyEval(String attributes, String keys){
+        String[] attrSplitter = attributes.trim().split(",");
+        String[] keySplitter = keys.trim().split(",");
+        List<Integer> posList = new ArrayList<Integer>();
 
+        for(int j=0; j<keySplitter.length;j++){
+            for(int i=0; i<attrSplitter.length;i++){
+                if(keySplitter[j].compareToIgnoreCase(attrSplitter[i])==0){
+                    System.out.println("key "+ keySplitter[j]+ " from position" + i);
+                    posList.add(i);
+                }
+            }
+        }
+        //TODO return list of position
+        //TODO maybe insert everything in a list and then concat
+        //https://mkyong.com/java/java-how-to-join-list-string-with-commas/
+        return posList;
+    }
 
 
 

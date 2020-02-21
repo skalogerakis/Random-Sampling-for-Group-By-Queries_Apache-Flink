@@ -6,6 +6,7 @@ import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
@@ -17,7 +18,7 @@ import org.apache.flink.util.Collector;
  * over both state and time. Supports fault-tolerance using timers and timestamps
  */
 //TODO also if there is time implement fault tolerance https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/operators/process_function.html
-public class CalcImplementation extends KeyedProcessFunction<Tuple, Tuple2<String, Double>, Tuple5<String, Double, Double,Double,Double>> {
+public class CalcImplementation extends KeyedProcessFunction<Tuple, Tuple2<String,Double>, Tuple5<String, Double, Double,Double,Double>> {
 
     /**
      * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
@@ -26,7 +27,7 @@ public class CalcImplementation extends KeyedProcessFunction<Tuple, Tuple2<Strin
     private transient ValueState<Calculations> state;
 
     @Override
-    public void processElement(Tuple2<String, Double> input,Context ctx, Collector<Tuple5<String, Double, Double,Double,Double>> out) throws Exception {
+    public void processElement(Tuple2<String,Double> input,Context ctx, Collector<Tuple5<String, Double, Double,Double,Double>> out) throws Exception {
 
         // access the state value
         Calculations new_state = state.value();
@@ -35,7 +36,7 @@ public class CalcImplementation extends KeyedProcessFunction<Tuple, Tuple2<Strin
         if(new_state == null){
             //currentSum = Tuple7.of(input.f0,0.0D,0.0D,0.0D,0.0D,0.0D,0.0D);
             new_state = new Calculations();
-            new_state.__key = input.f0;
+            new_state.__key = input.f0+","+input.f1;
         }
         // update the count
         new_state.__count++;

@@ -44,4 +44,26 @@ public class DummyClass {
 //        }
 //    }
 
+
+    //        DataStream<Tuple3<String,String, Double>> input = env.addSource(flinkKafkaConsumer)
+//                .flatMap(new FlatMapFunction<String, Tuple3<String, String,Double>>() {
+//                    @Override
+//                    public void flatMap(String value, Collector<Tuple3<String,String, Double>> out)
+//                            throws Exception {
+//                        String[] words = value.split(",");
+//                        Matcher m = r.matcher(words[0]);
+//                        Tuple3<String, String,Double> temp1;
+//                        //System.out.println("ERROREOER " + words[0]);
+//                        if(m.matches()){
+//
+//                            temp1 = new Tuple3<>(words[0], words[5],0.0D);
+//                        }else{
+//                            temp1 = new Tuple3<>(words[0], words[5],Double.parseDouble(words[6]));
+//
+//                        }
+//                        //System.out.println(temp1);
+//                        out.collect(temp1);
+//                    }
+//                });
+
 }
