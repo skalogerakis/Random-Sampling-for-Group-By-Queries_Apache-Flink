@@ -19,8 +19,8 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
      */
 
     private transient ValueState<Calculations> state;
-    private transient ValueState<Calculations> glob_state;
-    ValueStateDescriptor<Calculations> global_descriptor;
+//    private transient ValueState<Calculations> glob_state;
+//    ValueStateDescriptor<Calculations> global_descriptor;
     final static int weight = 1;
 
 
@@ -30,8 +30,8 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
         // access the state value
         Calculations new_state = state.value();
 
-        glob_state = ctx.globalState().getState(global_descriptor);
-        Calculations global_new_state = glob_state.value();
+//        glob_state = ctx.globalState().getState(global_descriptor);
+//        Calculations global_new_state = glob_state.value();
 
         //Calculations new_state = state.value();
         //ValueStateDescriptor = ctx.windowState().getState()
@@ -42,11 +42,11 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
             new_state.__key = input.iterator().next().getField(0);
         }
 
-        if(global_new_state == null){
-
-            global_new_state = new Calculations();
-            global_new_state.__key = input.iterator().next().getField(0);
-        }
+//        if(global_new_state == null){
+//
+//            global_new_state = new Calculations();
+//            global_new_state.__key = input.iterator().next().getField(0);
+//        }
 
         for (Tuple2<String, Double> in: input) {
             new_state = state.value();
@@ -54,6 +54,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
                 new_state = new Calculations();
                 new_state.__key = in.f0;
             }
+            new_state.__gammaFin=1;
 
             new_state.__count++;
 
@@ -74,10 +75,10 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
 
             state.update(new_state);
         }
-        global_new_state.__gammaFin+=new_state.__gamma;
-        glob_state.update(global_new_state);
+//        global_new_state.__gammaFin+=new_state.__gamma;
+//        glob_state.update(global_new_state);
 
-        out.collect(new Tuple6<String,Double,Double,Double, Double,Double>(input.iterator().next().getField(0),new_state.__mean,new_state.__var,new_state.__count,new_state.__gamma,global_new_state.__gammaFin));
+        out.collect(new Tuple6<String,Double,Double,Double, Double,Double>(input.iterator().next().getField(0),new_state.__mean,new_state.__var,new_state.__count,new_state.__gamma,new_state.__gammaFin));
 
 
     }
@@ -94,10 +95,10 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
                 TypeInformation.of(new TypeHint<Calculations>() {})); // type information
         state = getRuntimeContext().getState(descriptor);//Access state using getRuntimeContext()
 
-        global_descriptor = new ValueStateDescriptor<>(
-                "global_sum", // the state name
-                TypeInformation.of(new TypeHint<Calculations>() {})); // type information
-        glob_state = getRuntimeContext().getState(global_descriptor);//Access state using getRuntimeContext()
+//        global_descriptor = new ValueStateDescriptor<>(
+//                "global_sum", // the state name
+//                TypeInformation.of(new TypeHint<Calculations>() {})); // type information
+//        glob_state = getRuntimeContext().getState(global_descriptor);//Access state using getRuntimeContext()
 
 
     }

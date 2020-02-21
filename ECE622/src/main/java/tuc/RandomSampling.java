@@ -3,6 +3,7 @@ package tuc;
 import jdk.nashorn.internal.objects.Global;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.state.ListState;
@@ -118,18 +119,29 @@ public class RandomSampling {
          * New version with window
          * TODO check if we want to add timestamps and watermarks
          */
+        //TODO MUST REMOVE LAST DUMMY ELEMENT
         DataStream<Tuple6<String,Double,Double,Double,Double,Double>> sum = input
                 .keyBy(0)
                 .timeWindow(Time.seconds(30))
                 .process(new CalcImplemWindow())
-
                 ;
         sum.print();
 
-        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> finsum = sum
+        DataStream<Tuple2<String, Double>> finsum = sum
+                .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,Double>, Tuple2<String, Double>>() {
+                    @Override
+                    public void flatMap(Tuple6<String,Double,Double,Double,Double,Double> value, Collector<Tuple2<String, Double>> out)
+                            throws Exception {
+                        //String[] words = value.split(",");
+                        Tuple2<String, Double> temp1 = new Tuple2<>("Total", value.f4);
+
+                        out.collect(temp1);
+                    }
+                })
                 .keyBy(0)
-                .sum(5)
-                ;
+                .timeWindow(Time.seconds(30))
+                .sum(1);
+
 
         finsum.print();
         //execute program to see action

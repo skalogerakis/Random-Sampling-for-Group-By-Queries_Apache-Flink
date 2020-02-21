@@ -99,7 +99,7 @@ public class CSV_Parser {
             /**
              * Final message sent after our stream terminated
              */
-            finalProducer.send(new ProducerRecord<>(KafkaTopic, "EndOfStream"));
+            //finalProducer.send(new ProducerRecord<>(KafkaTopic, "EndOfStream"));
             finalProducer.flush();
             finalProducer.close();
         }catch (IOException io){
