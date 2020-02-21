@@ -1,4 +1,4 @@
-package tuc;
+package utils;
 
 public class WordCountData {
 

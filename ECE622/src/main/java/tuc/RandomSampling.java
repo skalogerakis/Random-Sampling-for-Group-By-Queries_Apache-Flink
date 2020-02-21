@@ -25,12 +25,16 @@ import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
+import org.apache.flink.streaming.connectors.kafka.internals.KeyedSerializationSchemaWrapper;
 import org.apache.flink.util.Collector;
 
 import javax.naming.Context;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import tuc.Calculations;
 
 
 public class RandomSampling {
@@ -48,15 +52,25 @@ public class RandomSampling {
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        //env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
-        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+        //TODO check what is going on with time
+        env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
+        //env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         Pattern r = Pattern.compile(pattern);
 
+        /**
+         * IMPORTANT: Messages sent by a kafka producer to a particular topic partition will be appended in the order they are sent.
+         */
         FlinkKafkaConsumer<String> flinkKafkaConsumer = createStringConsumerForTopic(
                 inputTopic, address, consumerGroup);
         //TODO enable that
         //flinkKafkaConsumer.setStartFromEarliest();
+
+//        FlinkKafkaProducer producer = new FlinkKafkaProducer<String>(
+//                outputTopic,
+//                new KeyedSerializationSchemaWrapper<String>(new KafkaMsgSchema()),
+//                p,
+//                FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
 
 //        flinkKafkaConsumer.assignTimestampsAndWatermarks()
 //        DataStream<String> stringInputStream = env
@@ -91,203 +105,40 @@ public class RandomSampling {
                     }
                 });
 
-        //FlatMap implementation
-        //DataStream<Tuple3<String, Float,Float>> sum = input.keyBy(0).flatMap(new CalcImplementation());
+        /**
+         *          key   sum   count   mean   var
+         * TODO INIT version without window
+         */
 
-        //KeyedProcessFunction implementation
-        //                  key   sum   count   mean   var
-        //TODO previous
-        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
+//        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
+//                .keyBy(0)
+//                .process(new CalcImplementation());
+
+        /**
+         * New version with window
+         * TODO check if we want to add timestamps and watermarks
+         */
+        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> sum = input
                 .keyBy(0)
-                .process(new CalcImplementation());
+                .timeWindow(Time.seconds(30))
+                .process(new CalcImplemWindow())
 
-
+                ;
         sum.print();
 
-//        DataStream<Tuple4<String,Double,Double,Double>> sum = input
-//                .keyBy(0)
-//                .timeWindow(Time.seconds(10))
-//                .process(new CalcImplementation1())
-//                ;
-//        sum.print();
-        //DataStream<String> sideOutputStream = sum.getSideOutput(outputTag);
+        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> finsum = sum
+                .keyBy(0)
+                .sum(5)
+                ;
 
-        //sideOutputStream.print();
+        finsum.print();
         //execute program to see action
         env.execute("Streaming for Random Sampling");
 
     }
 
-    /**
-     * Alternative way to store data handled in state
-     */
-    public class ImplementationFields {
-
-        public String key;
-        public double sum;
-        public double count;
-        public double var;
-        public double mean;
-        //public long lastModified;
-    }
-
-    /**
-     * The ProcessFunction can be thought of as a FlatMapFunction with access to keyed state and timers.
-     * It handles events by being invoked for each event received in the input stream. Provides fine-grained control
-     * over both state and time. Supports fault-tolerance using timers and timestamps
-     */
-    //TODO also if there is time implement fault tolerance https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/operators/process_function.html
-    //TODO add mean and variance
-    public static class CalcImplementation extends KeyedProcessFunction<Tuple, Tuple2<String, Double>, Tuple5<String, Double, Double,Double,Double>> {
-
-        /**
-         * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
-         */
-        private transient ValueState<Tuple7<String, Double,Double,Double,Double,Double,Double>> sum;
-        //private transient ValueState<ImplementationFields> sum;
-
-        @Override
-        public void processElement(Tuple2<String, Double> input,Context ctx, Collector<Tuple5<String, Double, Double,Double,Double>> out) throws Exception {
-
-            // access the state value
-            Tuple7<String, Double,Double,Double,Double,Double,Double> currentSum = sum.value();
-            //ImplementationFields currentSum = sum.value();
-
-            if(currentSum == null){
-                currentSum = Tuple7.of(input.f0,0.0D,0.0D,0.0D,0.0D,0.0D,0.0D);
-            }
-            // update the count
-            currentSum.f2++;
-            // add the second field of the input value
-            currentSum.f1 += input.f1;
-            //sum(xi^2)
-            currentSum.f4 += Math.pow(input.f1,2);
-
-            //mean(x)
-            currentSum.f3 =  currentSum.f1/currentSum.f2;
-
-            //mean(x^2)
-            currentSum.f5 =  currentSum.f4/currentSum.f2;
-
-            // CALC σ (standard deviation)
-            currentSum.f6=Math.sqrt( (currentSum.f5-Math.pow(currentSum.f3,2)) );
-
-            //System.out.println(" sum="+currentSum.f1+" count="+currentSum.f2+" mean="+currentSum.f3 +" x2="+currentSum.f4 +" mean2="+currentSum.f5+" σ ="+currentSum.f6);
 
 
-            // update the state
-            sum.update(currentSum);
-
-            out.collect(new Tuple5<>(input.f0, currentSum.f1,currentSum.f2,currentSum.f3,currentSum.f6));
-            //Added for side output implementation
-            //ctx.output(outputTag, "sideout-" + String.valueOf(input.f0));
-        }
-
-        //Initialization inside ValueStateDescriptor is Deprecated. Must check null case and initialize in flatMap function
-        @Override
-        public void open(Configuration config) {
-
-            //StateDescriptor holds name and characteristics of state
-            ValueStateDescriptor<Tuple7<String, Double,Double,Double,Double,Double,Double>> descriptor = new ValueStateDescriptor<>(
-                    "sum", // the state name
-                    TypeInformation.of(new TypeHint<Tuple7<String, Double,Double,Double,Double,Double,Double>>() {})); // type information
-            //Tuple3.of("",0.0F,0.0F)); // default value of the state, if nothing was set
-            sum = getRuntimeContext().getState(descriptor);     //Access state using getRuntimeContext()
-
-        }
-
-    }
-
-
-    public static class CalcImplementation1 extends ProcessWindowFunction<Tuple2<String, Double>, Tuple4<String, Double, Double,Double> ,Tuple, TimeWindow> {
-
-        /**
-         * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
-         */
-        // private transient ValueState<Tuple7<String, Double,Double,Double,Double,Double,Double>> sum;
-        //private transient ValueState<ImplementationFields> sum;
-        private transient ValueState<Tuple7<String, Double,Double,Double,Double,Double,Double>> state;
-
-        //@Override
-        public void process(Tuple key, Context ctx, Iterable<Tuple2<String, Double>> input, Collector<Tuple4<String, Double, Double,Double>> out) throws Exception {
-
-            // access the state value
-            // Tuple7<String, Double,Double,Double,Double,Double,Double> currentSum = sum.value();
-            //ImplementationFields currentSum = sum.value();
-            //
-
-            Tuple7<String, Double,Double,Double,Double,Double,Double> st=state.value();
-
-            if(st == null){                    //KEY                  COUNT MEAN MEAN2 SUM  SUM2 SD
-                st = Tuple7.of(input.iterator().next().getField(0),0.0D,0.0D,0.0D,0.0D,0.0D,0.0D);
-            }
-
-           /* Double count=0.0D;
-            Double sum=0.0D;
-            Double sum2=0.0D;
-            Double mean=0.0D;
-            Double mean2=0.0D;
-            Double sd=0.0D;*/
-
-            for (Tuple2<String, Double> in: input) {
-                st=state.value();
-                if(st == null){   //KEY COUNT MEAN MEAN2 SUM  SUM2 SD
-                    st = Tuple7.of(in.f0,0.0D,0.0D,0.0D,0.0D,0.0D,0.0D);
-                }
-                // count++;
-                st.f1++;
-
-                st.f4 += (double) in.f1;
-                // sum+= (double) in.f1;
-                //System.out.println("sum=" + sum);
-                st.f5 += Math.pow((double) in.f1, 2);
-                //sum2+= Math.pow((double) in.f1, 2);
-
-                st.f2 = st.f4 / st.f1;
-                // mean =sum/count;
-
-                st.f3 = st.f5 / st.f1;
-                // mean2=sum2/count;
-
-                st.f6 = Math.sqrt((st.f3 - Math.pow(st.f2, 2)));
-                // sd =Math.sqrt((mean2 - Math.pow(mean, 2)));
-
-
-                //System.out.println(in.f0+" :"+"mean=" + mean +" sd=" +sd +"COUNT="+count);
-                state.update(st);
-            }
-
-            out.collect(new Tuple4<String,Double,Double,Double>(input.iterator().next().getField(0),st.f2,st.f6,st.f1));
-            //out.collect(new Tuple3<String,Double,Double>(input.iterator().next().getField(0),mean,sd));
-            //}
-
-
-            // System.out.println("sd=");
-
-        }
-
-
-
-
-
-
-
-        //Initialization inside ValueStateDescriptor is Deprecated. Must check null case and initialize in flatMap function
-        @Override
-        public void open(Configuration config) {
-
-            //StateDescriptor holds name and characteristics of state
-            ValueStateDescriptor<Tuple7<String, Double,Double,Double,Double,Double,Double>> descriptor = new ValueStateDescriptor<>(
-                    "sum", // the state name
-                    TypeInformation.of(new TypeHint<Tuple7<String, Double,Double,Double,Double,Double,Double>>() {})); // type information
-            state = getRuntimeContext().getState(descriptor);//Access state using getRuntimeContext()
-
-
-        }
-
-
-
-    }
 
 
     public static FlinkKafkaConsumer<String> createStringConsumerForTopic(
@@ -302,54 +153,19 @@ public class RandomSampling {
         return consumer;
     }
 
-    public static class WordsCapitalizer implements MapFunction<String, String> {
-        @Override
-        public String map(String s) {
-            System.out.println(s.toUpperCase());
-            return s.toUpperCase();
-        }
-    }
+//    public static FlinkKafkaProducer<String> createStringProducerForTopic(
+//            String topic, String kafkaAddress){
+//        Properties props = new Properties();
+//        props.setProperty("bootstrap.servers", kafkaAddress);
+//        //props.setProperty("group.id",kafkaGroup);
+//
+//        return new FlinkKafkaProducer<>(kafkaAddress,
+//                topic, new SimpleStringSchema(),props);
+//    }
 
-//    public static class SegmentingOutOfOrderTrigger extends Trigger<Tuple5<String,Double,Double,Double,Double>, GlobalWindow> {
-//
-//        @Override
-//        public TriggerResult onElement(Tuple5<String,Double,Double,Double,Double> event, long timestamp, GlobalWindow window, TriggerContext context) throws Exception {
-//
-//            // if this is a stop event, set a timer
-//            if (event.speed == 0.0) {
-//                context.registerEventTimeTimer(event.timestamp);
-//            }
-//
-//            return TriggerResult.CONTINUE;
-//        }
-//
-//        @Override
-//        public TriggerResult onEventTime(long time, GlobalWindow window, TriggerContext ctx) {
-//            return TriggerResult.FIRE;
-//        }
-//
-//        @Override
-//        public TriggerResult onProcessingTime(long time, GlobalWindow window, TriggerContext ctx) {
-//            return TriggerResult.CONTINUE;
-//        }
-//
-//        @Override
-//        public void clear(GlobalWindow window, TriggerContext ctx) {
-//        }
-//    }
-//
-//    public static class ConnectedCarAssigner implements AssignerWithPunctuatedWatermarks<Tuple5<String,Double,Double,Double,Double>> {
-//        @Override
-//        public long extractTimestamp(Tuple5<String,Double,Double,Double,Double> event, long previousElementTimestamp) {
-//            return event.timestamp;
-//        }
-//
-//        @Override
-//        public Watermark checkAndGetNextWatermark(Tuple5<String,Double,Double,Double,Double> event, long extractedTimestamp) {
-//            // simply emit a watermark with every event
-//            return new Watermark(extractedTimestamp - 30000);
-//        }
-//    }
+
 
 
 }
+
+
