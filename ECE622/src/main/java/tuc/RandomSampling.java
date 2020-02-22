@@ -2,42 +2,36 @@ package tuc;
 
 import jdk.nashorn.internal.objects.Global;
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.common.functions.ReduceFunction;
-import org.apache.flink.api.common.functions.RichFlatMapFunction;
+import org.apache.flink.api.common.serialization.SerializationSchema;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
-import org.apache.flink.api.common.state.ListState;
-import org.apache.flink.api.common.state.ListStateDescriptor;
-import org.apache.flink.api.common.state.ValueState;
-import org.apache.flink.api.common.state.ValueStateDescriptor;
-import org.apache.flink.api.common.typeinfo.TypeHint;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.runtime.checkpoint.MasterTriggerRestoreHook;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.AssignerWithPunctuatedWatermarks;
-import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 
-import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
+import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
 import org.apache.flink.streaming.connectors.kafka.internals.KeyedSerializationSchemaWrapper;
 import org.apache.flink.util.Collector;
 
+import javax.annotation.Nullable;
 import javax.naming.Context;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.kafka.clients.producer.ProducerRecord;
 import tuc.Calculations;
+import utils.KafkaMsgSchema;
+import utils.KafkaTestSchema;
 
 
 public class RandomSampling {
@@ -47,7 +41,7 @@ public class RandomSampling {
     public static void main(String[] args) throws Exception {
 
         String inputTopic = "csvtokafka2";
-        String outputTopic = "flink_output";
+        String outputTopic = "flink_out";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
         String pattern = "^\\bEndOfStream\\b$";
@@ -78,11 +72,17 @@ public class RandomSampling {
         //TODO enable that
         flinkKafkaConsumer.setStartFromEarliest();
 
+        FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> flinkKafkaProducer = createStringProducer2(
+                outputTopic, address);
+
+        flinkKafkaProducer.setWriteTimestampToKafka(true);
+
 //        FlinkKafkaProducer producer = new FlinkKafkaProducer<String>(
 //                outputTopic,
 //                new KeyedSerializationSchemaWrapper<String>(new KafkaMsgSchema()),
 //                p,
 //                FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
+
 
 //        flinkKafkaConsumer.assignTimestampsAndWatermarks()
 //        DataStream<String> stringInputStream = env
@@ -133,6 +133,7 @@ public class RandomSampling {
                 .keyBy(0)
                 .process(new CalcImplementation());
         sum.print();
+        sum.addSink(flinkKafkaProducer);
 
         /**
          * New version with window
@@ -184,15 +185,34 @@ public class RandomSampling {
         return consumer;
     }
 
-//    public static FlinkKafkaProducer<String> createStringProducerForTopic(
-//            String topic, String kafkaAddress){
-//        Properties props = new Properties();
-//        props.setProperty("bootstrap.servers", kafkaAddress);
-//        //props.setProperty("group.id",kafkaGroup);
-//
-//        return new FlinkKafkaProducer<>(kafkaAddress,
-//                topic, new SimpleStringSchema(),props);
-//    }
+    /**
+     * This works but is deprecated.TODO find a better way to do that
+     * @param topic
+     * @param kafkaAddress
+     * @return
+     */
+    @Deprecated
+    public static FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> createStringProducer(
+            String topic, String kafkaAddress){
+        Properties props = new Properties();
+        props.setProperty("bootstrap.servers", kafkaAddress);
+
+        FlinkKafkaProducer producer = new FlinkKafkaProducer<>(kafkaAddress, topic, (SerializationSchema<Tuple5<String,Double,Double,Double,Double>>) new KafkaMsgSchema());
+
+        return producer;
+    }
+
+    public static FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> createStringProducer2(
+            String topic, String kafkaAddress){
+        Properties props = new Properties();
+        props.setProperty("bootstrap.servers", kafkaAddress);
+        //TODO implemented based on this
+        //https://github.com/luweizheng/flink-tutorials/blob/2a72c375d182cc47da016627023083ba85808f96/src/main/java/com/flink/tutorials/java/projects/wordcount/WordCountKafkaInKafkaOut.java
+        //FlinkKafkaProducer producer = new FlinkKafkaProducer<>(topic, (SerializationSchema<Tuple5<String,Double,Double,Double,Double>>) new KafkaTestSchema(),props, FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
+        FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> producer =  new FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>>(topic, new KafkaTestSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
+        return producer;
+    }
+
     //TODO add checks when wrong input
     public static List<Integer> keyEval(String attributes, String keys){
         String[] attrSplitter = attributes.trim().split(",");
@@ -202,7 +222,7 @@ public class RandomSampling {
         for(int j=0; j<keySplitter.length;j++){
             for(int i=0; i<attrSplitter.length;i++){
                 if(keySplitter[j].compareToIgnoreCase(attrSplitter[i])==0){
-                    System.out.println("key "+ keySplitter[j]+ " from position" + i);
+                    //System.out.println("key "+ keySplitter[j]+ " from position" + i);
                     posList.add(i);
                 }
             }
