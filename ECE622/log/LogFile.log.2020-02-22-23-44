@@ -1,0 +1,994 @@
+2020-02-22 23:44:55,292 [main] INFO  (LocalStreamEnvironment.java:108) - Running job on local embedded Flink mini cluster
+2020-02-22 23:44:55,856 [main] INFO  (MiniCluster.java:253) - Starting Flink Mini Cluster
+2020-02-22 23:44:55,859 [main] INFO  (MiniCluster.java:262) - Starting Metrics Registry
+2020-02-22 23:44:55,920 [main] INFO  (MetricRegistryImpl.java:114) - No metrics reporter configured, no metrics will be exposed/reported.
+2020-02-22 23:44:55,920 [main] INFO  (MiniCluster.java:266) - Starting RPC Service(s)
+2020-02-22 23:44:56,601 [flink-akka.actor.default-dispatcher-2] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-22 23:44:56,865 [main] INFO  (BootstrapTools.java:244) - Trying to start actor system at :0
+2020-02-22 23:44:56,954 [flink-metrics-2] INFO  (Slf4jLogger.scala:92) - Slf4jLogger started
+2020-02-22 23:44:56,975 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Starting remoting
+2020-02-22 23:44:57,133 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting started; listening on addresses :[akka.tcp://flink-metrics@127.0.1.1:35249]
+2020-02-22 23:44:57,173 [main] INFO  (BootstrapTools.java:256) - Actor system started at akka.tcp://flink-metrics@127.0.1.1:35249
+2020-02-22 23:44:57,185 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.metrics.dump.MetricQueryService at akka://flink-metrics/user/MetricQueryService .
+2020-02-22 23:44:57,201 [main] INFO  (MiniCluster.java:397) - Starting high-availability services
+2020-02-22 23:44:57,213 [main] INFO  (BlobServer.java:141) - Created BLOB server storage directory /tmp/blobStore-81f47f98-01cc-4b29-99fd-048d88050f66
+2020-02-22 23:44:57,216 [main] INFO  (BlobServer.java:203) - Started BLOB server at 0.0.0.0:41589 - max concurrent requests: 50 - max backlog: 1000
+2020-02-22 23:44:57,218 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-dc348fe6-8390-481e-8d59-d96bac026c68
+2020-02-22 23:44:57,220 [main] INFO  (AbstractBlobCache.java:107) - Created BLOB cache storage directory /tmp/blobStore-09417687-e6cc-43e3-be4d-b6525a488708
+2020-02-22 23:44:57,224 [main] INFO  (MiniCluster.java:479) - Starting 1 TaskManger(s)
+2020-02-22 23:44:57,226 [main] INFO  (TaskManagerRunner.java:351) - Starting TaskManager with ResourceID: b90608e1-2af8-430d-af59-06a0c8d92cbd
+2020-02-22 23:44:57,326 [main] INFO  (TaskManagerServices.java:519) - Temporary file directory '/tmp': total 439 GB, usable 336 GB (76.54% usable)
+2020-02-22 23:44:57,328 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-io-e1bb51a2-deea-4921-bf90-cdeff3e8f8cb for spill files.
+2020-02-22 23:44:57,335 [main] INFO  (FileChannelManagerImpl.java:76) - FileChannelManager uses directory /tmp/flink-netty-shuffle-e4c3ffe0-d972-46a8-8c11-ccdc3c9bca74 for spill files.
+2020-02-22 23:44:57,427 [main] INFO  (NetworkBufferPool.java:140) - Allocated 191 MB for network buffer pool (number of memory segments: 6113, bytes per segment: 32768).
+2020-02-22 23:44:57,433 [main] INFO  (NettyShuffleEnvironment.java:283) - Starting the network environment and its components.
+2020-02-22 23:44:57,434 [main] INFO  (KvStateService.java:89) - Starting the kvState service and its components.
+2020-02-22 23:44:57,434 [main] INFO  (TaskManagerServices.java:364) - Limiting managed memory to 0.7 of the currently free heap space (1196 MB), memory will be allocated lazily.
+2020-02-22 23:44:57,445 [main] INFO  (TaskManagerConfiguration.java:197) - Messages have a max timeout of 10000 ms
+2020-02-22 23:44:57,456 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.taskexecutor.TaskExecutor at akka://flink/user/taskmanager_0 .
+2020-02-22 23:44:57,469 [flink-akka.actor.default-dispatcher-3] INFO  (JobLeaderService.java:125) - Start job leader service.
+2020-02-22 23:44:57,471 [flink-akka.actor.default-dispatcher-3] INFO  (FileCache.java:107) - User file cache uses directory /tmp/flink-dist-cache-915e0bef-c354-40a2-acbf-e325fea2a44c
+2020-02-22 23:44:57,514 [main] INFO  (RestServerEndpoint.java:136) - Starting rest endpoint.
+2020-02-22 23:44:57,724 [main] WARN  (WebMonitorUtils.java:87) - Log file environment variable 'log.file' is not set.
+2020-02-22 23:44:57,724 [main] WARN  (WebMonitorUtils.java:93) - JobManager log files are unavailable in the web dashboard. Log file location not found in environment variable 'log.file' or configuration key 'Key: 'web.log.path' , default: null (fallback keys: [{key=jobmanager.web.log.path, isDeprecated=true}])'.
+2020-02-22 23:44:57,735 [main] INFO  (DispatcherRestEndpoint.java:113) - Failed to load web based job submission extension. Probable reason: flink-runtime-web is not in the classpath.
+2020-02-22 23:44:57,921 [main] INFO  (RestServerEndpoint.java:233) - Rest endpoint listening at localhost:35119
+2020-02-22 23:44:57,922 [main] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.dispatcher.DispatcherRestEndpoint@23ee75c5 @ http://localhost:35119
+2020-02-22 23:44:57,928 [mini-cluster-io-thread-1] INFO  (WebMonitorEndpoint.java:712) - http://localhost:35119 was granted leadership with leaderSessionID=c6f144b1-ba94-4423-b4d1-1eecbd07d1a8
+2020-02-22 23:44:57,928 [mini-cluster-io-thread-1] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader http://localhost:35119 , session=c6f144b1-ba94-4423-b4d1-1eecbd07d1a8
+2020-02-22 23:44:57,938 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.resourcemanager.StandaloneResourceManager at akka://flink/user/resourcemanager .
+2020-02-22 23:44:57,954 [main] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.dispatcher.StandaloneDispatcher at akka://flink/user/dispatcher .
+2020-02-22 23:44:57,970 [flink-akka.actor.default-dispatcher-4] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.resourcemanager.StandaloneResourceManager@7af57f84 @ akka://flink/user/resourcemanager
+2020-02-22 23:44:57,973 [flink-akka.actor.default-dispatcher-3] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.dispatcher.StandaloneDispatcher@4f055419 @ akka://flink/user/dispatcher
+2020-02-22 23:44:57,974 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:925) - ResourceManager akka://flink/user/resourcemanager was granted leadership with fencing token 9ce4e629de921a992f321b6802bf4ca1
+2020-02-22 23:44:57,979 [flink-akka.actor.default-dispatcher-4] INFO  (SlotManagerImpl.java:219) - Starting the SlotManager.
+2020-02-22 23:44:57,980 [main] INFO  (MiniCluster.java:362) - Flink Mini Cluster started successfully
+2020-02-22 23:44:57,981 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:884) - Dispatcher akka://flink/user/dispatcher was granted leadership with fencing token 47a4ce9d-9861-4529-9253-9f4ea2bb9ecf
+2020-02-22 23:44:57,988 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:716) - Recovering all persisted jobs.
+2020-02-22 23:44:57,990 [flink-akka.actor.default-dispatcher-2] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/dispatcher , session=47a4ce9d-9861-4529-9253-9f4ea2bb9ecf
+2020-02-22 23:44:57,992 [flink-akka.actor.default-dispatcher-4] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/resourcemanager , session=2f321b68-02bf-4ca1-9ce4-e629de921a99
+2020-02-22 23:44:57,997 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:991) - Connecting to ResourceManager akka://flink/user/resourcemanager(9ce4e629de921a992f321b6802bf4ca1).
+2020-02-22 23:44:58,012 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:155) - Resolved ResourceManager address, beginning registration
+2020-02-22 23:44:58,012 [flink-akka.actor.default-dispatcher-2] INFO  (RetryingRegistration.java:204) - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-02-22 23:44:58,020 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:717) - Registering TaskManager with ResourceID b90608e1-2af8-430d-af59-06a0c8d92cbd (akka://flink/user/taskmanager_0) at ResourceManager
+2020-02-22 23:44:58,022 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutorToResourceManagerConnection.java:100) - Successful registration at resource manager akka://flink/user/resourcemanager under registration id 50b6a033ba8da53f8d88e63de7ac05cc.
+2020-02-22 23:44:58,030 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:264) - Received JobGraph submission 4a968eb05b1c9ebefee26274a30b0def (Job2).
+2020-02-22 23:44:58,030 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:321) - Submitting job 4a968eb05b1c9ebefee26274a30b0def (Job2).
+2020-02-22 23:44:58,047 [flink-akka.actor.default-dispatcher-4] INFO  (AkkaRpcService.java:223) - Starting RPC endpoint for org.apache.flink.runtime.jobmaster.JobMaster at akka://flink/user/jobmanager_1 .
+2020-02-22 23:44:58,057 [flink-akka.actor.default-dispatcher-4] INFO  (JobMaster.java:242) - Initializing job Job2 (4a968eb05b1c9ebefee26274a30b0def).
+2020-02-22 23:44:58,074 [flink-akka.actor.default-dispatcher-4] INFO  (LegacyScheduler.java:171) - Using restart strategy NoRestartStrategy for Job2 (4a968eb05b1c9ebefee26274a30b0def).
+2020-02-22 23:44:58,099 [flink-akka.actor.default-dispatcher-4] INFO  (ExecutionGraph.java:519) - Job recovers via failover strategy: full graph restart
+2020-02-22 23:44:58,120 [flink-akka.actor.default-dispatcher-4] INFO  (ExecutionGraphBuilder.java:204) - Running initialization on master for job Job2 (4a968eb05b1c9ebefee26274a30b0def).
+2020-02-22 23:44:58,120 [flink-akka.actor.default-dispatcher-4] INFO  (ExecutionGraphBuilder.java:222) - Successfully ran initialization on master in 0 ms.
+2020-02-22 23:44:58,167 [flink-akka.actor.default-dispatcher-4] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-22 23:44:58,177 [flink-akka.actor.default-dispatcher-4] INFO  (EmbeddedLeaderService.java:300) - Proposing leadership to contender org.apache.flink.runtime.jobmaster.JobManagerRunner@31d99dd1 @ akka://flink/user/jobmanager_1
+2020-02-22 23:44:58,177 [mini-cluster-io-thread-2] INFO  (JobManagerRunner.java:313) - JobManager runner for job Job2 (4a968eb05b1c9ebefee26274a30b0def) was granted leadership with session id 8d8adf4b-521d-4e2e-8cc1-f21ec68581d7 at akka://flink/user/jobmanager_1.
+2020-02-22 23:44:58,181 [flink-akka.actor.default-dispatcher-4] INFO  (JobMaster.java:712) - Starting execution of job Job2 (4a968eb05b1c9ebefee26274a30b0def) under job master id 8cc1f21ec68581d78d8adf4b521d4e2e.
+2020-02-22 23:44:58,182 [flink-akka.actor.default-dispatcher-4] INFO  (ExecutionGraph.java:1325) - Job Job2 (4a968eb05b1c9ebefee26274a30b0def) switched from state CREATED to RUNNING.
+2020-02-22 23:44:58,186 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from CREATED to SCHEDULED.
+2020-02-22 23:44:58,200 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:369) - Cannot serve slot request, no ResourceManager connected. Adding as pending request [SlotRequestId{263f3a6416bcdfe44989e33e2645a641}]
+2020-02-22 23:44:58,206 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from CREATED to SCHEDULED.
+2020-02-22 23:44:58,207 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:369) - Cannot serve slot request, no ResourceManager connected. Adding as pending request [SlotRequestId{92d1e18a324ebdef1ffaef55530cf87a}]
+2020-02-22 23:44:58,207 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from CREATED to SCHEDULED.
+2020-02-22 23:44:58,208 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:369) - Cannot serve slot request, no ResourceManager connected. Adding as pending request [SlotRequestId{0d738382c6f3d566cad39feaba03c369}]
+2020-02-22 23:44:58,208 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) switched from CREATED to SCHEDULED.
+2020-02-22 23:44:58,208 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:369) - Cannot serve slot request, no ResourceManager connected. Adding as pending request [SlotRequestId{e0721cfcc8cba4d761ac017d1f49043f}]
+2020-02-22 23:44:58,210 [jobmanager-future-thread-1] INFO  (EmbeddedLeaderService.java:250) - Received confirmation of leadership for leader akka://flink/user/jobmanager_1 , session=8d8adf4b-521d-4e2e-8cc1-f21ec68581d7
+2020-02-22 23:44:58,211 [flink-akka.actor.default-dispatcher-4] INFO  (JobMaster.java:936) - Connecting to ResourceManager akka://flink/user/resourcemanager(9ce4e629de921a992f321b6802bf4ca1)
+2020-02-22 23:44:58,213 [flink-akka.actor.default-dispatcher-3] INFO  (RetryingRegistration.java:155) - Resolved ResourceManager address, beginning registration
+2020-02-22 23:44:58,213 [flink-akka.actor.default-dispatcher-3] INFO  (RetryingRegistration.java:204) - Registration at ResourceManager attempt 1 (timeout=100ms)
+2020-02-22 23:44:58,214 [flink-akka.actor.default-dispatcher-4] INFO  (ResourceManager.java:306) - Registering job manager 8cc1f21ec68581d78d8adf4b521d4e2e@akka://flink/user/jobmanager_1 for job 4a968eb05b1c9ebefee26274a30b0def.
+2020-02-22 23:44:58,219 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:661) - Registered job manager 8cc1f21ec68581d78d8adf4b521d4e2e@akka://flink/user/jobmanager_1 for job 4a968eb05b1c9ebefee26274a30b0def.
+2020-02-22 23:44:58,221 [flink-akka.actor.default-dispatcher-4] INFO  (JobMaster.java:958) - JobManager successfully registered at ResourceManager, leader id: 9ce4e629de921a992f321b6802bf4ca1.
+2020-02-22 23:44:58,222 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{263f3a6416bcdfe44989e33e2645a641}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-22 23:44:58,223 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 4a968eb05b1c9ebefee26274a30b0def with allocation id 213cd84b63521c826facb47a4ff09a8f.
+2020-02-22 23:44:58,223 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{92d1e18a324ebdef1ffaef55530cf87a}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-22 23:44:58,224 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{0d738382c6f3d566cad39feaba03c369}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-22 23:44:58,225 [flink-akka.actor.default-dispatcher-4] INFO  (SlotPoolImpl.java:319) - Requesting new slot [SlotRequestId{e0721cfcc8cba4d761ac017d1f49043f}] and profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} from resource manager.
+2020-02-22 23:44:58,226 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request 213cd84b63521c826facb47a4ff09a8f for job 4a968eb05b1c9ebefee26274a30b0def from resource manager with leader id 9ce4e629de921a992f321b6802bf4ca1.
+2020-02-22 23:44:58,228 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 4a968eb05b1c9ebefee26274a30b0def with allocation id e557518f8811985b8b709375ba2f81f7.
+2020-02-22 23:44:58,228 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 4a968eb05b1c9ebefee26274a30b0def with allocation id 077a823faa730298424b3588d4438c36.
+2020-02-22 23:44:58,229 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:441) - Request slot with profile ResourceProfile{cpuCores=-1.0, heapMemoryInMB=-1, directMemoryInMB=-1, nativeMemoryInMB=-1, networkMemoryInMB=-1, managedMemoryInMB=-1} for job 4a968eb05b1c9ebefee26274a30b0def with allocation id 4da7bd312f274e5145416786986ee18e.
+2020-02-22 23:44:58,236 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for 213cd84b63521c826facb47a4ff09a8f.
+2020-02-22 23:44:58,236 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:193) - Add job 4a968eb05b1c9ebefee26274a30b0def for job leader monitoring.
+2020-02-22 23:44:58,237 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request e557518f8811985b8b709375ba2f81f7 for job 4a968eb05b1c9ebefee26274a30b0def from resource manager with leader id 9ce4e629de921a992f321b6802bf4ca1.
+2020-02-22 23:44:58,238 [mini-cluster-io-thread-1] INFO  (JobLeaderService.java:333) - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 8d8adf4b-521d-4e2e-8cc1-f21ec68581d7.
+2020-02-22 23:44:58,238 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for e557518f8811985b8b709375ba2f81f7.
+2020-02-22 23:44:58,238 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:193) - Add job 4a968eb05b1c9ebefee26274a30b0def for job leader monitoring.
+2020-02-22 23:44:58,239 [mini-cluster-io-thread-1] INFO  (JobLeaderService.java:333) - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 8d8adf4b-521d-4e2e-8cc1-f21ec68581d7.
+2020-02-22 23:44:58,239 [flink-akka.actor.default-dispatcher-5] INFO  (RetryingRegistration.java:155) - Resolved JobManager address, beginning registration
+2020-02-22 23:44:58,239 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request 077a823faa730298424b3588d4438c36 for job 4a968eb05b1c9ebefee26274a30b0def from resource manager with leader id 9ce4e629de921a992f321b6802bf4ca1.
+2020-02-22 23:44:58,240 [flink-akka.actor.default-dispatcher-5] INFO  (RetryingRegistration.java:155) - Resolved JobManager address, beginning registration
+2020-02-22 23:44:58,240 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for 077a823faa730298424b3588d4438c36.
+2020-02-22 23:44:58,240 [flink-akka.actor.default-dispatcher-5] INFO  (RetryingRegistration.java:204) - Registration at JobManager attempt 1 (timeout=100ms)
+2020-02-22 23:44:58,240 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:193) - Add job 4a968eb05b1c9ebefee26274a30b0def for job leader monitoring.
+2020-02-22 23:44:58,240 [mini-cluster-io-thread-3] INFO  (JobLeaderService.java:333) - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 8d8adf4b-521d-4e2e-8cc1-f21ec68581d7.
+2020-02-22 23:44:58,240 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:822) - Receive slot request 4da7bd312f274e5145416786986ee18e for job 4a968eb05b1c9ebefee26274a30b0def from resource manager with leader id 9ce4e629de921a992f321b6802bf4ca1.
+2020-02-22 23:44:58,241 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:834) - Allocated slot for 4da7bd312f274e5145416786986ee18e.
+2020-02-22 23:44:58,241 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:193) - Add job 4a968eb05b1c9ebefee26274a30b0def for job leader monitoring.
+2020-02-22 23:44:58,242 [flink-akka.actor.default-dispatcher-5] INFO  (RetryingRegistration.java:155) - Resolved JobManager address, beginning registration
+2020-02-22 23:44:58,242 [mini-cluster-io-thread-4] INFO  (JobLeaderService.java:333) - Try to register at job manager akka://flink/user/jobmanager_1 with leader id 8d8adf4b-521d-4e2e-8cc1-f21ec68581d7.
+2020-02-22 23:44:58,243 [flink-akka.actor.default-dispatcher-3] INFO  (RetryingRegistration.java:155) - Resolved JobManager address, beginning registration
+2020-02-22 23:44:58,244 [flink-akka.actor.default-dispatcher-3] INFO  (RetryingRegistration.java:204) - Registration at JobManager attempt 1 (timeout=100ms)
+2020-02-22 23:44:58,244 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:382) - Successful registration at job manager akka://flink/user/jobmanager_1 for job 4a968eb05b1c9ebefee26274a30b0def.
+2020-02-22 23:44:58,245 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1227) - Establish JobManager connection for job 4a968eb05b1c9ebefee26274a30b0def.
+2020-02-22 23:44:58,248 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1128) - Offer reserved slots to the leader of job 4a968eb05b1c9ebefee26274a30b0def.
+2020-02-22 23:44:58,254 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from SCHEDULED to DEPLOYING.
+2020-02-22 23:44:58,254 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (attempt #0) to b90608e1-2af8-430d-af59-06a0c8d92cbd @ localhost (dataPort=-1)
+2020-02-22 23:44:58,264 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from SCHEDULED to DEPLOYING.
+2020-02-22 23:44:58,268 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (attempt #0) to b90608e1-2af8-430d-af59-06a0c8d92cbd @ localhost (dataPort=-1)
+2020-02-22 23:44:58,268 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from SCHEDULED to DEPLOYING.
+2020-02-22 23:44:58,269 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (attempt #0) to b90608e1-2af8-430d-af59-06a0c8d92cbd @ localhost (dataPort=-1)
+2020-02-22 23:44:58,269 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) switched from SCHEDULED to DEPLOYING.
+2020-02-22 23:44:58,270 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:713) - Deploying Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (attempt #0) to b90608e1-2af8-430d-af59-06a0c8d92cbd @ localhost (dataPort=-1)
+2020-02-22 23:44:58,283 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4).
+2020-02-22 23:44:58,284 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from CREATED to DEPLOYING.
+2020-02-22 23:44:58,285 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) [DEPLOYING]
+2020-02-22 23:44:58,298 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4).
+2020-02-22 23:44:58,299 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:593) - Loading JAR files for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) [DEPLOYING].
+2020-02-22 23:44:58,300 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:619) - Registering task at network: Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) [DEPLOYING].
+2020-02-22 23:44:58,306 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4).
+2020-02-22 23:44:58,307 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from CREATED to DEPLOYING.
+2020-02-22 23:44:58,307 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) [DEPLOYING]
+2020-02-22 23:44:58,307 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:593) - Loading JAR files for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) [DEPLOYING].
+2020-02-22 23:44:58,309 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:619) - Registering task at network: Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) [DEPLOYING].
+2020-02-22 23:44:58,316 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,316 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from CREATED to DEPLOYING.
+2020-02-22 23:44:58,317 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) [DEPLOYING]
+2020-02-22 23:44:58,317 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:593) - Loading JAR files for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) [DEPLOYING].
+2020-02-22 23:44:58,318 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:619) - Registering task at network: Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) [DEPLOYING].
+2020-02-22 23:44:58,319 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,321 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:592) - Received task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4).
+2020-02-22 23:44:58,321 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,322 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,325 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-22 23:44:58,325 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-22 23:44:58,333 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,333 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,333 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 077a823faa730298424b3588d4438c36.
+2020-02-22 23:44:58,334 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 213cd84b63521c826facb47a4ff09a8f.
+2020-02-22 23:44:58,334 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot e557518f8811985b8b709375ba2f81f7.
+2020-02-22 23:44:58,334 [flink-akka.actor.default-dispatcher-4] INFO  (TaskSlotTable.java:242) - Activate slot 4da7bd312f274e5145416786986ee18e.
+2020-02-22 23:44:58,334 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-22 23:44:58,341 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) switched from CREATED to DEPLOYING.
+2020-02-22 23:44:58,341 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:586) - Creating FileSystem stream leak safety net for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) [DEPLOYING]
+2020-02-22 23:44:58,341 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:593) - Loading JAR files for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) [DEPLOYING].
+2020-02-22 23:44:58,342 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:619) - Registering task at network: Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) [DEPLOYING].
+2020-02-22 23:44:58,343 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,343 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (StateBackendLoader.java:227) - No state backend has been configured, using default (Memory / JobManager) MemoryStateBackend (data in heap memory / checkpoints to JobManager) (checkpoints: 'null', savepoints: 'null', asynchronous: TRUE, maxStateSize: 5242880)
+2020-02-22 23:44:58,343 [flink-akka.actor.default-dispatcher-4] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) switched from DEPLOYING to RUNNING.
+2020-02-22 23:44:58,392 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (TypeExtractor.java:1818) - class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition does not contain a setter for field topic
+2020-02-22 23:44:58,392 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (TypeExtractor.java:1857) - Class class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition cannot be used as a POJO type because not all fields are valid POJO fields, and must be processed as GenericType. Please read the Flink documentation on "Data Types & Serialization" for details of the effect on performance.
+2020-02-22 23:44:58,393 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (TypeExtractor.java:1818) - class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition does not contain a setter for field topic
+2020-02-22 23:44:58,393 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (TypeExtractor.java:1857) - Class class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition cannot be used as a POJO type because not all fields are valid POJO fields, and must be processed as GenericType. Please read the Flink documentation on "Data Types & Serialization" for details of the effect on performance.
+2020-02-22 23:44:58,399 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (TypeExtractor.java:1818) - class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition does not contain a setter for field topic
+2020-02-22 23:44:58,399 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (TypeExtractor.java:1857) - Class class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition cannot be used as a POJO type because not all fields are valid POJO fields, and must be processed as GenericType. Please read the Flink documentation on "Data Types & Serialization" for details of the effect on performance.
+2020-02-22 23:44:58,399 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (TypeExtractor.java:1818) - class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition does not contain a setter for field topic
+2020-02-22 23:44:58,400 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (TypeExtractor.java:1857) - Class class org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition cannot be used as a POJO type because not all fields are valid POJO fields, and must be processed as GenericType. Please read the Flink documentation on "Data Types & Serialization" for details of the effect on performance.
+2020-02-22 23:44:58,409 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (FlinkKafkaConsumerBase.java:886) - Consumer subtask 1 has no restore state.
+2020-02-22 23:44:58,410 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (FlinkKafkaConsumerBase.java:886) - Consumer subtask 0 has no restore state.
+2020-02-22 23:44:58,409 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (FlinkKafkaConsumerBase.java:886) - Consumer subtask 3 has no restore state.
+2020-02-22 23:44:58,409 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (FlinkKafkaConsumerBase.java:886) - Consumer subtask 2 has no restore state.
+2020-02-22 23:44:58,433 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,435 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,436 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,436 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,528 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,528 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,528 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898526
+2020-02-22 23:44:58,530 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,530 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,530 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898529
+2020-02-22 23:44:58,533 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,533 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,534 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898527
+2020-02-22 23:44:58,534 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,534 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,534 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898527
+2020-02-22 23:44:58,833 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Metadata.java:261) - [Consumer clientId=consumer-KafkaCsvProducer-4, groupId=KafkaCsvProducer] Cluster ID: 3ucINKo4TAKnwC1NtaaqrA
+2020-02-22 23:44:58,836 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (FlinkKafkaConsumerBase.java:604) - Consumer subtask 3 will start reading the following 1 partitions from the earliest offsets: [KafkaTopicPartition{topic='flink1', partition=0}]
+2020-02-22 23:44:58,837 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Metadata.java:261) - [Consumer clientId=consumer-KafkaCsvProducer-3, groupId=KafkaCsvProducer] Cluster ID: 3ucINKo4TAKnwC1NtaaqrA
+2020-02-22 23:44:58,837 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Metadata.java:261) - [Consumer clientId=consumer-KafkaCsvProducer-1, groupId=KafkaCsvProducer] Cluster ID: 3ucINKo4TAKnwC1NtaaqrA
+2020-02-22 23:44:58,837 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (FlinkKafkaConsumerBase.java:651) - Consumer subtask 1 initially has no partitions to read from.
+2020-02-22 23:44:58,838 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (FlinkKafkaConsumerBase.java:651) - Consumer subtask 0 initially has no partitions to read from.
+2020-02-22 23:44:58,838 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Metadata.java:261) - [Consumer clientId=consumer-KafkaCsvProducer-2, groupId=KafkaCsvProducer] Cluster ID: 3ucINKo4TAKnwC1NtaaqrA
+2020-02-22 23:44:58,839 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (FlinkKafkaConsumerBase.java:651) - Consumer subtask 2 initially has no partitions to read from.
+2020-02-22 23:44:58,850 [Legacy Source Thread - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (FlinkKafkaConsumerBase.java:688) - Consumer subtask 2 creating fetcher with offsets {}.
+2020-02-22 23:44:58,857 [Legacy Source Thread - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (FlinkKafkaConsumerBase.java:688) - Consumer subtask 3 creating fetcher with offsets {KafkaTopicPartition{topic='flink1', partition=0}=-915623761775}.
+2020-02-22 23:44:58,857 [Legacy Source Thread - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (FlinkKafkaConsumerBase.java:688) - Consumer subtask 1 creating fetcher with offsets {}.
+2020-02-22 23:44:58,859 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,860 [Legacy Source Thread - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (FlinkKafkaConsumerBase.java:688) - Consumer subtask 0 creating fetcher with offsets {}.
+2020-02-22 23:44:58,861 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,866 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,870 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AbstractConfig.java:347) - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = KafkaCsvProducer
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+2020-02-22 23:44:58,874 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,875 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,875 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898874
+2020-02-22 23:44:58,890 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,892 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,892 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898880
+2020-02-22 23:44:58,892 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (KafkaConsumer.java:1123) - [Consumer clientId=consumer-KafkaCsvProducer-6, groupId=KafkaCsvProducer] Subscribed to partition(s): flink1-0
+2020-02-22 23:44:58,897 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,897 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,897 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898887
+2020-02-22 23:44:58,903 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AppInfoParser.java:117) - Kafka version: 2.4.0
+2020-02-22 23:44:58,903 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AppInfoParser.java:118) - Kafka commitId: 77a89fcf8d7fa018
+2020-02-22 23:44:58,904 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (AppInfoParser.java:119) - Kafka startTimeMs: 1582407898884
+2020-02-22 23:44:58,907 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (SubscriptionState.java:568) - [Consumer clientId=consumer-KafkaCsvProducer-6, groupId=KafkaCsvProducer] Seeking to EARLIEST offset of partition flink1-0
+2020-02-22 23:44:59,005 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Metadata.java:261) - [Consumer clientId=consumer-KafkaCsvProducer-6, groupId=KafkaCsvProducer] Cluster ID: 3ucINKo4TAKnwC1NtaaqrA
+2020-02-22 23:44:59,014 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (SubscriptionState.java:385) - [Consumer clientId=consumer-KafkaCsvProducer-6, groupId=KafkaCsvProducer] Resetting offset for partition flink1-0 to offset 0.
+2020-02-22 23:44:59,078 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:960) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) switched from RUNNING to FAILED.
+java.lang.NumberFormatException: For input string: "3.8220973782771535""
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043)
+	at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+	at java.lang.Double.parseDouble(Double.java:538)
+	at tuc.Job2$1.flatMap(Job2.java:77)
+	at tuc.Job2$1.flatMap(Job2.java:66)
+	at org.apache.flink.streaming.api.operators.StreamFlatMap.processElement(StreamFlatMap.java:50)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:637)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:612)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:592)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:727)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:705)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollect(StreamSourceContexts.java:176)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollectWithTimestamp(StreamSourceContexts.java:194)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$WatermarkContext.collectWithTimestamp(StreamSourceContexts.java:409)
+	at org.apache.flink.streaming.connectors.kafka.internals.AbstractFetcher.emitRecordWithTimestamp(AbstractFetcher.java:398)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.emitRecord(KafkaFetcher.java:185)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.runFetchLoop(KafkaFetcher.java:150)
+	at org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase.run(FlinkKafkaConsumerBase.java:715)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:100)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:63)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.run(SourceStreamTask.java:208)
+2020-02-22 23:44:59,107 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2).
+2020-02-22 23:44:59,107 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) [FAILED]
+2020-02-22 23:44:59,119 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out 066489af4044905888c19cfcdfb685c2.
+2020-02-22 23:44:59,128 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1511) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4) (066489af4044905888c19cfcdfb685c2) switched from RUNNING to FAILED.
+java.lang.NumberFormatException: For input string: "3.8220973782771535""
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043)
+	at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+	at java.lang.Double.parseDouble(Double.java:538)
+	at tuc.Job2$1.flatMap(Job2.java:77)
+	at tuc.Job2$1.flatMap(Job2.java:66)
+	at org.apache.flink.streaming.api.operators.StreamFlatMap.processElement(StreamFlatMap.java:50)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:637)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:612)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:592)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:727)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:705)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollect(StreamSourceContexts.java:176)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollectWithTimestamp(StreamSourceContexts.java:194)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$WatermarkContext.collectWithTimestamp(StreamSourceContexts.java:409)
+	at org.apache.flink.streaming.connectors.kafka.internals.AbstractFetcher.emitRecordWithTimestamp(AbstractFetcher.java:398)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.emitRecord(KafkaFetcher.java:185)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.runFetchLoop(KafkaFetcher.java:150)
+	at org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase.run(FlinkKafkaConsumerBase.java:715)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:100)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:63)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.run(SourceStreamTask.java:208)
+2020-02-22 23:44:59,129 [flink-akka.actor.default-dispatcher-3] INFO  (ExecutionGraph.java:1325) - Job Job2 (4a968eb05b1c9ebefee26274a30b0def) switched from state RUNNING to FAILING.
+java.lang.NumberFormatException: For input string: "3.8220973782771535""
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043)
+	at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+	at java.lang.Double.parseDouble(Double.java:538)
+	at tuc.Job2$1.flatMap(Job2.java:77)
+	at tuc.Job2$1.flatMap(Job2.java:66)
+	at org.apache.flink.streaming.api.operators.StreamFlatMap.processElement(StreamFlatMap.java:50)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:637)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:612)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:592)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:727)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:705)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollect(StreamSourceContexts.java:176)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollectWithTimestamp(StreamSourceContexts.java:194)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$WatermarkContext.collectWithTimestamp(StreamSourceContexts.java:409)
+	at org.apache.flink.streaming.connectors.kafka.internals.AbstractFetcher.emitRecordWithTimestamp(AbstractFetcher.java:398)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.emitRecord(KafkaFetcher.java:185)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.runFetchLoop(KafkaFetcher.java:150)
+	at org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase.run(FlinkKafkaConsumerBase.java:715)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:100)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:63)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.run(SourceStreamTask.java:208)
+2020-02-22 23:44:59,140 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from RUNNING to CANCELING.
+2020-02-22 23:44:59,143 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from RUNNING to CANCELING.
+2020-02-22 23:44:59,143 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb).
+2020-02-22 23:44:59,144 [flink-akka.actor.default-dispatcher-3] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from RUNNING to CANCELING.
+2020-02-22 23:44:59,144 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from RUNNING to CANCELING.
+2020-02-22 23:44:59,144 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb).
+2020-02-22 23:44:59,154 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f).
+2020-02-22 23:44:59,154 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from RUNNING to CANCELING.
+2020-02-22 23:44:59,154 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f).
+2020-02-22 23:44:59,155 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d).
+2020-02-22 23:44:59,156 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from RUNNING to CANCELING.
+2020-02-22 23:44:59,159 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d).
+2020-02-22 23:44:59,160 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] WARN  (StreamTask.java:296) - Error while canceling task.
+java.lang.Exception: org.apache.flink.streaming.connectors.kafka.internal.Handover$ClosedException
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.checkThrowSourceExecutionException(SourceStreamTask.java:232)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.processInput(SourceStreamTask.java:133)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.flink.streaming.connectors.kafka.internal.Handover$ClosedException
+	at org.apache.flink.streaming.connectors.kafka.internal.Handover.close(Handover.java:182)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.cancel(KafkaFetcher.java:175)
+	at org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase.cancel(FlinkKafkaConsumerBase.java:818)
+	at org.apache.flink.streaming.api.operators.StreamSource.cancel(StreamSource.java:134)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.cancelTask(SourceStreamTask.java:158)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.cancel(StreamTask.java:528)
+	at org.apache.flink.runtime.taskmanager.Task$TaskCanceler.run(Task.java:1434)
+	... 1 more
+2020-02-22 23:44:59,166 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from CANCELING to CANCELED.
+2020-02-22 23:44:59,166 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb).
+2020-02-22 23:44:59,166 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) [CANCELED]
+2020-02-22 23:44:59,167 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from CANCELING to CANCELED.
+2020-02-22 23:44:59,167 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f).
+2020-02-22 23:44:59,167 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) [CANCELED]
+2020-02-22 23:44:59,167 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out 44eef18ab7ac00ba85cd74ca09572acb.
+2020-02-22 23:44:59,168 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out 7e2778fc644c201a6809590dbc30eb0f.
+2020-02-22 23:44:59,169 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from CANCELING to CANCELED.
+2020-02-22 23:44:59,169 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d).
+2020-02-22 23:44:59,170 [Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) [CANCELED]
+2020-02-22 23:44:59,169 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (1/4) (44eef18ab7ac00ba85cd74ca09572acb) switched from CANCELING to CANCELED.
+2020-02-22 23:44:59,171 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> Sink: Print to Std. Out e6742556cf1193c2f83ae74f4387887d.
+2020-02-22 23:44:59,172 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (2/4) (7e2778fc644c201a6809590dbc30eb0f) switched from CANCELING to CANCELED.
+2020-02-22 23:44:59,173 [flink-akka.actor.default-dispatcher-2] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (3/4) (e6742556cf1193c2f83ae74f4387887d) switched from CANCELING to CANCELED.
+2020-02-22 23:44:59,174 [flink-akka.actor.default-dispatcher-2] INFO  (ExecutionGraph.java:1452) - Try to restart or fail the job Job2 (4a968eb05b1c9ebefee26274a30b0def) if no longer possible.
+2020-02-22 23:44:59,174 [flink-akka.actor.default-dispatcher-2] INFO  (ExecutionGraph.java:1325) - Job Job2 (4a968eb05b1c9ebefee26274a30b0def) switched from state FAILING to FAILED.
+java.lang.NumberFormatException: For input string: "3.8220973782771535""
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043)
+	at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+	at java.lang.Double.parseDouble(Double.java:538)
+	at tuc.Job2$1.flatMap(Job2.java:77)
+	at tuc.Job2$1.flatMap(Job2.java:66)
+	at org.apache.flink.streaming.api.operators.StreamFlatMap.processElement(StreamFlatMap.java:50)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:637)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:612)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:592)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:727)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:705)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollect(StreamSourceContexts.java:176)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollectWithTimestamp(StreamSourceContexts.java:194)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$WatermarkContext.collectWithTimestamp(StreamSourceContexts.java:409)
+	at org.apache.flink.streaming.connectors.kafka.internals.AbstractFetcher.emitRecordWithTimestamp(AbstractFetcher.java:398)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.emitRecord(KafkaFetcher.java:185)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.runFetchLoop(KafkaFetcher.java:150)
+	at org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase.run(FlinkKafkaConsumerBase.java:715)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:100)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:63)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.run(SourceStreamTask.java:208)
+2020-02-22 23:44:59,175 [flink-akka.actor.default-dispatcher-2] INFO  (ExecutionGraph.java:1478) - Could not restart the job Job2 (4a968eb05b1c9ebefee26274a30b0def) because the restart strategy prevented it.
+java.lang.NumberFormatException: For input string: "3.8220973782771535""
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043)
+	at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+	at java.lang.Double.parseDouble(Double.java:538)
+	at tuc.Job2$1.flatMap(Job2.java:77)
+	at tuc.Job2$1.flatMap(Job2.java:66)
+	at org.apache.flink.streaming.api.operators.StreamFlatMap.processElement(StreamFlatMap.java:50)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:637)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:612)
+	at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.collect(OperatorChain.java:592)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:727)
+	at org.apache.flink.streaming.api.operators.AbstractStreamOperator$CountingOutput.collect(AbstractStreamOperator.java:705)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollect(StreamSourceContexts.java:176)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$AutomaticWatermarkContext.processAndCollectWithTimestamp(StreamSourceContexts.java:194)
+	at org.apache.flink.streaming.api.operators.StreamSourceContexts$WatermarkContext.collectWithTimestamp(StreamSourceContexts.java:409)
+	at org.apache.flink.streaming.connectors.kafka.internals.AbstractFetcher.emitRecordWithTimestamp(AbstractFetcher.java:398)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.emitRecord(KafkaFetcher.java:185)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.runFetchLoop(KafkaFetcher.java:150)
+	at org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase.run(FlinkKafkaConsumerBase.java:715)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:100)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:63)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.run(SourceStreamTask.java:208)
+2020-02-22 23:44:59,175 [flink-akka.actor.default-dispatcher-2] INFO  (CheckpointCoordinator.java:329) - Stopping checkpoint coordinator for job 4a968eb05b1c9ebefee26274a30b0def.
+2020-02-22 23:44:59,176 [flink-akka.actor.default-dispatcher-2] INFO  (StandaloneCompletedCheckpointStore.java:97) - Shutting down
+2020-02-22 23:44:59,185 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:774) - Job 4a968eb05b1c9ebefee26274a30b0def reached globally terminal state FAILED.
+2020-02-22 23:44:59,185 [main] INFO  (MiniCluster.java:416) - Shutting down Flink Mini Cluster
+2020-02-22 23:44:59,186 [main] INFO  (RestServerEndpoint.java:290) - Shutting down rest endpoint.
+2020-02-22 23:44:59,186 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:354) - Stopping TaskExecutor akka://flink/user/taskmanager_0.
+2020-02-22 23:44:59,187 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:1064) - Close ResourceManager connection 461b25106c7af01ff27512cac6b3bd60.
+2020-02-22 23:44:59,189 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-22 23:44:59,190 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:809) - Closing TaskExecutor connection b90608e1-2af8-430d-af59-06a0c8d92cbd because: The TaskExecutor is shutting down.
+2020-02-22 23:44:59,191 [flink-akka.actor.default-dispatcher-2] INFO  (JobMaster.java:338) - Stopping the JobMaster for job Job2(4a968eb05b1c9ebefee26274a30b0def).
+2020-02-22 23:44:59,192 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutorLocalStateStoresManager.java:213) - Shutting down TaskExecutorLocalStateStoresManager.
+2020-02-22 23:44:59,192 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:228) - Suspending SlotPool.
+2020-02-22 23:44:59,193 [flink-akka.actor.default-dispatcher-2] INFO  (JobMaster.java:1006) - Close ResourceManager connection 461b25106c7af01ff27512cac6b3bd60: JobManager is shutting down..
+2020-02-22 23:44:59,193 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:780) - Disconnect job manager 8cc1f21ec68581d78d8adf4b521d4e2e@akka://flink/user/jobmanager_1 for job 4a968eb05b1c9ebefee26274a30b0def from the resource manager.
+2020-02-22 23:44:59,193 [flink-akka.actor.default-dispatcher-2] INFO  (SlotPoolImpl.java:249) - Stopping SlotPool.
+2020-02-22 23:44:59,207 [flink-akka.actor.default-dispatcher-4] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-io-e1bb51a2-deea-4921-bf90-cdeff3e8f8cb
+2020-02-22 23:44:59,207 [flink-akka.actor.default-dispatcher-4] INFO  (NettyShuffleEnvironment.java:304) - Shutting down the network environment and its components.
+2020-02-22 23:44:59,210 [flink-akka.actor.default-dispatcher-4] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-netty-shuffle-e4c3ffe0-d972-46a8-8c11-ccdc3c9bca74
+2020-02-22 23:44:59,211 [flink-akka.actor.default-dispatcher-4] INFO  (KvStateService.java:119) - Shutting down the kvState service and its components.
+2020-02-22 23:44:59,211 [flink-akka.actor.default-dispatcher-4] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-22 23:44:59,211 [flink-akka.actor.default-dispatcher-4] INFO  (FileCache.java:153) - removed file cache directory /tmp/flink-dist-cache-915e0bef-c354-40a2-acbf-e325fea2a44c
+2020-02-22 23:44:59,212 [flink-akka.actor.default-dispatcher-4] INFO  (TaskExecutor.java:394) - Stopped TaskExecutor akka://flink/user/taskmanager_0.
+2020-02-22 23:44:59,217 [ForkJoinPool.commonPool-worker-1] INFO  (WebMonitorEndpoint.java:688) - Removing cache directory /tmp/flink-web-ui
+2020-02-22 23:44:59,217 [ForkJoinPool.commonPool-worker-1] INFO  (RestServerEndpoint.java:299) - Shut down complete.
+2020-02-22 23:44:59,221 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:503) - Shut down cluster because application is in CANCELED, diagnostics DispatcherResourceManagerComponent has been closed..
+2020-02-22 23:44:59,223 [flink-akka.actor.default-dispatcher-4] INFO  (Dispatcher.java:220) - Stopping dispatcher akka://flink/user/dispatcher.
+2020-02-22 23:44:59,223 [flink-akka.actor.default-dispatcher-4] INFO  (Dispatcher.java:696) - Stopping all currently running jobs of dispatcher akka://flink/user/dispatcher.
+2020-02-22 23:44:59,223 [flink-akka.actor.default-dispatcher-5] INFO  (SlotManagerImpl.java:284) - Closing the SlotManager.
+2020-02-22 23:44:59,224 [flink-akka.actor.default-dispatcher-5] INFO  (SlotManagerImpl.java:247) - Suspending the SlotManager.
+2020-02-22 23:44:59,225 [flink-akka.actor.default-dispatcher-4] INFO  (StackTraceSampleCoordinator.java:220) - Shutting down stack trace sample coordinator.
+2020-02-22 23:44:59,225 [flink-akka.actor.default-dispatcher-4] INFO  (Dispatcher.java:229) - Stopped dispatcher akka://flink/user/dispatcher.
+2020-02-22 23:44:59,226 [flink-akka.actor.default-dispatcher-4] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-22 23:44:59,234 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Shutting down remote daemon.
+2020-02-22 23:44:59,236 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remote daemon shut down; proceeding with flushing remote transports.
+2020-02-22 23:44:59,259 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting shut down.
+2020-02-22 23:44:59,287 [flink-metrics-2] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-22 23:44:59,287 [flink-metrics-2] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.
+2020-02-22 23:44:59,304 [flink-akka.actor.default-dispatcher-3] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-22 23:44:59,304 [flink-akka.actor.default-dispatcher-3] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-22 23:44:59,306 [flink-akka.actor.default-dispatcher-3] INFO  (BlobServer.java:340) - Stopped BLOB server at 0.0.0.0:41589
+2020-02-22 23:44:59,307 [flink-akka.actor.default-dispatcher-3] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.
+2020-02-22 23:44:59,567 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Sink: Print to Std. Out (4/4)] INFO  (AbstractCoordinator.java:756) - [Consumer clientId=consumer-KafkaCsvProducer-6, groupId=KafkaCsvProducer] Discovered group coordinator skl:9092 (id: 2147483647 rack: null)

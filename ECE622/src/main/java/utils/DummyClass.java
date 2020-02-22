@@ -66,4 +66,27 @@ public class DummyClass {
 //                    }
 //                });
 
+    //        sum.union(finsum).keyBy(0).transform().print();
+
+
+//        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> sumEND = sum
+//                .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,Double>, Tuple6<String,Double,Double,Double,Double,Double>>() {
+//                    @Override
+//                    public void flatMap(Tuple6<String,Double,Double,Double,Double,Double> value, Collector<Tuple6<String,Double,Double,Double,Double,Double>> out)
+//                            throws Exception {
+//                        SingleOutputStreamOperator<Double> tempDouble = finsum.flatMap(new FlatMapFunction<Tuple2<String, Double>, Double>() {
+//                            @Override
+//                            public void flatMap(Tuple2<String, Double> value, Collector<Double> out)
+//                                    throws Exception {
+//                                out.collect(value.f1);
+//                            }
+//                        });
+//
+//                        Tuple6<String,Double,Double,Double,Double,Double> temp1 = new Tuple6<>(value.f0,value.f1,value.f2,value.f3,value.f4,(double)tempDouble);
+//                        out.collect(temp1);
+//                    }
+//                })
+//                ;
+
+
 }

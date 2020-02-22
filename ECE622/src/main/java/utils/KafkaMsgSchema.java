@@ -30,7 +30,7 @@ public class KafkaMsgSchema implements SerializationSchema<Tuple5<String,Double,
     @Override
     public byte[] serialize(Tuple5<String,Double,Double,Double,Double> element) {
 
-        return ("\""+element.getField(0).toString()+ ","+element.getField(1).toString()+","+element.getField(2).toString()+","+element.getField(3).toString()+","+element.getField(4).toString() +"\"").getBytes();
+        return (element.getField(0).toString()+ ","+element.getField(1).toString()+","+element.getField(2).toString()+","+element.getField(3).toString()+","+element.getField(4).toString()).getBytes();
     }
 
 }

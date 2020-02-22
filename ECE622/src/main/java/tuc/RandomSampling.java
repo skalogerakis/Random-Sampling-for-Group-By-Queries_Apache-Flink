@@ -13,6 +13,7 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
+import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
 import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
@@ -41,14 +42,23 @@ public class RandomSampling {
     public static void main(String[] args) throws Exception {
 
         String inputTopic = "csvtokafka2";
-        String outputTopic = "flink_out";
+        String outputTopic = "flink2";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
         String pattern = "^\\bEndOfStream\\b$";
 
         String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
-        String keys = "location,parameter";
+        String keys = "location";
         //List<Integer> integerList = null;
+
+//        final ParameterTool parameterTool = ParameterTool.fromArgs(args);
+//
+//        if (parameterTool.getNumberOfParameters() < 3) {
+//            System.out.println("Missing parameters!\n" +
+//                    "Usage: --numRecords <numRecords> --index <index> --type <type>");
+//            return;
+//        }
+
 
 
         // set up the execution environment
@@ -77,26 +87,6 @@ public class RandomSampling {
 
         flinkKafkaProducer.setWriteTimestampToKafka(true);
 
-//        FlinkKafkaProducer producer = new FlinkKafkaProducer<String>(
-//                outputTopic,
-//                new KeyedSerializationSchemaWrapper<String>(new KafkaMsgSchema()),
-//                p,
-//                FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
-
-
-//        flinkKafkaConsumer.assignTimestampsAndWatermarks()
-//        DataStream<String> stringInputStream = env
-//                .addSource(flinkKafkaConsumer);
-//
-//        stringInputStream
-//                .map(new WordsCapitalizer());
-
-        //DataStream<Tuple2<String, Float>> csvInput = env.readTextFile("/home/skalogerakis/TUC_Projects/TUC_Advanced_Database_Systems/MyDocs/openaq_Bosnia.csv")
-
-        //This is for data input purposes only. TODO replace that with Kafka implementation
-        //Current way data are transformed Tuple2<String, Float>
-        //DataStream<Tuple2<String, Double>> input = env.readTextFile("/home/skalogerakis/Downloads/openaq.csv")
-        //TODO a tuple3 implementation in DummyClass
         //List<Integer> finalIntegerList = integerList;
         DataStream<Tuple2<String, Double>> input = env.addSource(flinkKafkaConsumer)
                 .flatMap(new FlatMapFunction<String, Tuple2<String,Double>>() {
@@ -129,41 +119,45 @@ public class RandomSampling {
          * TODO INIT version without window
          */
 
-        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
-                .keyBy(0)
-                .process(new CalcImplementation());
-        sum.print();
-        sum.addSink(flinkKafkaProducer);
+//        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
+//                .keyBy(0)
+//                .process(new CalcImplementation());
+//        sum.print();
+//        sum.addSink(flinkKafkaProducer);
+
 
         /**
          * New version with window
          * TODO check if we want to add timestamps and watermarks
          */
         //TODO MUST REMOVE LAST DUMMY ELEMENT
-//        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> sum = input
-//                .keyBy(0)
-//                .timeWindow(Time.seconds(30))
-//                .process(new CalcImplemWindow())
-//                ;
-//        sum.print();
-//
-//        DataStream<Tuple2<String, Double>> finsum = sum
-//                .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,Double>, Tuple2<String, Double>>() {
-//                    @Override
-//                    public void flatMap(Tuple6<String,Double,Double,Double,Double,Double> value, Collector<Tuple2<String, Double>> out)
-//                            throws Exception {
-//                        //String[] words = value.split(",");
-//                        Tuple2<String, Double> temp1 = new Tuple2<>("Total", value.f4);
-//
-//                        out.collect(temp1);
-//                    }
-//                })
-//                .keyBy(0)
-//                .timeWindow(Time.seconds(30))
-//                .sum(1);
-//
-//
-//        finsum.print();
+        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
+                .keyBy(0)
+                .timeWindow(Time.seconds(30))
+                .process(new CalcImplemWindow())
+                ;
+        sum.print();
+
+        sum.addSink(flinkKafkaProducer);
+
+        DataStream<Tuple5<String,Double,Double,Double,Double>> finsum = sum
+                .flatMap(new FlatMapFunction<Tuple5<String,Double,Double,Double,Double>, Tuple5<String,Double,Double,Double,Double>>() {
+                    @Override
+                    public void flatMap(Tuple5<String,Double,Double,Double,Double> value, Collector<Tuple5<String,Double,Double,Double,Double>> out)
+                            throws Exception {
+                        //String[] words = value.split(",");
+                        Tuple5<String,Double,Double,Double,Double> temp1 = new Tuple5<>("Total", value.f4,-1D,-1D,-1D);
+                        out.collect(temp1);
+                    }
+                })
+                .keyBy(0)
+                .timeWindow(Time.seconds(30))
+                .sum(1)
+                ;
+
+        finsum.print();
+        finsum.addSink(flinkKafkaProducer);
+
         //execute program to see action
         env.execute("Streaming for Random Sampling");
 
