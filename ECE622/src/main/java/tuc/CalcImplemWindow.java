@@ -12,7 +12,7 @@ import org.apache.flink.util.Collector;
 
 
 
-public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Double>, Tuple6<String, Double, Double,Double,Double,String>, Tuple, TimeWindow> {
+public  class CalcImplemWindow extends ProcessWindowFunction<Tuple3<String, Double,String>, Tuple6<String, Double, Double,Double,Double,String>, Tuple, TimeWindow> {
 
     /**
      * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
@@ -25,7 +25,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
 
 
     @Override
-    public void process(Tuple key, Context ctx, Iterable<Tuple2<String, Double>> input, Collector<Tuple6<String, Double, Double,Double,Double,String>> out) throws Exception {
+    public void process(Tuple key, Context ctx, Iterable<Tuple3<String, Double,String>> input, Collector<Tuple6<String, Double, Double,Double,Double,String>> out) throws Exception {
 
         // access the state value
         Calculations new_state = state.value();
@@ -42,7 +42,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
 //            global_new_state.__key = input.iterator().next().getField(0);
 //        }
 
-        for (Tuple2<String, Double> in: input) {
+        for (Tuple3<String, Double,String> in: input) {
             new_state = state.value();
             if(new_state == null){   //KEY COUNT MEAN MEAN2 SUM  SUM2 SD
                 new_state = new Calculations();

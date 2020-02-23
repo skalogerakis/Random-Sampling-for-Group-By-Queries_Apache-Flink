@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import tuc.Calculations;
 //import utils.JoinProcessFunction;
+import utils.KafkaInputSchema;
 import utils.KafkaMsgSchema;
 import utils.KafkaTestSchema;
 
@@ -47,25 +48,18 @@ public class RandomSampling {
 
     public static void main(String[] args) throws Exception {
 
-        String inputTopic = "csvtokafka2";
-        String outputTopic = "flink2";
+        String inputTopic = "csvkafka";
+
+        String inputNewTopic = "flinkout1";
+        String outputTopic = "flinkaggr1";
+
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
         String pattern = "^\\bEndOfStream\\b$";
 
         String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
         String keys = "location";
-        //List<Integer> integerList = null;
-
-//        final ParameterTool parameterTool = ParameterTool.fromArgs(args);
-//
-//        if (parameterTool.getNumberOfParameters() < 3) {
-//            System.out.println("Missing parameters!\n" +
-//                    "Usage: --numRecords <numRecords> --index <index> --type <type>");
-//            return;
-//        }
-
-
+        String aggr = "value";
 
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -76,9 +70,8 @@ public class RandomSampling {
         env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
         //env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
-        Pattern r = Pattern.compile(pattern);
-
-        List<Integer> integerList = keyEval(example,keys);
+        //List<Integer> integerList = keyEval(example,keys);
+        HashMap<String,List<Integer>> integerList = attrEval(example,keys,aggr);
 
         /**
          * IMPORTANT: Messages sent by a kafka producer to a particular topic partition will be appended in the order they are sent.
@@ -88,41 +81,59 @@ public class RandomSampling {
         //TODO enable that
         flinkKafkaConsumer.setStartFromEarliest();
 
-        FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> flinkKafkaProducer = createStringProducer2(
+        FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> flinkKafkaProducer = createStringProducer2(
                 outputTopic, address);
-
         flinkKafkaProducer.setWriteTimestampToKafka(true);
 
-        //List<Integer> finalIntegerList = integerList;
-        DataStream<Tuple2<String, Double>> input = env.addSource(flinkKafkaConsumer)
-                .flatMap(new FlatMapFunction<String, Tuple2<String,Double>>() {
+        FlinkKafkaProducer<Tuple3<String,Double,String>> flinkKafkaProducerInput = createStringProducerInput(
+                inputNewTopic, address);
+        flinkKafkaProducerInput.setWriteTimestampToKafka(true);
+
+        List<Integer> keyPosList = integerList.get("key");
+        List<Integer> attrPosList = integerList.get("attr");
+        List<Integer> aggrPosList = integerList.get("aggr");
+
+        DataStream<Tuple3<String, Double,String>> input = env.addSource(flinkKafkaConsumer)
+                .flatMap(new FlatMapFunction<String, Tuple3<String,Double,String>>() {
                     @Override
-                    public void flatMap(String value, Collector<Tuple2<String, Double>> out)
+                    public void flatMap(String value, Collector<Tuple3<String, Double,String>> out)
                             throws Exception {
+
+
+                        List<String> tempkey = new ArrayList<String>();
+                        List<String> tempattr = new ArrayList<String>();
+                        //List<String> tempaggr = new ArrayList<String>();
+                        //TODO works only for one element right now
+                        int tempaggr = aggrPosList.get(0);
+
                         String[] words = value.split(",");
-                        //Matcher m = r.matcher(words[0]);
-                        Tuple2<String,Double> temp1;
-                        //System.out.println("ERROREOER " + words[0]);
-                        //if(m.matches()){
-                        List<String> tempString = new ArrayList<String>();;
-                        for(int i = 0; i< integerList.size(); i++){
-                            tempString.add(words[integerList.get(i)]);
+
+                        for(int i = 0; i< keyPosList.size(); i++){
+                            tempkey.add(words[keyPosList.get(i)]);
                         }
-                        String finaltem = String.join(",",tempString);
+                        String finalKey = String.join(",",tempkey);
 
-                           // temp1 = new Tuple2<>(words[0]+","+words[5],0.0D);
-                        //}else{
-                            temp1 = new Tuple2<>(finaltem,Double.parseDouble(words[6]));
+                        for(int i = 0; i< attrPosList.size(); i++){
+                            tempattr.add(words[attrPosList.get(i)]);
+                        }
+                        String finalAttr = String.join(",",tempattr);
 
-                        //}
-                        //System.out.println(temp1);
+                        Double finalAggr = Double.parseDouble(words[tempaggr]);
+
+                        Tuple3<String,Double,String> temp1;
+
+                        temp1 = new Tuple3<>(finalKey,finalAggr,finalAttr);
+                        tempkey.clear();
+                        tempattr.clear();
                         out.collect(temp1);
+
                     }
                 });
-        input.print();
+
+        //input.print();
 
         //TODO add sink and write input in another topic formatted in specific way
-        //input.addSink();
+        input.addSink(flinkKafkaProducerInput);
 
 
         /**
@@ -142,14 +153,13 @@ public class RandomSampling {
          * TODO check if we want to add timestamps and watermarks
          */
         //TODO MUST REMOVE LAST DUMMY ELEMENT
+
         DataStream<Tuple6<String,Double,Double,Double,Double,String>> sum = input
                 .keyBy(0)
                 .timeWindow(Time.seconds(30))
                 .process(new CalcImplemWindow())
                 ;
         sum.print();
-
-//        sum.addSink(flinkKafkaProducer);
 
         DataStream<Tuple5<String,Double,Double,Double,Double>> finsum = sum
                 .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple5<String,Double,Double,Double,Double>>() {
@@ -197,14 +207,8 @@ public class RandomSampling {
         //finsum.union(sum).print();
 
         joinedStream.print();
-//        finsum.addSink(flinkKafkaProducer);
-//        sum.addSink(flinkKafkaProducer);
+        joinedStream.addSink(flinkKafkaProducer);
 
-        //ConnectedStreams<Tuple5<String,Double,Double,Double,Double>, Tuple5<String,Double,Double,Double,Double>> joinStream = finsum.connect(sum);
-
-        //DataStream<Tuple6<String,Double,Double,Double,Double,Double>> gtxs = joinStream.process(new JoinProcessFunction());
-        //ConnectedStreams<Tuple5<String,Double,Double,Double,Double>,Tuple5<String,Double,Double,Double,Double>> connectedStreams = finsum.connect(sum);
-        //gtxs.print();
         //execute program to see action
         env.execute("Streaming for Random Sampling");
 
@@ -243,35 +247,62 @@ public class RandomSampling {
         return producer;
     }
 
-    public static FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> createStringProducer2(
+    public static FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> createStringProducer2(
+            String topic, String kafkaAddress){
+        Properties props = new Properties();
+        props.setProperty("bootstrap.servers", kafkaAddress);
+        FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> producer =  new FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>>(topic, new KafkaTestSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
+        return producer;
+    }
+
+    public static FlinkKafkaProducer<Tuple3<String,Double,String>> createStringProducerInput(
             String topic, String kafkaAddress){
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
         //TODO implemented based on this
         //https://github.com/luweizheng/flink-tutorials/blob/2a72c375d182cc47da016627023083ba85808f96/src/main/java/com/flink/tutorials/java/projects/wordcount/WordCountKafkaInKafkaOut.java
         //FlinkKafkaProducer producer = new FlinkKafkaProducer<>(topic, (SerializationSchema<Tuple5<String,Double,Double,Double,Double>>) new KafkaTestSchema(),props, FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
-        FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> producer =  new FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>>(topic, new KafkaTestSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
+        FlinkKafkaProducer<Tuple3<String,Double,String>> producer =  new FlinkKafkaProducer<Tuple3<String,Double,String>>(topic, new KafkaInputSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
         return producer;
     }
 
+
+
     //TODO add checks when wrong input
-    public static List<Integer> keyEval(String attributes, String keys){
+    //TODO CHECK IF WE CAN HAVE MULTIPLE AGGREGATION. FOR NOW CAN BE USED ONLY WITH ONE
+    public static HashMap<String,List<Integer>> attrEval(String attributes, String keys, String aggregation){
         String[] attrSplitter = attributes.trim().split(",");
         String[] keySplitter = keys.trim().split(",");
-        List<Integer> posList = new ArrayList<Integer>();
+        //List<Integer> posList = new ArrayList<Integer>();
+
+        HashMap<String,List<Integer>> attrParser = new HashMap<String,List<Integer>>();
+        List<Integer> keyPosList = new ArrayList<Integer>();
+        List<Integer> attrPosList = new ArrayList<Integer>();
+        List<Integer> aggrPosList = new ArrayList<Integer>();
+
 
         for(int j=0; j<keySplitter.length;j++){
             for(int i=0; i<attrSplitter.length;i++){
                 if(keySplitter[j].compareToIgnoreCase(attrSplitter[i])==0){
-                    //System.out.println("key "+ keySplitter[j]+ " from position" + i);
-                    posList.add(i);
+                    keyPosList.add(i);
+                    //System.out.println("key "+i);
+                }else{
+                    attrPosList.add(i);
+                    //System.out.println("attr "+i);
+                    //System.out.println(attrSplitter[j] +" "+aggregation);
+
+                }
+                if(attrSplitter[i].compareToIgnoreCase(aggregation)==0){
+                    aggrPosList.add(i);
+                    //System.out.println("aggr "+i);
                 }
             }
         }
-        //TODO return list of position
-        //TODO maybe insert everything in a list and then concat
-        //https://mkyong.com/java/java-how-to-join-list-string-with-commas/
-        return posList;
+        attrParser.put("key",keyPosList);
+        attrParser.put("attr",attrPosList);
+        attrParser.put("aggr",aggrPosList);
+
+        return attrParser;
     }
 
 

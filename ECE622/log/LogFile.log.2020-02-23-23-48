@@ -1,0 +1,288 @@
+2020-02-23 23:48:15,589 [Kafka Fetcher for Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4)] INFO  (AbstractCoordinator.java:756) - [Consumer clientId=consumer-KafkaCsvProducer-15, groupId=KafkaCsvProducer] Discovered group coordinator skl:9092 (id: 2147483647 rack: null)
+2020-02-23 23:48:16,350 [KeyedProcess (1/4)] INFO  (Task.java:960) - KeyedProcess (1/4) (2039feb40abd0e5de7577d7694678b35) switched from RUNNING to FAILED.
+java.lang.IllegalArgumentException: bound must be positive
+	at java.util.Random.nextInt(Random.java:388)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:180)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:148)
+	at org.apache.flink.streaming.api.operators.KeyedProcessOperator.processElement(KeyedProcessOperator.java:85)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processElement(StreamOneInputProcessor.java:164)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processInput(StreamOneInputProcessor.java:143)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.processInput(StreamTask.java:279)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+2020-02-23 23:48:15,590 [Kafka Fetcher for Source: Custom Source -> Flat Map -> Map (2/4)] INFO  (AbstractCoordinator.java:756) - [Consumer clientId=consumer-KafkaCsvProducer-13, groupId=KafkaCsvProducer] Discovered group coordinator skl:9092 (id: 2147483647 rack: null)
+2020-02-23 23:48:18,600 [KeyedProcess (1/4)] INFO  (Task.java:804) - Freeing task resources for KeyedProcess (1/4) (2039feb40abd0e5de7577d7694678b35).
+2020-02-23 23:48:18,844 [KeyedProcess (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task KeyedProcess (1/4) (2039feb40abd0e5de7577d7694678b35) [FAILED]
+2020-02-23 23:48:19,222 [flink-akka.actor.default-dispatcher-6] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FAILED to JobManager for task KeyedProcess 2039feb40abd0e5de7577d7694678b35.
+2020-02-23 23:48:22,379 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1511) - KeyedProcess (1/4) (2039feb40abd0e5de7577d7694678b35) switched from RUNNING to FAILED.
+java.lang.IllegalArgumentException: bound must be positive
+	at java.util.Random.nextInt(Random.java:388)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:180)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:148)
+	at org.apache.flink.streaming.api.operators.KeyedProcessOperator.processElement(KeyedProcessOperator.java:85)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processElement(StreamOneInputProcessor.java:164)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processInput(StreamOneInputProcessor.java:143)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.processInput(StreamTask.java:279)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+2020-02-23 23:48:22,380 [flink-akka.actor.default-dispatcher-5] INFO  (ExecutionGraph.java:1325) - Job Job2 (6d63f910e7ce7a8284a1dd8e961c2328) switched from state RUNNING to FAILING.
+java.lang.IllegalArgumentException: bound must be positive
+	at java.util.Random.nextInt(Random.java:388)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:180)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:148)
+	at org.apache.flink.streaming.api.operators.KeyedProcessOperator.processElement(KeyedProcessOperator.java:85)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processElement(StreamOneInputProcessor.java:164)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processInput(StreamOneInputProcessor.java:143)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.processInput(StreamTask.java:279)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+2020-02-23 23:48:22,382 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769) switched from RUNNING to CANCELING.
+2020-02-23 23:48:22,829 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b) switched from RUNNING to CANCELING.
+2020-02-23 23:48:22,830 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,339 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,338 [KeyedProcess (2/4)] INFO  (Task.java:960) - KeyedProcess (2/4) (96d693d21a08838fdd42d6f8a0080eaa) switched from RUNNING to FAILED.
+java.lang.IllegalArgumentException: bound must be positive
+	at java.util.Random.nextInt(Random.java:388)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:180)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:148)
+	at org.apache.flink.streaming.api.operators.KeyedProcessOperator.processElement(KeyedProcessOperator.java:85)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processElement(StreamOneInputProcessor.java:164)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processInput(StreamOneInputProcessor.java:143)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.processInput(StreamTask.java:279)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+2020-02-23 23:48:23,340 [KeyedProcess (2/4)] INFO  (Task.java:804) - Freeing task resources for KeyedProcess (2/4) (96d693d21a08838fdd42d6f8a0080eaa).
+2020-02-23 23:48:23,340 [KeyedProcess (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task KeyedProcess (2/4) (96d693d21a08838fdd42d6f8a0080eaa) [FAILED]
+2020-02-23 23:48:23,340 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,342 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,346 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,350 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769).
+2020-02-23 23:48:23,350 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,350 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769).
+2020-02-23 23:48:23,350 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,351 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,352 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,353 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,353 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,354 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - KeyedProcess (2/4) (96d693d21a08838fdd42d6f8a0080eaa) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,362 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4)] WARN  (StreamTask.java:296) - Error while canceling task.
+java.lang.Exception: org.apache.flink.streaming.connectors.kafka.internal.Handover$ClosedException
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.checkThrowSourceExecutionException(SourceStreamTask.java:232)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.processInput(SourceStreamTask.java:133)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.flink.streaming.connectors.kafka.internal.Handover$ClosedException
+	at org.apache.flink.streaming.connectors.kafka.internal.Handover.close(Handover.java:182)
+	at org.apache.flink.streaming.connectors.kafka.internal.KafkaFetcher.cancel(KafkaFetcher.java:175)
+	at org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase.cancel(FlinkKafkaConsumerBase.java:818)
+	at org.apache.flink.streaming.api.operators.StreamSource.cancel(StreamSource.java:134)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.cancelTask(SourceStreamTask.java:158)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.cancel(StreamTask.java:528)
+	at org.apache.flink.runtime.taskmanager.Task$TaskCanceler.run(Task.java:1434)
+	... 1 more
+2020-02-23 23:48:23,364 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,393 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,393 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b).
+2020-02-23 23:48:23,394 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,395 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b).
+2020-02-23 23:48:23,395 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,395 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769).
+2020-02-23 23:48:23,396 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769) [CANCELED]
+2020-02-23 23:48:23,399 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c).
+2020-02-23 23:48:23,399 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,399 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c).
+2020-02-23 23:48:23,404 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734).
+2020-02-23 23:48:23,413 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,413 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734).
+2020-02-23 23:48:23,428 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state FAILED to JobManager for task KeyedProcess 96d693d21a08838fdd42d6f8a0080eaa.
+2020-02-23 23:48:23,429 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d).
+2020-02-23 23:48:23,430 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,430 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,431 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b).
+2020-02-23 23:48:23,431 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b) [CANCELED]
+2020-02-23 23:48:23,431 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d).
+2020-02-23 23:48:23,442 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - KeyedProcess (2/4) (96d693d21a08838fdd42d6f8a0080eaa) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,443 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1371) - Discarding the results produced by task execution 96d693d21a08838fdd42d6f8a0080eaa.
+2020-02-23 23:48:23,504 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,504 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c).
+2020-02-23 23:48:23,516 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c) [CANCELED]
+2020-02-23 23:48:23,513 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6).
+2020-02-23 23:48:23,516 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,517 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6).
+2020-02-23 23:48:23,527 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4).
+2020-02-23 23:48:23,527 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,528 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4).
+2020-02-23 23:48:23,529 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,529 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734).
+2020-02-23 23:48:23,529 [Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734) [CANCELED]
+2020-02-23 23:48:23,531 [Source: Custom Source -> Flat Map -> Map (1/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,531 [Source: Custom Source -> Flat Map -> Map (1/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d).
+2020-02-23 23:48:23,531 [Source: Custom Source -> Flat Map -> Map (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d) [CANCELED]
+2020-02-23 23:48:23,533 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c).
+2020-02-23 23:48:23,534 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,554 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c).
+2020-02-23 23:48:23,559 [Source: Custom Source -> Flat Map -> Map (2/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,559 [Source: Custom Source -> Flat Map -> Map (2/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6).
+2020-02-23 23:48:23,559 [Source: Custom Source -> Flat Map -> Map (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6) [CANCELED]
+2020-02-23 23:48:23,561 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b).
+2020-02-23 23:48:23,561 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,561 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b).
+2020-02-23 23:48:23,562 [Source: Custom Source -> Flat Map -> Map (3/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,562 [Source: Custom Source -> Flat Map -> Map (3/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4).
+2020-02-23 23:48:23,562 [Source: Custom Source -> Flat Map -> Map (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4) [CANCELED]
+2020-02-23 23:48:23,573 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce).
+2020-02-23 23:48:23,573 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,573 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce).
+2020-02-23 23:48:23,573 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4)] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,573 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4)] INFO  (Task.java:804) - Freeing task resources for Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b).
+2020-02-23 23:48:23,574 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b) [CANCELED]
+2020-02-23 23:48:23,578 [Source: Custom Source -> Flat Map -> Map (4/4)] INFO  (Task.java:958) - Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,579 [Source: Custom Source -> Flat Map -> Map (4/4)] INFO  (Task.java:804) - Freeing task resources for Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c).
+2020-02-23 23:48:23,580 [Source: Custom Source -> Flat Map -> Map (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c) [CANCELED]
+2020-02-23 23:48:23,590 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a).
+2020-02-23 23:48:23,590 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,590 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a).
+2020-02-23 23:48:23,596 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5).
+2020-02-23 23:48:23,604 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,603 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4)] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,606 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4)] INFO  (Task.java:804) - Freeing task resources for Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a).
+2020-02-23 23:48:23,600 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4)] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,605 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5).
+2020-02-23 23:48:23,608 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a) [CANCELED]
+2020-02-23 23:48:23,609 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4)] INFO  (Task.java:804) - Freeing task resources for Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce).
+2020-02-23 23:48:23,612 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce) [CANCELED]
+2020-02-23 23:48:23,615 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0).
+2020-02-23 23:48:23,615 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,615 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0).
+2020-02-23 23:48:23,615 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4)] INFO  (Task.java:958) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,616 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4)] INFO  (Task.java:804) - Freeing task resources for Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5).
+2020-02-23 23:48:23,616 [Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5) [CANCELED]
+2020-02-23 23:48:23,620 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:982) - Attempting to cancel task KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a).
+2020-02-23 23:48:23,623 [KeyedProcess (3/4)] INFO  (Task.java:958) - KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,623 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:958) - KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a) switched from RUNNING to CANCELING.
+2020-02-23 23:48:23,623 [KeyedProcess (3/4)] INFO  (Task.java:804) - Freeing task resources for KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0).
+2020-02-23 23:48:23,623 [flink-akka.actor.default-dispatcher-2] INFO  (Task.java:1045) - Triggering cancellation of task code KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a).
+2020-02-23 23:48:23,623 [KeyedProcess (3/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0) [CANCELED]
+2020-02-23 23:48:23,625 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) 3bbd5c8533713166cd6e367623cad769.
+2020-02-23 23:48:23,625 [KeyedProcess (4/4)] INFO  (Task.java:958) - KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,625 [KeyedProcess (4/4)] INFO  (Task.java:804) - Freeing task resources for KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a).
+2020-02-23 23:48:23,625 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) 4e721527603cb82c74416d14870fe28b.
+2020-02-23 23:48:23,625 [KeyedProcess (4/4)] INFO  (Task.java:831) - Ensuring all FileSystem streams are closed for task KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a) [CANCELED]
+2020-02-23 23:48:23,626 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) eebcad7c0149d31603214b1a83c16f0c.
+2020-02-23 23:48:23,626 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (1/4) (3bbd5c8533713166cd6e367623cad769) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,626 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) 188bc3429766700d5111f5f8cfed3734.
+2020-02-23 23:48:23,628 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> Map ab8831707099441f665eb57083320b0d.
+2020-02-23 23:48:23,628 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (2/4) (4e721527603cb82c74416d14870fe28b) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,629 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> Map b2e402a8b71e0bfef5f46a1c46bb44e6.
+2020-02-23 23:48:23,629 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (3/4) (eebcad7c0149d31603214b1a83c16f0c) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,630 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> Map bc2533c7de795c82d22453e508864dd4.
+2020-02-23 23:48:23,630 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> (Sink: Print to Std. Out, Map) (4/4) (188bc3429766700d5111f5f8cfed3734) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,630 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) 0046a327629df67f86087a255f69460b.
+2020-02-23 23:48:23,632 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Source: Custom Source -> Flat Map -> Map 9296465ba40603222389288beb24322c.
+2020-02-23 23:48:23,632 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (1/4) (ab8831707099441f665eb57083320b0d) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,632 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) acfc6172aed9fe999e41c11c18fafe9a.
+2020-02-23 23:48:23,633 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (2/4) (b2e402a8b71e0bfef5f46a1c46bb44e6) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,633 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) a8c4cca10b40d6daf52a6d95d1bcd9ce.
+2020-02-23 23:48:23,634 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) 8ae1eefe278822c6441e22c5e11a5ad5.
+2020-02-23 23:48:23,634 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (3/4) (bc2533c7de795c82d22453e508864dd4) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,635 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task KeyedProcess 2078c422c85c8434d2c79243f4c69ae0.
+2020-02-23 23:48:23,640 [flink-akka.actor.default-dispatcher-3] INFO  (TaskExecutor.java:1445) - Un-registering task and sending final execution state CANCELED to JobManager for task KeyedProcess 7fed72373a27acc77adbaeea3f6ba88a.
+2020-02-23 23:48:23,642 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (1/4) (0046a327629df67f86087a255f69460b) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,643 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Source: Custom Source -> Flat Map -> Map (4/4) (9296465ba40603222389288beb24322c) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,647 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (3/4) (acfc6172aed9fe999e41c11c18fafe9a) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,648 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (2/4) (a8c4cca10b40d6daf52a6d95d1bcd9ce) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,649 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - Window(TumblingEventTimeWindows(2000), EventTimeTrigger, CoGroupWindowFunction) (4/4) (8ae1eefe278822c6441e22c5e11a5ad5) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,659 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - KeyedProcess (3/4) (2078c422c85c8434d2c79243f4c69ae0) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,664 [flink-akka.actor.default-dispatcher-5] INFO  (Execution.java:1509) - KeyedProcess (4/4) (7fed72373a27acc77adbaeea3f6ba88a) switched from CANCELING to CANCELED.
+2020-02-23 23:48:23,664 [flink-akka.actor.default-dispatcher-5] INFO  (ExecutionGraph.java:1452) - Try to restart or fail the job Job2 (6d63f910e7ce7a8284a1dd8e961c2328) if no longer possible.
+2020-02-23 23:48:23,665 [flink-akka.actor.default-dispatcher-5] INFO  (ExecutionGraph.java:1325) - Job Job2 (6d63f910e7ce7a8284a1dd8e961c2328) switched from state FAILING to FAILED.
+java.lang.IllegalArgumentException: bound must be positive
+	at java.util.Random.nextInt(Random.java:388)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:180)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:148)
+	at org.apache.flink.streaming.api.operators.KeyedProcessOperator.processElement(KeyedProcessOperator.java:85)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processElement(StreamOneInputProcessor.java:164)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processInput(StreamOneInputProcessor.java:143)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.processInput(StreamTask.java:279)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+2020-02-23 23:48:23,665 [flink-akka.actor.default-dispatcher-5] INFO  (ExecutionGraph.java:1478) - Could not restart the job Job2 (6d63f910e7ce7a8284a1dd8e961c2328) because the restart strategy prevented it.
+java.lang.IllegalArgumentException: bound must be positive
+	at java.util.Random.nextInt(Random.java:388)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:180)
+	at tuc.Job2$ReservoirSampler.processElement(Job2.java:148)
+	at org.apache.flink.streaming.api.operators.KeyedProcessOperator.processElement(KeyedProcessOperator.java:85)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processElement(StreamOneInputProcessor.java:164)
+	at org.apache.flink.streaming.runtime.io.StreamOneInputProcessor.processInput(StreamOneInputProcessor.java:143)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.processInput(StreamTask.java:279)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:321)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.runAndHandleCancel(StreamTask.java:286)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:426)
+	at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)
+	at java.lang.Thread.run(Thread.java:748)
+2020-02-23 23:48:23,666 [flink-akka.actor.default-dispatcher-5] INFO  (CheckpointCoordinator.java:329) - Stopping checkpoint coordinator for job 6d63f910e7ce7a8284a1dd8e961c2328.
+2020-02-23 23:48:23,666 [flink-akka.actor.default-dispatcher-5] INFO  (StandaloneCompletedCheckpointStore.java:97) - Shutting down
+2020-02-23 23:48:23,685 [flink-akka.actor.default-dispatcher-3] INFO  (Dispatcher.java:774) - Job 6d63f910e7ce7a8284a1dd8e961c2328 reached globally terminal state FAILED.
+2020-02-23 23:48:23,685 [main] INFO  (MiniCluster.java:416) - Shutting down Flink Mini Cluster
+2020-02-23 23:48:23,687 [main] INFO  (RestServerEndpoint.java:290) - Shutting down rest endpoint.
+2020-02-23 23:48:23,687 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:354) - Stopping TaskExecutor akka://flink/user/taskmanager_0.
+2020-02-23 23:48:23,688 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:1064) - Close ResourceManager connection 63f746684f6e794edb6c3e54ecf67dfa.
+2020-02-23 23:48:23,692 [flink-akka.actor.default-dispatcher-5] INFO  (ResourceManager.java:809) - Closing TaskExecutor connection 069d0fb8-454a-4062-b535-f2dd473869ba because: The TaskExecutor is shutting down.
+2020-02-23 23:48:23,700 [flink-akka.actor.default-dispatcher-2] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-23 23:48:23,701 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutorLocalStateStoresManager.java:213) - Shutting down TaskExecutorLocalStateStoresManager.
+2020-02-23 23:48:23,715 [flink-akka.actor.default-dispatcher-6] INFO  (JobMaster.java:338) - Stopping the JobMaster for job Job2(6d63f910e7ce7a8284a1dd8e961c2328).
+2020-02-23 23:48:23,726 [flink-akka.actor.default-dispatcher-6] INFO  (SlotPoolImpl.java:228) - Suspending SlotPool.
+2020-02-23 23:48:23,726 [flink-akka.actor.default-dispatcher-6] INFO  (JobMaster.java:1006) - Close ResourceManager connection 63f746684f6e794edb6c3e54ecf67dfa: JobManager is shutting down..
+2020-02-23 23:48:23,726 [flink-akka.actor.default-dispatcher-6] INFO  (SlotPoolImpl.java:249) - Stopping SlotPool.
+2020-02-23 23:48:23,726 [flink-akka.actor.default-dispatcher-3] INFO  (ResourceManager.java:780) - Disconnect job manager 8ac30604fc54dc9e9f24684bee9e4866@akka://flink/user/jobmanager_1 for job 6d63f910e7ce7a8284a1dd8e961c2328 from the resource manager.
+2020-02-23 23:48:23,745 [flink-akka.actor.default-dispatcher-2] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-io-cbfa08b2-80b8-41a8-8982-5ab566661ca2
+2020-02-23 23:48:23,745 [flink-akka.actor.default-dispatcher-2] INFO  (NettyShuffleEnvironment.java:304) - Shutting down the network environment and its components.
+2020-02-23 23:48:23,747 [flink-akka.actor.default-dispatcher-2] INFO  (FileChannelManagerImpl.java:112) - FileChannelManager removed spill file directory /tmp/flink-netty-shuffle-c382c18f-bb6b-48f2-af78-20cd18bb6bee
+2020-02-23 23:48:23,748 [flink-akka.actor.default-dispatcher-2] INFO  (KvStateService.java:119) - Shutting down the kvState service and its components.
+2020-02-23 23:48:23,748 [flink-akka.actor.default-dispatcher-2] INFO  (JobLeaderService.java:142) - Stop job leader service.
+2020-02-23 23:48:23,748 [flink-akka.actor.default-dispatcher-2] INFO  (FileCache.java:153) - removed file cache directory /tmp/flink-dist-cache-3c1ba029-ef1a-4fc4-9390-32753d635c23
+2020-02-23 23:48:23,749 [flink-akka.actor.default-dispatcher-2] INFO  (TaskExecutor.java:394) - Stopped TaskExecutor akka://flink/user/taskmanager_0.
+2020-02-23 23:48:23,763 [ForkJoinPool.commonPool-worker-1] INFO  (WebMonitorEndpoint.java:688) - Removing cache directory /tmp/flink-web-ui
+2020-02-23 23:48:23,764 [ForkJoinPool.commonPool-worker-1] INFO  (RestServerEndpoint.java:299) - Shut down complete.
+2020-02-23 23:48:23,766 [flink-akka.actor.default-dispatcher-2] INFO  (ResourceManager.java:503) - Shut down cluster because application is in CANCELED, diagnostics DispatcherResourceManagerComponent has been closed..
+2020-02-23 23:48:23,771 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:220) - Stopping dispatcher akka://flink/user/dispatcher.
+2020-02-23 23:48:23,772 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:696) - Stopping all currently running jobs of dispatcher akka://flink/user/dispatcher.
+2020-02-23 23:48:23,772 [flink-akka.actor.default-dispatcher-2] INFO  (SlotManagerImpl.java:284) - Closing the SlotManager.
+2020-02-23 23:48:23,772 [flink-akka.actor.default-dispatcher-2] INFO  (SlotManagerImpl.java:247) - Suspending the SlotManager.
+2020-02-23 23:48:23,772 [flink-akka.actor.default-dispatcher-5] INFO  (StackTraceSampleCoordinator.java:220) - Shutting down stack trace sample coordinator.
+2020-02-23 23:48:23,783 [flink-akka.actor.default-dispatcher-5] INFO  (Dispatcher.java:229) - Stopped dispatcher akka://flink/user/dispatcher.
+2020-02-23 23:48:23,784 [flink-akka.actor.default-dispatcher-5] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-23 23:48:23,799 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Shutting down remote daemon.
+2020-02-23 23:48:23,805 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remote daemon shut down; proceeding with flushing remote transports.
+2020-02-23 23:48:23,836 [flink-metrics-2] INFO  (MarkerIgnoringBase.java:107) - Remoting shut down.
+2020-02-23 23:48:23,880 [flink-metrics-2] INFO  (AkkaRpcService.java:335) - Stopping Akka RPC service.
+2020-02-23 23:48:23,880 [flink-metrics-2] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.
+2020-02-23 23:48:23,893 [flink-akka.actor.default-dispatcher-5] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-23 23:48:23,894 [flink-akka.actor.default-dispatcher-5] INFO  (AbstractBlobCache.java:247) - Shutting down BLOB cache
+2020-02-23 23:48:23,896 [flink-akka.actor.default-dispatcher-5] INFO  (BlobServer.java:340) - Stopped BLOB server at 0.0.0.0:39847
+2020-02-23 23:48:23,897 [flink-akka.actor.default-dispatcher-5] INFO  (AkkaRpcService.java:354) - Stopped Akka RPC service.

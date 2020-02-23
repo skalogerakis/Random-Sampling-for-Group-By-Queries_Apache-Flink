@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //JUST USELESS CLEANING CODE
 public class DummyClass {
 
@@ -87,6 +90,44 @@ public class DummyClass {
 //                    }
 //                })
 //                ;
+//TODO add checks when wrong input
+//public static List<Integer> keyEval(String attributes, String keys){
+//    String[] attrSplitter = attributes.trim().split(",");
+//    String[] keySplitter = keys.trim().split(",");
+//    List<Integer> posList = new ArrayList<Integer>();
+//
+//    for(int j=0; j<keySplitter.length;j++){
+//        for(int i=0; i<attrSplitter.length;i++){
+//            if(keySplitter[j].compareToIgnoreCase(attrSplitter[i])==0){
+//                //System.out.println("key "+ keySplitter[j]+ " from position" + i);
+//                posList.add(i);
+//            }
+//        }
+//    }
+//
+//    //https://mkyong.com/java/java-how-to-join-list-string-with-commas/
+//    return posList;
+//}
 
+    //TODO job2 print all elements from aggregation
+//        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> inputAg = env2.addSource(flinkKafkaConsumer)
+//                .flatMap(new FlatMapFunction<String, Tuple6<String,Double,Double,Double,Double,Double>>() {
+//                    @Override
+//                    public void flatMap(String value, Collector<Tuple6<String,Double,Double,Double,Double,Double>> out)
+//                            throws Exception {
+//                        String[] words = value.trim().split(",");
+//
+//                        Tuple6<String,Double,Double,Double,Double,Double> temp1;
+////                        for(int i=0;i<5;i++){
+////                            System.out.println(words[i]);
+////                        }
+//
+//                        temp1 = new Tuple6<>(words[0],Double.parseDouble(words[1]),Double.parseDouble(words[2]),Double.parseDouble(words[3]),Double.parseDouble(words[4]),Double.parseDouble(words[5]));
+//
+//                        //}
+//                        //System.out.println(temp1);
+//                        out.collect(temp1);
+//                    }
+//                });
 
 }

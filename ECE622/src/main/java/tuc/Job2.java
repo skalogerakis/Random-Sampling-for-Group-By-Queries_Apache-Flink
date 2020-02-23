@@ -1,24 +1,29 @@
 package tuc;
 
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.serialization.SerializationSchema;
-import org.apache.flink.api.common.serialization.SimpleStringSchema;
-import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.api.java.tuple.Tuple5;
+import org.apache.flink.api.common.functions.JoinFunction;
+import org.apache.flink.api.common.state.ValueState;
+import org.apache.flink.api.common.state.ValueStateDescriptor;
+import org.apache.flink.api.common.typeinfo.TypeHint;
+import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.apache.flink.api.java.functions.KeySelector;
+import org.apache.flink.api.java.tuple.*;
+import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
+import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
 import org.apache.flink.util.Collector;
-import sun.awt.X11.XSystemTrayPeer;
-import utils.KafkaMsgSchema;
+import utils.KafkaFinalSchema;
+import utils.KafkaInputSchema;
 import utils.KafkaTestSchema;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import java.util.regex.Pattern;
+import java.util.Random;
 
 public class Job2 {
 
@@ -31,12 +36,13 @@ public class Job2 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputTopic = "flink2";
-        //String outputTopic = "flink_out";
+        String inputTopic = "flinkout1";
+        String inputAggr = "flinkaggr1";
+        String outputTopic = "flinkfinal";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
 
-
+        double M =20.0D;
         // set up the execution environment
         final StreamExecutionEnvironment env2 = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -45,56 +51,174 @@ public class Job2 {
 
         env2.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
 
+        FlinkKafkaProducer<Tuple2<String,String>> flinkKafkaProducer = createStringProducer2(
+                outputTopic, address);
 
+        flinkKafkaProducer.setWriteTimestampToKafka(true);
 
         /**
          * IMPORTANT: Messages sent by a kafka producer to a particular topic partition will be appended in the order they are sent.
          */
         FlinkKafkaConsumer<String> flinkKafkaConsumer = createStringConsumerForTopic(
-                inputTopic, address, consumerGroup);
+                inputAggr, address, consumerGroup);
         //TODO disable that in this consumer enable in the other one
         flinkKafkaConsumer.setStartFromEarliest();
 
-       // flinkKafkaConsumer.notifyCheckpointComplete();
 
-//        KafkaTestSchema test = new KafkaTestSchema(inputTopic);
-//
-//        if(test.isEndOfStream(flinkKafkaConsumer.toString())){
-//            System.out.println("This is it.");
-//        }
-
-
-        DataStream<Tuple5<String,Double,Double,Double,Double>> input = env2.addSource(flinkKafkaConsumer)
-                .flatMap(new FlatMapFunction<String, Tuple5<String,Double,Double,Double,Double>>() {
+        DataStream<Tuple4<String,Double,Double,Double>> inputAg = env2
+                .addSource(flinkKafkaConsumer)
+                .flatMap(new FlatMapFunction<String, Tuple4<String,Double,Double,Double>>() {
                     @Override
-                    public void flatMap(String value, Collector<Tuple5<String,Double,Double,Double,Double>> out)
+                    public void flatMap(String value, Collector<Tuple4<String,Double,Double,Double>> out)
                             throws Exception {
-                        String[] words = value.trim().split(",");
+                        String[] words = value.split(",");
+                        double si = Math.round(M * (Double.parseDouble(words[4]) / Double.parseDouble(words[5])));//M*γi/γ
+                        out.collect(new Tuple4<>(words[0], Double.parseDouble(words[3]), Double.parseDouble(words[5]), si));
+                    }});
 
-                        Tuple5<String,Double,Double,Double,Double> temp1;
-//                        for(int i=0;i<5;i++){
-//                            System.out.println(words[i]);
-//                        }
 
-                        temp1 = new Tuple5<>(words[0],Double.parseDouble(words[1]),Double.parseDouble(words[2]),Double.parseDouble(words[3]),Double.parseDouble(words[4]));
+        //inputAg.print();
 
-                        //}
-                        //System.out.println(temp1);
+        FlinkKafkaConsumer<String> flinkKafkaConsumerInput = createStringConsumerForInput(
+                inputTopic, address, consumerGroup);
+        //TODO disable that in this consumer enable in the other one
+        flinkKafkaConsumerInput.setStartFromEarliest();
+
+        //TODO do not print second aggregate attribute
+        DataStream<Tuple2<String,String>> inputStream = env2.addSource(flinkKafkaConsumerInput)
+                .flatMap(new FlatMapFunction<String, Tuple2<String,String>>() {
+                    @Override
+                    public void flatMap(String value, Collector<Tuple2<String,String>> out)
+                            throws Exception {
+
+                        String[] words = value.split(";");
+                        //Also available in words[1] aggregate
+                        Tuple2<String,String> temp1;
+
+                        temp1 = new Tuple2<>(words[0],words[2]);
+
                         out.collect(temp1);
+
                     }
                 });
-        input.print();
 
-//        FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> flinkKafkaProducer = createStringProducer2(
-//                outputTopic, address);
-//
-//        flinkKafkaProducer.setWriteTimestampToKafka(true);
+        //inputStream.print();
 
+        // key  args   γi     γ      si
+        DataStream<Tuple5<String,String,Double,Double,Double>> joinedStream= inputStream
+                .join(inputAg)
+                .where(new KeySelector<Tuple2<String, String>, String>() {
+                    @Override
+                    public String getKey(Tuple2<String, String> stringStringTuple2) throws Exception {
+                        return stringStringTuple2.f0;
+                    }
+                })
+                .equalTo(new KeySelector<Tuple4<String, Double, Double, Double>, String>() {
+                    @Override
+                    public String getKey(Tuple4<String, Double, Double, Double> stringDoubleDoubleDoubleTuple4) throws Exception {
+                        return stringDoubleDoubleDoubleTuple4.f0;
+                    }
+                })
+                .window(TumblingEventTimeWindows.of(Time.seconds(2)))
+                //.allowedLateness(Time.seconds(10))
+                .apply(new JoinFunction<Tuple2<String, String>, Tuple4<String, Double, Double, Double>, Tuple5<String, String, Double, Double, Double>>() {
+                    @Override
+                    public Tuple5<String, String, Double, Double, Double> join(Tuple2<String, String> stringStringTuple2, Tuple4<String, Double, Double, Double> stringDoubleDoubleDoubleTuple4) throws Exception {
+                        return new Tuple5<>(stringStringTuple2.f0,stringStringTuple2.f1,stringDoubleDoubleDoubleTuple4.f1,stringDoubleDoubleDoubleTuple4.f2,stringDoubleDoubleDoubleTuple4.f3);
+                    }
+                })
+                ;
+
+
+        DataStream<Tuple2<String,String>> sample =joinedStream
+
+                .keyBy(0)
+                .process(new ReservoirSampler())
+                ;
+
+
+        //sample.keyBy(0).print();
+
+
+
+
+
+        sample.keyBy(0).addSink(flinkKafkaProducer);
         env2.execute("Job2");
 
     }
 
+    public static class ReservoirSampler extends KeyedProcessFunction<Tuple,Tuple5<String,String,Double,Double,Double>, Tuple2<String,String>> {
 
+        /**
+         * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
+         */
+
+        private transient ValueState< StateSample > stateSample;
+
+        @Override
+        public void processElement(Tuple5<String,String,Double,Double,Double> input, Context ctx, Collector<Tuple2<String,String>> out) throws Exception {
+
+            // access the state value
+
+
+
+            StateSample s = stateSample.value();
+            int getIn=0;
+            if (s==null){ //state initialization
+                s= new StateSample();
+                s.count=0;
+            }
+
+
+            if(s.sample.size()<input.f4){ // fill the sample vector with si elements
+                Tuple2<String ,String> t = new Tuple2<String ,String>(input.f0,input.f1);
+                s.sample.add(t);
+                s.count++;// count how many elements have inserted
+                stateSample.update(s);
+            }
+            else if(s.count!=0){
+
+                Random rand = new Random();
+                int r = rand.nextInt(s.count); // generate number from 0 to inserted elements
+                if (r < input.f4) {//si  get in with pr si/n
+                    getIn = 1;
+                } // pr=si/n
+                else {
+                    getIn = 0;
+                }
+
+                if(getIn==1){ // if get in =1 replace with pr 1/si
+                    //System.out.println(input.f0+" "+(int) Math.round(input.f4));
+                    r = rand.nextInt((int) Math.round(input.f4));//si
+                    s.getSample().set(r,new Tuple2<>(input.f0,input.f1));
+
+                }
+
+                s.count++; // readed tuples from stratum
+                stateSample.update(s);
+            }
+
+            if(s.count==input.f4 && s.count!=0){// if read all the expected tuples
+
+                for(int i=0; i<s.sample.size();i++){ //produce output with the sample
+
+                    out.collect(s.sample.get(i));
+                }
+            }
+
+        }
+
+        @Override
+        public void open(Configuration config) {
+            //StateDescriptor holds name and characteristics of state
+            ValueStateDescriptor<StateSample> descriptor = new ValueStateDescriptor<>(
+                    "sum", // the state name
+                    TypeInformation.of(new TypeHint<StateSample>() {})); // type information
+            stateSample = getRuntimeContext().getState(descriptor);//Access state using getRuntimeContext()
+        }
+
+    }
 
 
 
@@ -111,14 +235,26 @@ public class Job2 {
         return consumer;
     }
 
-    public static FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> createStringProducer2(
+
+    public static FlinkKafkaConsumer<String> createStringConsumerForInput(
+            String topic, String kafkaAddress, String kafkaGroup ) {
+
+        Properties props = new Properties();
+        props.setProperty("bootstrap.servers", kafkaAddress);
+        props.setProperty("group.id",kafkaGroup);
+        KafkaInputSchema t = new KafkaInputSchema(topic);
+        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>(
+                topic, t, props);
+        //System.out.println("THIS IS IT "+t.EOS);
+        return consumer;
+    }
+
+
+    public static FlinkKafkaProducer<Tuple2<String,String>> createStringProducer2(
             String topic, String kafkaAddress){
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
-        //TODO implemented based on this
-        //https://github.com/luweizheng/flink-tutorials/blob/2a72c375d182cc47da016627023083ba85808f96/src/main/java/com/flink/tutorials/java/projects/wordcount/WordCountKafkaInKafkaOut.java
-        //FlinkKafkaProducer producer = new FlinkKafkaProducer<>(topic, (SerializationSchema<Tuple5<String,Double,Double,Double,Double>>) new KafkaTestSchema(),props, FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
-        FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> producer =  new FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>>(topic, new KafkaTestSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
+        FlinkKafkaProducer<Tuple2<String,String>> producer =  new FlinkKafkaProducer<Tuple2<String,String>>(topic, new KafkaFinalSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
         return producer;
     }
 }

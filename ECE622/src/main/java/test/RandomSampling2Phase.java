@@ -17,8 +17,9 @@ import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.util.Collector;
+import tuc.StateSample;
+
 import java.util.Random;
-import java.util.Vector;
 
 public class RandomSampling2Phase {
 
@@ -125,7 +126,7 @@ double M =20.0D;
          * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
          */
 
-        private transient ValueState< StateSample > stateSample;
+        private transient ValueState<StateSample> stateSample;
 
         @Override
         public void processElement(Tuple5<String,String,Double,Double,Double> input, Context ctx, Collector<Tuple2<String,String>> out) throws Exception {
