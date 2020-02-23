@@ -8,6 +8,7 @@ import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.runtime.checkpoint.MasterTriggerRestoreHook;
 import org.apache.flink.streaming.api.TimeCharacteristic;
+import org.apache.flink.streaming.api.datastream.ConnectedStreams;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
@@ -22,15 +23,15 @@ import org.apache.flink.util.Collector;
 
 import javax.annotation.Nullable;
 import javax.naming.Context;
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import tuc.Calculations;
+import utils.JoinProcessFunction;
 import utils.KafkaMsgSchema;
 import utils.KafkaTestSchema;
 
@@ -42,7 +43,7 @@ public class RandomSampling {
     public static void main(String[] args) throws Exception {
 
         String inputTopic = "csvtokafka2";
-        String outputTopic = "flink2";
+        String outputTopic = "flink19";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
         String pattern = "^\\bEndOfStream\\b$";
@@ -138,7 +139,7 @@ public class RandomSampling {
                 ;
         sum.print();
 
-        sum.addSink(flinkKafkaProducer);
+//        sum.addSink(flinkKafkaProducer);
 
         DataStream<Tuple5<String,Double,Double,Double,Double>> finsum = sum
                 .flatMap(new FlatMapFunction<Tuple5<String,Double,Double,Double,Double>, Tuple5<String,Double,Double,Double,Double>>() {
@@ -155,9 +156,19 @@ public class RandomSampling {
                 .sum(1)
                 ;
 
-        finsum.print();
-        finsum.addSink(flinkKafkaProducer);
 
+        finsum.print();
+        //finsum.union(sum).print();
+
+
+        finsum.addSink(flinkKafkaProducer);
+        sum.addSink(flinkKafkaProducer);
+
+        //ConnectedStreams<Tuple5<String,Double,Double,Double,Double>, Tuple5<String,Double,Double,Double,Double>> joinStream = finsum.connect(sum);
+
+        //DataStream<Tuple6<String,Double,Double,Double,Double,Double>> gtxs = joinStream.process(new JoinProcessFunction());
+        //ConnectedStreams<Tuple5<String,Double,Double,Double,Double>,Tuple5<String,Double,Double,Double,Double>> connectedStreams = finsum.connect(sum);
+        //gtxs.print();
         //execute program to see action
         env.execute("Streaming for Random Sampling");
 

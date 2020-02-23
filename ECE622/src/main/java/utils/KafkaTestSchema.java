@@ -68,28 +68,3 @@ public class KafkaTestSchema implements KafkaSerializationSchema<Tuple5<String,D
         return BasicTypeInfo.STRING_TYPE_INFO;
     }
 }
-//}
-//}
-//
-//public class KafkaTestSchema implements DeserializationSchema<UserBehavior>, SerializationSchema<UserBehavior> {
-//
-//    @Override
-//    public UserBehavior deserialize(byte[] message) throws IOException {
-//        return JSONObject.parseObject(message, UserBehavior.class);
-//    }
-//
-//    @Override
-//    public boolean isEndOfStream(UserBehavior nextElement) {
-//        return false;
-//    }
-//
-//    @Override
-//    public byte[] serialize(UserBehavior element) {
-//        return JSONObject.toJSONString(element).getBytes(StandardCharsets.UTF_8);
-//    }
-//
-//    @Override
-//    public TypeInformation<UserBehavior> getProducedType() {
-//        return TypeInformation.of(UserBehavior.class);
-//    }
-//}
