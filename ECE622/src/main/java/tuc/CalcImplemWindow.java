@@ -12,7 +12,7 @@ import org.apache.flink.util.Collector;
 
 
 
-public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Double>, Tuple5<String, Double, Double,Double,Double>, Tuple, TimeWindow> {
+public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Double>, Tuple6<String, Double, Double,Double,Double,String>, Tuple, TimeWindow> {
 
     /**
      * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
@@ -25,7 +25,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
 
 
     @Override
-    public void process(Tuple key, Context ctx, Iterable<Tuple2<String, Double>> input, Collector<Tuple5<String, Double, Double,Double,Double>> out) throws Exception {
+    public void process(Tuple key, Context ctx, Iterable<Tuple2<String, Double>> input, Collector<Tuple6<String, Double, Double,Double,Double,String>> out) throws Exception {
 
         // access the state value
         Calculations new_state = state.value();
@@ -48,7 +48,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
                 new_state = new Calculations();
                 new_state.__key = in.f0;
             }
-            //new_state.__gammaFin=-1;
+            new_state.__gammaFin="Total";
 
             new_state.__count++;
 
@@ -70,7 +70,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple2<String, Doub
             state.update(new_state);
         }
 
-        out.collect(new Tuple5<String,Double,Double,Double, Double>(input.iterator().next().getField(0),new_state.__mean,new_state.__var,new_state.__count,new_state.__gamma));
+        out.collect(new Tuple6<String,Double,Double,Double, Double,String>(input.iterator().next().getField(0),new_state.__mean,new_state.__var,new_state.__count,new_state.__gamma,new_state.__gammaFin));
 
 
     }

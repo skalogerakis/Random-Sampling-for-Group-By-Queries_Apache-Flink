@@ -2,8 +2,12 @@ package tuc;
 
 import jdk.nashorn.internal.objects.Global;
 import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.functions.JoinFunction;
 import org.apache.flink.api.common.serialization.SerializationSchema;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
+import org.apache.flink.api.common.typeinfo.TypeHint;
+import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.runtime.checkpoint.MasterTriggerRestoreHook;
@@ -14,6 +18,7 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
@@ -31,7 +36,7 @@ import java.util.regex.Pattern;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import tuc.Calculations;
-import utils.JoinProcessFunction;
+//import utils.JoinProcessFunction;
 import utils.KafkaMsgSchema;
 import utils.KafkaTestSchema;
 
@@ -43,7 +48,7 @@ public class RandomSampling {
     public static void main(String[] args) throws Exception {
 
         String inputTopic = "csvtokafka2";
-        String outputTopic = "flink19";
+        String outputTopic = "flink2";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
         String pattern = "^\\bEndOfStream\\b$";
@@ -114,6 +119,11 @@ public class RandomSampling {
                         out.collect(temp1);
                     }
                 });
+        input.print();
+
+        //TODO add sink and write input in another topic formatted in specific way
+        //input.addSink();
+
 
         /**
          *          key   sum   count   mean   var
@@ -132,7 +142,7 @@ public class RandomSampling {
          * TODO check if we want to add timestamps and watermarks
          */
         //TODO MUST REMOVE LAST DUMMY ELEMENT
-        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
+        DataStream<Tuple6<String,Double,Double,Double,Double,String>> sum = input
                 .keyBy(0)
                 .timeWindow(Time.seconds(30))
                 .process(new CalcImplemWindow())
@@ -142,12 +152,14 @@ public class RandomSampling {
 //        sum.addSink(flinkKafkaProducer);
 
         DataStream<Tuple5<String,Double,Double,Double,Double>> finsum = sum
-                .flatMap(new FlatMapFunction<Tuple5<String,Double,Double,Double,Double>, Tuple5<String,Double,Double,Double,Double>>() {
+                .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple5<String,Double,Double,Double,Double>>() {
                     @Override
-                    public void flatMap(Tuple5<String,Double,Double,Double,Double> value, Collector<Tuple5<String,Double,Double,Double,Double>> out)
+                    public void flatMap(Tuple6<String,Double,Double,Double,Double,String> value, Collector<Tuple5<String,Double,Double,Double,Double>> out)
                             throws Exception {
                         //String[] words = value.split(",");
                         Tuple5<String,Double,Double,Double,Double> temp1 = new Tuple5<>("Total", value.f4,-1D,-1D,-1D);
+
+                        //System.out.println("THIS is "+temp1.toString());
                         out.collect(temp1);
                     }
                 })
@@ -158,11 +170,35 @@ public class RandomSampling {
 
 
         finsum.print();
+
+        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> joinedStream= sum
+                .join(finsum)
+                .where(new KeySelector<Tuple6<String,Double,Double,Double,Double,String>, String>() {
+                    @Override
+                    public String getKey(Tuple6<String,Double,Double,Double,Double,String> stringStringTuple6) throws Exception {
+                        return stringStringTuple6.f5;
+                    }
+                })
+                .equalTo(new KeySelector<Tuple5<String,Double,Double,Double,Double>, String>() {
+                    @Override
+                    public String getKey(Tuple5<String,Double,Double,Double,Double> stringDoubleDoubleDoubleTuple5) throws Exception {
+                        return stringDoubleDoubleDoubleTuple5.f0;
+                    }
+                })
+                .window(TumblingEventTimeWindows.of(Time.seconds(30)))
+                //.allowedLateness(Time.seconds(10))
+                .apply(new JoinFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple5<String,Double,Double,Double,Double>, Tuple6<String, Double, Double, Double, Double,Double>>() {
+                    @Override
+                    public Tuple6<String, Double, Double, Double, Double,Double> join(Tuple6<String,Double,Double,Double,Double,String> join1, Tuple5<String,Double,Double,Double,Double> join2) throws Exception {
+                        return new Tuple6<>(join1.f0,join1.f1,join1.f2,join1.f3,join1.f4,join2.f1);
+                    }
+                })
+                ;
         //finsum.union(sum).print();
 
-
-        finsum.addSink(flinkKafkaProducer);
-        sum.addSink(flinkKafkaProducer);
+        joinedStream.print();
+//        finsum.addSink(flinkKafkaProducer);
+//        sum.addSink(flinkKafkaProducer);
 
         //ConnectedStreams<Tuple5<String,Double,Double,Double,Double>, Tuple5<String,Double,Double,Double,Double>> joinStream = finsum.connect(sum);
 

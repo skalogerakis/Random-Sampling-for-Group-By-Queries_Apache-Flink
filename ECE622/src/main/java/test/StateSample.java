@@ -1,6 +1,7 @@
 package test;
 
 import org.apache.flink.api.java.tuple.Tuple11;
+import org.apache.flink.api.java.tuple.Tuple2;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -8,7 +9,7 @@ import java.util.Vector;
 public class StateSample implements Serializable {
 
     int count;
-    Vector <Tuple11>sample;
+    Vector <Tuple2>sample;
 
     public StateSample() {
         sample =new Vector<>();
@@ -26,11 +27,11 @@ public class StateSample implements Serializable {
         this.count = count;
     }
 
-    public Vector<Tuple11> getSample() {
+    public Vector<Tuple2> getSample() {
         return sample;
     }
 
-    public void setSample(Vector<Tuple11> sample) {
+    public void setSample(Vector<Tuple2> sample) {
         this.sample = sample;
     }
 

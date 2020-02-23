@@ -12,6 +12,6 @@ public class Calculations {
     public double __var;
     public double __mean;
     public double __gamma;
-    public double __gammaFin;
+    public String __gammaFin;
     //public long lastModified;
 }

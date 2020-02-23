@@ -1,33 +1,24 @@
 package test;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+
 import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.functions.JoinFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.java.sampling.ReservoirSamplerWithReplacement;
-import org.apache.flink.api.java.sampling.ReservoirSamplerWithoutReplacement;
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
-import org.apache.flink.streaming.api.functions.ProcessFunction;
-import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Enumeration;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Vector;
-
-import static java.lang.Double.valueOf;
 
 public class RandomSampling2Phase {
 
@@ -38,79 +29,83 @@ public class RandomSampling2Phase {
 
 double M =20.0D;
 
-        //final Time timeout = Time.milliseconds(5);
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
+                        //key    count   γ      si
+        DataStream<Tuple4<String,Double,Double,Double>> inputFrom1Phase = env
+               .readTextFile("/home/john/TUC_Advanced_Database_System/MyDocs/phase2input")
 
-
-        Vector <DataForSampling>dataForSampling = new Vector<DataForSampling>();
-        try {
-            File myObj = new File("/home/john/TUC_Advanced_Database_System/MyDocs/phase2input");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-
-                String[] words = data.split(",");
-                DataForSampling d = new DataForSampling( words[0],Double.parseDouble(words[1]),Double.parseDouble(words[2]),Double.parseDouble(words[3]));
-                d.setGamai( d.getSd()/d.getMean() );
-                dataForSampling.addElement(d);
-
-               // System.out.println(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        double gama=0;
-        for(int i=0; i<dataForSampling.size();i++){// calc sum(gamai)
-            //System.out.println(dataForSampling.get(i).getKey()+" " + dataForSampling.get(i).getMean()+" " +dataForSampling.get(i).getSd()+" " +dataForSampling.get(i).getCount()+" " +dataForSampling.get(i).getGamai()+" ");
-            gama+=dataForSampling.get(i).getGamai();
-        }
-
-        for(int i=0; i<dataForSampling.size();i++){// insert gama and si
-            dataForSampling.get(i).setGama(gama);
-            dataForSampling.get(i).setSi(Math.round( M*(dataForSampling.get(i).getGamai()/gama)) );
-        }
-
-        System.out.println("M="+M);
-        for(int i=0; i<dataForSampling.size();i++){
-            //System.out.println(dataForSampling.get(i).getKey()+" " + dataForSampling.get(i).getMean()+" " +dataForSampling.get(i).getSd()+" " +dataForSampling.get(i).getCount()+" " +dataForSampling.get(i).getGamai()+" " +dataForSampling.get(i).getGama()+" " +dataForSampling.get(i).getSi());
-            System.out.println("key= "+dataForSampling.get(i).getKey()+" samples=" +dataForSampling.get(i).getSi());
-
-        }
+               .flatMap(new FlatMapFunction<String, Tuple4<String,Double,Double,Double>>() {
+            @Override
+            public void flatMap(String value, Collector<Tuple4<String,Double,Double,Double>> out)
+                    throws Exception {
+                String[] words = value.split(",");
+                double si = Math.round(M * (Double.parseDouble(words[2]) / Double.parseDouble(words[3])));//M*γi/γ
+                //System.out.println(words[0]+" "+si);
+                out.collect(new Tuple4<>(words[0], Double.parseDouble(words[1]), Double.parseDouble(words[3]), si));
+            }});
 
 
 
-        DataStream<Tuple12<String,String,String,String,String,String, Double,String,Double,Double,String,DataForSampling>> input = env.readTextFile("/home/john/TUC_Advanced_Database_System/MyDocs/openaq_Bosnia2.csv")
-                .flatMap(new FlatMapFunction<String, Tuple12<String,String,String,String,String,String, Double,String,Double,Double,String,DataForSampling>>() {
+        //TODO key,attributes
+        DataStream<Tuple2<String,String>> input = env.readTextFile("/home/john/TUC_Advanced_Database_System/MyDocs/openaq_Bosnia2.csv")
+
+                .flatMap(new FlatMapFunction<String, Tuple2<String,String>>() {
                     @Override
-                    public void flatMap(String value, Collector<Tuple12<String,String,String,String,String,String, Double,String,Double,Double,String,DataForSampling>> out)
+                    public void flatMap(String value, Collector<Tuple2<String,String>> out)
                             throws Exception {
                         String[] words = value.split(",");
-                        DataForSampling d= new DataForSampling();
-
-                        // insert data for sampling in every tuple
-                        for(int i=0; i<dataForSampling.size();i++) {
-                            if(dataForSampling.get(i).getKey().equals(words[0]))
-                             d =dataForSampling.get(i);
+                        String arg= "";
+                        for(int i=1; i<words.length;i++) {
+                            if(i==1){
+                            arg=words[i];}
+                            else{
+                                arg=arg+","+words[i];}
                         }
-                        Tuple12<String,String,String,String,String,String, Double,String,Double,Double,String,DataForSampling> temp1 = new Tuple12<>(words[0],words[1],words[2],words[3],words[4],words[5], Double.parseDouble(words[6]),words[7],Double.parseDouble(words[8]),Double.parseDouble(words[9]),words[10],d);
-                        //tuple output
-                        out.collect(temp1);
+
+                        out.collect(new Tuple2<String,String>(words[0],arg));
                     }
+
                 });
 
 
+                          // key  args   γi     γ      si
+        DataStream<Tuple5<String,String,Double,Double,Double>> joinedStream= input
+                .join(inputFrom1Phase)
+                .where(new KeySelector<Tuple2<String, String>, String>() {
+                    @Override
+                    public String getKey(Tuple2<String, String> stringStringTuple2) throws Exception {
+                        return stringStringTuple2.f0;
+                    }
+                })
+                .equalTo(new KeySelector<Tuple4<String, Double, Double, Double>, String>() {
+                    @Override
+                    public String getKey(Tuple4<String, Double, Double, Double> stringDoubleDoubleDoubleTuple4) throws Exception {
+                        return stringDoubleDoubleDoubleTuple4.f0;
+                    }
+                })
+                .window(TumblingEventTimeWindows.of(Time.seconds(2)))
+                //.allowedLateness(Time.seconds(10))
+                .apply(new JoinFunction<Tuple2<String, String>, Tuple4<String, Double, Double, Double>, Tuple5<String, String, Double, Double, Double>>() {
+                    @Override
+                    public Tuple5<String, String, Double, Double, Double> join(Tuple2<String, String> stringStringTuple2, Tuple4<String, Double, Double, Double> stringDoubleDoubleDoubleTuple4) throws Exception {
+                        return new Tuple5<>(stringStringTuple2.f0,stringStringTuple2.f1,stringDoubleDoubleDoubleTuple4.f1,stringDoubleDoubleDoubleTuple4.f2,stringDoubleDoubleDoubleTuple4.f3);
+                    }
+                })
+                ;
 
 
 
 
-        DataStream<Tuple11<String,String,String,String,String,String, Double,String,Double,Double,String>> sample =input
+
+
+        DataStream<Tuple2<String,String>> sample =joinedStream
+
                 .keyBy(0)
                 .process(new ReservoirSampler())
                 ;
+
 
         sample.keyBy(0).print();
 
@@ -121,7 +116,10 @@ double M =20.0D;
     }//main
 
 
-    public static class ReservoirSampler extends KeyedProcessFunction<Tuple,Tuple12<String,String,String,String,String,String, Double,String,Double,Double,String,DataForSampling>, Tuple11<String,String,String,String,String,String, Double,String,Double,Double,String>> {
+
+
+
+    public static class ReservoirSampler extends KeyedProcessFunction<Tuple,Tuple5<String,String,Double,Double,Double>, Tuple2<String,String>> {
 
         /**
          * The ValueState handle. The first field is the key, the second field a running sum, the third a count of all elements.
@@ -130,9 +128,10 @@ double M =20.0D;
         private transient ValueState< StateSample > stateSample;
 
         @Override
-        public void processElement(Tuple12<String,String,String,String,String,String, Double,String,Double,Double,String,DataForSampling> input,Context ctx, Collector<Tuple11<String,String,String,String,String,String, Double,String,Double,Double,String>> out) throws Exception {
+        public void processElement(Tuple5<String,String,Double,Double,Double> input, Context ctx, Collector<Tuple2<String,String>> out) throws Exception {
 
             // access the state value
+
 
 
             StateSample s = stateSample.value();
@@ -142,9 +141,9 @@ double M =20.0D;
                 s.count=0;
             }
 
-
-            if(s.sample.size()<input.f11.si){ // fill the sample vector with si elements
-                Tuple11<String,String,String,String,String,String, Double,String,Double,Double,String> t = new Tuple11<>(input.f0,input.f1,input.f2,input.f3,input.f4,input.f5,input.f6,input.f7,input.f8,input.f9,input.f10);
+        //System.out.println(input.productElement(0));
+            if(s.sample.size()<input.f4){ // fill the sample vector with si elements
+                Tuple2<String ,String> t = new Tuple2<String ,String>(input.f0,input.f1);
                 s.sample.add(t);
                 s.count++;// count how many elements have inserted
                 stateSample.update(s);
@@ -153,7 +152,7 @@ double M =20.0D;
 
                 Random rand = new Random();
                 int r = rand.nextInt(s.count); // generate number from 0 to inserted elements
-                if (r < input.f11.si) {// get in with pr si/n
+                if (r < input.f4) {//si  get in with pr si/n
                     getIn = 1;
                 } // pr=si/n
                 else {
@@ -161,8 +160,9 @@ double M =20.0D;
                 }
 
                 if(getIn==1){ // if get in =1 replace with pr 1/si
-                    r = rand.nextInt((int) input.f11.si);
-                    s.getSample().set(r,new Tuple11<>(input.f0,input.f1,input.f2,input.f3,input.f4,input.f5,input.f6,input.f7,input.f8,input.f9,input.f10));
+                    //System.out.println(input.f0+" "+(int) Math.round(input.f4));
+                    r = rand.nextInt((int) Math.round(input.f4));//si
+                    s.getSample().set(r,new Tuple2<>(input.f0,input.f1));
 
                 }
 
@@ -170,7 +170,7 @@ double M =20.0D;
                 stateSample.update(s);
             }
 
-            if(s.count==input.f11.count){// if read all the expected tuples
+            if(s.count==input.f4){// if read all the expected tuples
 
                 for(int i=0; i<s.sample.size();i++){ //produce output with the sample
 
@@ -178,26 +178,18 @@ double M =20.0D;
                 }
             }
 
-
-
         }
-
 
             @Override
             public void open(Configuration config) {
-
                 //StateDescriptor holds name and characteristics of state
                 ValueStateDescriptor<StateSample> descriptor = new ValueStateDescriptor<>(
                         "sum", // the state name
                         TypeInformation.of(new TypeHint<StateSample>() {})); // type information
                 stateSample = getRuntimeContext().getState(descriptor);//Access state using getRuntimeContext()
-
-
             }
 
     }
-
-
 
 
 

@@ -55,6 +55,8 @@ public class Job2 {
         //TODO disable that in this consumer enable in the other one
         flinkKafkaConsumer.setStartFromEarliest();
 
+       // flinkKafkaConsumer.notifyCheckpointComplete();
+
 //        KafkaTestSchema test = new KafkaTestSchema(inputTopic);
 //
 //        if(test.isEndOfStream(flinkKafkaConsumer.toString())){
@@ -102,9 +104,10 @@ public class Job2 {
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
         props.setProperty("group.id",kafkaGroup);
+        KafkaTestSchema t = new KafkaTestSchema(topic);
         FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>(
-                topic, new KafkaTestSchema(topic), props);
-
+                topic, t, props);
+        //System.out.println("THIS IS IT "+t.EOS);
         return consumer;
     }
 

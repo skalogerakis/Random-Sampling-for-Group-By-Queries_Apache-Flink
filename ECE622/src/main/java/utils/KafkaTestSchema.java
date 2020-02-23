@@ -25,14 +25,14 @@ public class KafkaTestSchema implements KafkaSerializationSchema<Tuple5<String,D
     //https://github.com/zBrainiac/edge2ailab/blob/03cf62b2dfd38c35547e8f8d547ef514b21cddec/src/main/java/FlinkConsumer/iotConsumerFilter.java
     //https://www.fatalerrors.org/a/apache-flink-talk-series-14-1-kafka-of-data-stream-connectors.html?fbclid=IwAR0bUHM2GHR52mlotbuxcmKll-fpK2e33atYbzIJx2tQk8ZKXHWK3H2IK-Y
     private String topic;
-    public boolean EOS;
+    public boolean EOS=false;
 
     //private final DeserializationSchema<String> deserializationSchema;
 
     public KafkaTestSchema(String topic) {
         super();
         this.topic = topic;
-        this.EOS = false;
+        //this.EOS = false;
         //this.deserializationSchema = deserializationSchema;
     }
     @Override
@@ -49,7 +49,7 @@ public class KafkaTestSchema implements KafkaSerializationSchema<Tuple5<String,D
         String regex = "^Total\\,(-)*(\\d.+){1}\\,-1\\.0{1}\\,-1\\.0{1}\\,-1\\.0{1}$";
         //System.out.println(s);
         if(s.matches(regex)){
-            System.out.println("BITCH");
+            System.out.println("Yaeh");
             this.EOS=true;
             return true;
         }
