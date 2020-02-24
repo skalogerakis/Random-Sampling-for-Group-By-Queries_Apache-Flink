@@ -25,10 +25,8 @@ public class ReservoirSampler extends KeyedProcessFunction<Tuple, Tuple5<String,
     public void processElement(Tuple5<String,String,Double,Double,Double> input, Context ctx, Collector<Tuple2<String,String>> out) throws Exception {
 
         // access the state value
-
-
-
         StateSample s = stateSample.value();
+
         int getIn=0;
         if (s==null){ //state initialization
             s= new StateSample();

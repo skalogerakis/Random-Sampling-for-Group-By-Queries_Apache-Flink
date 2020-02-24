@@ -1,38 +1,25 @@
 package tuc;
 
+import KafkaSchemas.KafkaFinalSchema;
+import KafkaSchemas.KafkaInputSchema;
+import KafkaSchemas.KafkaTestSchema;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.JoinFunction;
-import org.apache.flink.api.common.state.ValueState;
-import org.apache.flink.api.common.state.ValueStateDescriptor;
-import org.apache.flink.api.common.typeinfo.TypeHint;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.*;
-import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
 import org.apache.flink.util.Collector;
-import utils.KafkaFinalSchema;
-import utils.KafkaInputSchema;
-import utils.KafkaTestSchema;
 
 import java.util.Properties;
-import java.util.Random;
 
 public class Job2 {
 
-    /**
-     * TODO on Job2
-     * -Support version with dynamic keys
-     * @param args
-     * @throws Exception
-     */
 
     public static void main(String[] args) throws Exception {
 
@@ -42,7 +29,7 @@ public class Job2 {
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
 
-        double M =20.0D;
+        double M =100.0D;
         // set up the execution environment
         final StreamExecutionEnvironment env2 = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -119,7 +106,7 @@ public class Job2 {
                         return stringDoubleDoubleDoubleTuple4.f0;
                     }
                 })
-                .window(TumblingEventTimeWindows.of(Time.seconds(2)))
+                .window(TumblingEventTimeWindows.of(Time.seconds(50)))
                 //.allowedLateness(Time.seconds(10))
                 .apply(new JoinFunction<Tuple2<String, String>, Tuple4<String, Double, Double, Double>, Tuple5<String, String, Double, Double, Double>>() {
                     @Override
@@ -136,7 +123,7 @@ public class Job2 {
                 ;
 
 
-        //sample.keyBy(0).print();
+        sample.keyBy(0).print();
 
         sample.keyBy(0).addSink(flinkKafkaProducer);
         env2.execute("Job2");
@@ -149,10 +136,8 @@ public class Job2 {
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
         props.setProperty("group.id",kafkaGroup);
-        KafkaTestSchema t = new KafkaTestSchema(topic);
-        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>(
-                topic, t, props);
-        //System.out.println("THIS IS IT "+t.EOS);
+        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>(topic, new KafkaTestSchema(topic), props);
+
         return consumer;
     }
 
@@ -163,10 +148,8 @@ public class Job2 {
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
         props.setProperty("group.id",kafkaGroup);
-        KafkaInputSchema t = new KafkaInputSchema(topic);
-        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>(
-                topic, t, props);
-        //System.out.println("THIS IS IT "+t.EOS);
+        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>(topic, new KafkaInputSchema(topic), props);
+
         return consumer;
     }
 

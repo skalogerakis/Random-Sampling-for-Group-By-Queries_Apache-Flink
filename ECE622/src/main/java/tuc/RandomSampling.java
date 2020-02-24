@@ -13,19 +13,21 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
 import org.apache.flink.util.Collector;
-
+import KafkaSchemas.*;
 import java.util.*;
-
-import utils.KafkaInputSchema;
-
-import utils.KafkaTestSchema;
 
 
 public class RandomSampling {
 
+    /**
+     * NAME:
+     * DESCRIPTION:
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
 
-        String inputTopic = "csvkafka";
+        String inputTopic = "csvtokafka1";
 
         String inputNewTopic = "flinkout1";
         String outputTopic = "flinkaggr1";
@@ -33,15 +35,23 @@ public class RandomSampling {
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
 
-        String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
-        String keys = "location";
-        String aggr = "value";
+        //For OpenAq dataset
+//        String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
+//        String keys = "location";
+//        String aggr = "value";
+
+        //For population.csv
+        String example = "Year,District.Code,District.Name,Neighborhood.Code,Neighborhood.Name,Gender,Age,Number";
+        String keys = "District.Name";
+        String aggr = "Number";
+
+        //Year,District.Code,District.Name,Neighborhood.Code,Neighborhood.Name,Gender,Age,Number
+
 
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         env.setParallelism(4);
-
         env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
 
         HashMap<String,List<Integer>> integerList = attrEval(example,keys,aggr);
@@ -109,7 +119,7 @@ public class RandomSampling {
 
         DataStream<Tuple6<String,Double,Double,Double,Double,String>> sum = input
                 .keyBy(0)
-                .timeWindow(Time.seconds(30))
+                .timeWindow(Time.seconds(50))
                 .process(new CalcImplemWindow())
                 ;
         sum.print();
@@ -125,7 +135,7 @@ public class RandomSampling {
                     }
                 })
                 .keyBy(0)
-                .timeWindow(Time.seconds(30))
+                .timeWindow(Time.seconds(50))
                 .sum(1)
                 ;
 
@@ -145,7 +155,7 @@ public class RandomSampling {
                         return stringDoubleDoubleDoubleTuple5.f0;
                     }
                 })
-                .window(TumblingEventTimeWindows.of(Time.seconds(30)))
+                .window(TumblingEventTimeWindows.of(Time.seconds(50)))
                 //.allowedLateness(Time.seconds(10))
                 .apply(new JoinFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple5<String,Double,Double,Double,Double>, Tuple6<String, Double, Double, Double, Double,Double>>() {
                     @Override

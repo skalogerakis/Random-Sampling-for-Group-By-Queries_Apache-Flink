@@ -23,46 +23,45 @@ public class CSV_Parser {
     //this is the name of our kafka topic
     private static String KafkaTopic = null;
     private static String CsvFile = null;
+    private static int headerExists = 0;
     private static final Logger LOGGER = Logger.getLogger(CSV_Parser.class.getName());
 
 
     /**
      *  TODO set a default if not given by the user
      *  TODO check for input
-     *  TODO support JSON format and check header case with csv
-     *
-     *
      */
 
     private final static String BOOTSTRAP_SERVERS =
             "localhost:9092,localhost:9093,localhost:9094";
 
+    /**
+     * -------------------------------------------------------------------------------------------------------------------
+     * Name:CSV_Parser
+     * Description: This class is responsible to parse data from a .csv file and write them to a certain Kafka topic
+     * TODO ADD ARGS
+     * @param args
+     * @throws IOException
+     * -------------------------------------------------------------------------------------------------------------------
+     */
     public static void main(String[] args) throws IOException {
 
-
+        //Create a logger for debugging purposes
         CSV_Parser csvParser = new CSV_Parser();
         csvParser.LogConfig();
 
+        //File input
+        //TODO add validity checks
         if (args != null){
             KafkaBrokerEndpoint = args[0];
             KafkaTopic = args[1];
             CsvFile = args[2];
+            headerExists = Integer.parseInt(args[3]);
         }
 
-        /**
-         * Configure properties
-         * BOOTSTRAP_SERVERS_CONFIG: Servers that Producer uses to establish initial connection
-         * CLIENT_ID_CONFIG: ID to pass to the server when making requests so the server can track the source of requests
-         */
-        Properties props = new Properties();
 
-        props.put(ProducerConfig.CLIENT_ID_CONFIG, "KafkaCsvProducer");
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaBrokerEndpoint);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        //Set acknowledgements for producer requests.
-        props.put(ProducerConfig.ACKS_CONFIG, "all");
-        props.put(ProducerConfig.RETRIES_CONFIG, 0);
+        Properties props = new Properties();
+        csvParser.propConfif(props);
 
         KafkaProducer<String, String> producer = null;
 
@@ -75,10 +74,18 @@ public class CSV_Parser {
 
         try{
             Stream<String> FileStream = Files.lines(Paths.get(CsvFile));
-            //System.out.println(Files.lines(Paths.get(CsvFile)).count());
+
             KafkaProducer<String, String> finalProducer = producer;
             FileStream.forEach(line -> {
-                //System.out.println(line.toString());
+                /**
+                 * Ignores first line when there is a header in our csv to ignore. Default value does not
+                 * ignore first line
+                 */
+                if(headerExists==1){
+                    headerExists=0;
+                    return;
+                }
+
                 /**
                  * Synchronous Kafka producer to make sure we will not lose any data
                  */
@@ -93,7 +100,7 @@ public class CSV_Parser {
 
             });
             /**
-             * Final message sent after our stream terminated
+             * Final message sent after our stream terminated.CURRENTLY NOT USED
              */
             //finalProducer.send(new ProducerRecord<>(KafkaTopic, "EndOfStream"));
             finalProducer.flush();
@@ -129,6 +136,21 @@ public class CSV_Parser {
         //Console handler removed
         LOGGER.removeHandler(consoleHandler);
         LOGGER.setUseParentHandlers(false);
+    }
+
+    public void propConfif(Properties props){
+        /**
+         * Configure properties
+         * BOOTSTRAP_SERVERS_CONFIG: Servers that Producer uses to establish initial connection
+         * CLIENT_ID_CONFIG: ID to pass to the server when making requests so the server can track the source of requests
+         */
+        props.put(ProducerConfig.CLIENT_ID_CONFIG, "KafkaCsvProducer");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaBrokerEndpoint);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        //Set acknowledgements for producer requests.
+        props.put(ProducerConfig.ACKS_CONFIG, "all");
+        props.put(ProducerConfig.RETRIES_CONFIG, 0);
     }
 
 }
