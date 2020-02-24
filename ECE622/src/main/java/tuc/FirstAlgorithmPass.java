@@ -17,16 +17,20 @@ import KafkaSchemas.*;
 import java.util.*;
 
 
-public class RandomSampling {
+public class FirstAlgorithmPass {
 
     /**
      * NAME:
-     * DESCRIPTION:
+     * DESCRIPTION:This is the implementation of the first required job for our algorithm. In this job we parse data
+     * for the first time (bounded stream) and compute required aggregation such as average, count for each stratum
+     * (each stratum is formed by each distinct a group by attribute). We also compute values γi for each stratum
+     * and γ(sum of γι for all stratum) which are required in the second pass of the algorithm
      * @param args
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
 
+        //TODO take all of those as parameters
         String inputTopic = "csvtokafka1";
 
         String inputNewTopic = "flinkout1";
@@ -45,26 +49,36 @@ public class RandomSampling {
         String keys = "District.Name";
         String aggr = "Number";
 
-        //Year,District.Code,District.Name,Neighborhood.Code,Neighborhood.Name,Gender,Age,Number
-
 
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+        //parallelism definition
         env.setParallelism(4);
+
+        //Used Ingestion time as time characteristic
         env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
 
-        HashMap<String,List<Integer>> integerList = attrEval(example,keys,aggr);
+        //Used for dynamic key parsing from command line. More details in attrEval function below
+        HashMap<String,List<Integer>> TotalAttrList = attrEval(example,keys,aggr);
 
         /**
          * IMPORTANT: Messages sent by a kafka producer to a particular topic partition will be appended in the order they are sent.
          */
+        //---------------------------------------------------------------------------
+        //                             KAFKA CONSUMERS
+        //---------------------------------------------------------------------------
+
         FlinkKafkaConsumer<String> flinkKafkaConsumer = createStringConsumerForTopic(
                 inputTopic, address, consumerGroup);
-        //TODO enable that
+        //TODO see if we want to enable that
         flinkKafkaConsumer.setStartFromEarliest();
 
-        FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> flinkKafkaProducer = createStringProducer2(
+
+        //---------------------------------------------------------------------------
+        //                             KAFKA PRODUCERS
+        //---------------------------------------------------------------------------
+        FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> flinkKafkaProducer = createStringProducerAggr(
                 outputTopic, address);
         flinkKafkaProducer.setWriteTimestampToKafka(true);
 
@@ -72,25 +86,33 @@ public class RandomSampling {
                 inputNewTopic, address);
         flinkKafkaProducerInput.setWriteTimestampToKafka(true);
 
-        List<Integer> keyPosList = integerList.get("key");
-        List<Integer> attrPosList = integerList.get("attr");
-        List<Integer> aggrPosList = integerList.get("aggr");
+        //---------------------------------------------------------------------------
+        //                             KAFKA PRODUCERS
+        //---------------------------------------------------------------------------
 
-        DataStream<Tuple3<String, Double,String>> input = env.addSource(flinkKafkaConsumer)
+        //Position of attributes, aggregation, keys
+        List<Integer> keyPosList = TotalAttrList.get("key");
+        List<Integer> attrPosList = TotalAttrList.get("attr");
+        List<Integer> aggrPosList = TotalAttrList.get("aggr");
+
+        //Take input from kafka and transform it in form Tuple3<String, Double,String>, <Keys, AggregationValues,Other Attributes>
+        DataStream<Tuple3<String, Double,String>> inputTransformer = env.addSource(flinkKafkaConsumer)
                 .flatMap(new FlatMapFunction<String, Tuple3<String,Double,String>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple3<String, Double,String>> out)
                             throws Exception {
 
-
+                        //Create temp lists that hold all desired values
+                        //After we find all of those values, concat them in a single field, comma seperated
                         List<String> tempkey = new ArrayList<String>();
                         List<String> tempattr = new ArrayList<String>();
                         //List<String> tempaggr = new ArrayList<String>();
+
                         //TODO works only for one element right now
+                        //Currently works for one aggregation
                         int tempaggr = aggrPosList.get(0);
 
                         String[] words = value.split(",");
-
                         for(int i = 0; i< keyPosList.size(); i++){
                             tempkey.add(words[keyPosList.get(i)]);
                         }
@@ -113,18 +135,20 @@ public class RandomSampling {
                     }
                 });
 
-        //input.print();
+        //Send transformed data into a new topic so that we can process them and not require the same procedure in job2
+        inputTransformer.addSink(flinkKafkaProducerInput);
 
-        input.addSink(flinkKafkaProducerInput);
-
-        DataStream<Tuple6<String,Double,Double,Double,Double,String>> sum = input
+        //TODO change time to dynamic via input
+        //First aggregate computations
+        DataStream<Tuple6<String,Double,Double,Double,Double,String>> initAggr = inputTransformer
                 .keyBy(0)
                 .timeWindow(Time.seconds(50))
-                .process(new CalcImplemWindow())
+                .process(new initAggrWindow())
                 ;
-        sum.print();
+        initAggr.print();
 
-        DataStream<Tuple5<String,Double,Double,Double,Double>> finsum = sum
+        //Compute final gamma for all key by values. We use a dummy field to key by in this step.
+        DataStream<Tuple5<String,Double,Double,Double,Double>> totalGammaAggr = initAggr
                 .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple5<String,Double,Double,Double,Double>>() {
                     @Override
                     public void flatMap(Tuple6<String,Double,Double,Double,Double,String> value, Collector<Tuple5<String,Double,Double,Double,Double>> out)
@@ -139,10 +163,15 @@ public class RandomSampling {
                 .sum(1)
                 ;
 
-        finsum.print();
+        totalGammaAggr.print();
 
-        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> joinedStream= sum
-                .join(finsum)
+        /**
+         * As a final step we compute the final joined stream from the previous steps.
+         * We join initAggr and totalGammaAggr streams in the dummy field "Total" that we created in both stream
+         * The joined stream will include all the aggregations we want including gamma
+         */
+        DataStream<Tuple6<String,Double,Double,Double,Double,Double>> joinedStream= initAggr
+                .join(totalGammaAggr)
                 .where(new KeySelector<Tuple6<String,Double,Double,Double,Double,String>, String>() {
                     @Override
                     public String getKey(Tuple6<String,Double,Double,Double,Double,String> stringStringTuple6) throws Exception {
@@ -168,12 +197,13 @@ public class RandomSampling {
         joinedStream.print();
         joinedStream.addSink(flinkKafkaProducer);
 
+        //Print execution plan for visualisation purposes
+        System.out.println(env.getExecutionPlan());
+
         //execute program to see action
         env.execute("Streaming for Random Sampling");
 
     }
-
-
 
 
 
@@ -189,7 +219,7 @@ public class RandomSampling {
         return consumer;
     }
 
-    public static FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> createStringProducer2(
+    public static FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> createStringProducerAggr(
             String topic, String kafkaAddress){
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
@@ -211,12 +241,20 @@ public class RandomSampling {
 
     //TODO add checks when wrong input
     //TODO CHECK IF WE CAN HAVE MULTIPLE AGGREGATION. FOR NOW CAN BE USED ONLY WITH ONE
+    /**
+     * Name: attrEval
+     * Description: Function that spots the location of keys, aggregation, attribute given by the user from command line interface.
+     * @param attributes User must pass ALL the attributes parsed from .csv file in their EXACT order
+     * @param keys User must pass all the fields of the desired keys(from attributes) which will be used for group by implementation later
+     * @param aggregation User must pass the field for the aggregation(from attributes). FOR NOW ONLY ONE VALUE IS SUPPORTED FOR AGGREGATION
+     * @return HashMap with locations of keys, aggregation from attributes
+     */
     public static HashMap<String,List<Integer>> attrEval(String attributes, String keys, String aggregation){
         String[] attrSplitter = attributes.trim().split(",");
         String[] keySplitter = keys.trim().split(",");
-        //List<Integer> posList = new ArrayList<Integer>();
 
         HashMap<String,List<Integer>> attrParser = new HashMap<String,List<Integer>>();
+        //Make list for keys, attributes, aggregation respectively
         List<Integer> keyPosList = new ArrayList<Integer>();
         List<Integer> attrPosList = new ArrayList<Integer>();
         List<Integer> aggrPosList = new ArrayList<Integer>();
@@ -224,21 +262,20 @@ public class RandomSampling {
 
         for(int j=0; j<keySplitter.length;j++){
             for(int i=0; i<attrSplitter.length;i++){
+
                 if(keySplitter[j].compareToIgnoreCase(attrSplitter[i])==0){
                     keyPosList.add(i);
-                    //System.out.println("key "+i);
+                    continue;
                 }else{
                     attrPosList.add(i);
-                    //System.out.println("attr "+i);
-                    //System.out.println(attrSplitter[j] +" "+aggregation);
-
                 }
+
                 if(attrSplitter[i].compareToIgnoreCase(aggregation)==0){
                     aggrPosList.add(i);
-                    //System.out.println("aggr "+i);
                 }
             }
         }
+        //Add all lists of locations to our hashmap
         attrParser.put("key",keyPosList);
         attrParser.put("attr",attrPosList);
         attrParser.put("aggr",aggrPosList);

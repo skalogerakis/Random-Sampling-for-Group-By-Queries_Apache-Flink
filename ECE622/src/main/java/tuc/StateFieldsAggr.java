@@ -1,9 +1,10 @@
 package tuc;
 
 /**
- * Alternative way to store data handled in state
+ * Name:StateFieldsAggr
+ * Description:A simple class to store values used in aggregation
  */
-public class Calculations {
+public class StateFieldsAggr {
 
     public String __key;
     public double __sum;
@@ -13,5 +14,6 @@ public class Calculations {
     public double __mean;
     public double __gamma;
     public String __gammaFin;
-    //public long lastModified;
+
+
 }

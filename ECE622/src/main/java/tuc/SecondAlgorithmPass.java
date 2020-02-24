@@ -18,31 +18,31 @@ import org.apache.flink.util.Collector;
 
 import java.util.Properties;
 
-public class Job2 {
+public class SecondAlgorithmPass {
 
 
     public static void main(String[] args) throws Exception {
 
+        //TODO DYNAMIC INPUT
         String inputTopic = "flinkout1";
         String inputAggr = "flinkaggr1";
         String outputTopic = "flinkfinal";
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
-
         double M =100.0D;
+
         // set up the execution environment
-        final StreamExecutionEnvironment env2 = StreamExecutionEnvironment.getExecutionEnvironment();
+        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        env2.setParallelism(4);
+        //parallelism definition
+        env.setParallelism(4);
 
+        //Used Ingestion time as time characteristic
+        env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
 
-        env2.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
-
-        FlinkKafkaProducer<Tuple2<String,String>> flinkKafkaProducer = createStringProducer2(
-                outputTopic, address);
-
-        flinkKafkaProducer.setWriteTimestampToKafka(true);
-
+        //---------------------------------------------------------------------------
+        //                             KAFKA CONSUMERS
+        //---------------------------------------------------------------------------
         /**
          * IMPORTANT: Messages sent by a kafka producer to a particular topic partition will be appended in the order they are sent.
          */
@@ -51,8 +51,21 @@ public class Job2 {
         //TODO disable that in this consumer enable in the other one
         flinkKafkaConsumer.setStartFromEarliest();
 
+        FlinkKafkaConsumer<String> flinkKafkaConsumerInput = createStringConsumerForInput(
+                inputTopic, address, consumerGroup);
+        //TODO disable that in this consumer enable in the other one
+        flinkKafkaConsumerInput.setStartFromEarliest();
 
-        DataStream<Tuple4<String,Double,Double,Double>> inputAg = env2
+        //---------------------------------------------------------------------------
+        //                             KAFKA PRODUCERS
+        //---------------------------------------------------------------------------
+        FlinkKafkaProducer<Tuple2<String,String>> flinkKafkaProducer = createStringProducer2(
+                outputTopic, address);
+
+        flinkKafkaProducer.setWriteTimestampToKafka(true);
+
+
+        DataStream<Tuple4<String,Double,Double,Double>> inputAg = env
                 .addSource(flinkKafkaConsumer)
                 .flatMap(new FlatMapFunction<String, Tuple4<String,Double,Double,Double>>() {
                     @Override
@@ -66,13 +79,9 @@ public class Job2 {
 
         //inputAg.print();
 
-        FlinkKafkaConsumer<String> flinkKafkaConsumerInput = createStringConsumerForInput(
-                inputTopic, address, consumerGroup);
-        //TODO disable that in this consumer enable in the other one
-        flinkKafkaConsumerInput.setStartFromEarliest();
 
         //TODO do not print second aggregate attribute
-        DataStream<Tuple2<String,String>> inputStream = env2.addSource(flinkKafkaConsumerInput)
+        DataStream<Tuple2<String,String>> inputStream = env.addSource(flinkKafkaConsumerInput)
                 .flatMap(new FlatMapFunction<String, Tuple2<String,String>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple2<String,String>> out)
@@ -80,10 +89,8 @@ public class Job2 {
 
                         String[] words = value.split(";");
                         //Also available in words[1] aggregate
-                        Tuple2<String,String> temp1;
 
-                        temp1 = new Tuple2<>(words[0],words[2]);
-
+                        Tuple2<String,String> temp1 = new Tuple2<>(words[0],words[2]);
                         out.collect(temp1);
 
                     }
@@ -126,7 +133,11 @@ public class Job2 {
         sample.keyBy(0).print();
 
         sample.keyBy(0).addSink(flinkKafkaProducer);
-        env2.execute("Job2");
+
+        //Print execution plan for visualisation purposes
+        //https://flink.apache.org/visualizer/
+        System.out.println(env.getExecutionPlan());
+        env.execute("SecondAlgorithmPass");
 
     }
 
