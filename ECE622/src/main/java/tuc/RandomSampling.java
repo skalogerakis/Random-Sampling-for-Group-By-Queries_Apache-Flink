@@ -1,50 +1,27 @@
 package tuc;
 
-import jdk.nashorn.internal.objects.Global;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.JoinFunction;
-import org.apache.flink.api.common.serialization.SerializationSchema;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
-import org.apache.flink.api.common.typeinfo.TypeHint;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.*;
-import org.apache.flink.configuration.Configuration;
-import org.apache.flink.runtime.checkpoint.MasterTriggerRestoreHook;
 import org.apache.flink.streaming.api.TimeCharacteristic;
-import org.apache.flink.streaming.api.datastream.ConnectedStreams;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
-import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
-import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
-import org.apache.flink.streaming.connectors.kafka.internals.KeyedSerializationSchemaWrapper;
 import org.apache.flink.util.Collector;
 
-import javax.annotation.Nullable;
-import javax.naming.Context;
-import java.lang.reflect.Array;
-import java.nio.charset.Charset;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.kafka.clients.producer.ProducerRecord;
-import tuc.Calculations;
-//import utils.JoinProcessFunction;
 import utils.KafkaInputSchema;
-import utils.KafkaMsgSchema;
+
 import utils.KafkaTestSchema;
 
 
 public class RandomSampling {
-
-    //final static OutputTag<String> outputTag = new OutputTag<String>("side-output"){};
 
     public static void main(String[] args) throws Exception {
 
@@ -55,7 +32,6 @@ public class RandomSampling {
 
         String consumerGroup = "KafkaCsvProducer";
         String address = "localhost:9092";
-        String pattern = "^\\bEndOfStream\\b$";
 
         String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
         String keys = "location";
@@ -66,11 +42,8 @@ public class RandomSampling {
 
         env.setParallelism(4);
 
-        //TODO check what is going on with time
         env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
-        //env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
-        //List<Integer> integerList = keyEval(example,keys);
         HashMap<String,List<Integer>> integerList = attrEval(example,keys,aggr);
 
         /**
@@ -132,27 +105,7 @@ public class RandomSampling {
 
         //input.print();
 
-        //TODO add sink and write input in another topic formatted in specific way
         input.addSink(flinkKafkaProducerInput);
-
-
-        /**
-         *          key   sum   count   mean   var
-         * TODO INIT version without window
-         */
-
-//        DataStream<Tuple5<String,Double,Double,Double,Double>> sum = input
-//                .keyBy(0)
-//                .process(new CalcImplementation());
-//        sum.print();
-//        sum.addSink(flinkKafkaProducer);
-
-
-        /**
-         * New version with window
-         * TODO check if we want to add timestamps and watermarks
-         */
-        //TODO MUST REMOVE LAST DUMMY ELEMENT
 
         DataStream<Tuple6<String,Double,Double,Double,Double,String>> sum = input
                 .keyBy(0)
@@ -166,10 +119,8 @@ public class RandomSampling {
                     @Override
                     public void flatMap(Tuple6<String,Double,Double,Double,Double,String> value, Collector<Tuple5<String,Double,Double,Double,Double>> out)
                             throws Exception {
-                        //String[] words = value.split(",");
                         Tuple5<String,Double,Double,Double,Double> temp1 = new Tuple5<>("Total", value.f4,-1D,-1D,-1D);
 
-                        //System.out.println("THIS is "+temp1.toString());
                         out.collect(temp1);
                     }
                 })
@@ -177,7 +128,6 @@ public class RandomSampling {
                 .timeWindow(Time.seconds(30))
                 .sum(1)
                 ;
-
 
         finsum.print();
 
@@ -204,7 +154,6 @@ public class RandomSampling {
                     }
                 })
                 ;
-        //finsum.union(sum).print();
 
         joinedStream.print();
         joinedStream.addSink(flinkKafkaProducer);
@@ -230,23 +179,6 @@ public class RandomSampling {
         return consumer;
     }
 
-    /**
-     * This works but is deprecated.TODO find a better way to do that
-     * @param topic
-     * @param kafkaAddress
-     * @return
-     */
-    @Deprecated
-    public static FlinkKafkaProducer<Tuple5<String,Double,Double,Double,Double>> createStringProducer(
-            String topic, String kafkaAddress){
-        Properties props = new Properties();
-        props.setProperty("bootstrap.servers", kafkaAddress);
-
-        FlinkKafkaProducer producer = new FlinkKafkaProducer<>(kafkaAddress, topic, (SerializationSchema<Tuple5<String,Double,Double,Double,Double>>) new KafkaMsgSchema());
-
-        return producer;
-    }
-
     public static FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> createStringProducer2(
             String topic, String kafkaAddress){
         Properties props = new Properties();
@@ -265,7 +197,6 @@ public class RandomSampling {
         FlinkKafkaProducer<Tuple3<String,Double,String>> producer =  new FlinkKafkaProducer<Tuple3<String,Double,String>>(topic, new KafkaInputSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
         return producer;
     }
-
 
 
     //TODO add checks when wrong input

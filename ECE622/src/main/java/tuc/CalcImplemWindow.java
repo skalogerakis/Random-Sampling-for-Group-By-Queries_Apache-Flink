@@ -11,7 +11,11 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 
-
+/**
+ * The ProcessFunction can be thought of as a FlatMapFunction with access to keyed state and timers.
+ * It handles events by being invoked for each event received in the input stream. Provides fine-grained control
+ * over both state and time. Supports fault-tolerance using timers and timestamps
+ */
 public  class CalcImplemWindow extends ProcessWindowFunction<Tuple3<String, Double,String>, Tuple6<String, Double, Double,Double,Double,String>, Tuple, TimeWindow> {
 
     /**
@@ -19,8 +23,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple3<String, Doub
      */
 
     private transient ValueState<Calculations> state;
-//    private transient ValueState<Calculations> glob_state;
-//    ValueStateDescriptor<Calculations> global_descriptor;
+
     final static int weight = 1;
 
 
@@ -31,16 +34,10 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple3<String, Doub
         Calculations new_state = state.value();
 
         if(new_state == null){
-
             new_state = new Calculations();
             new_state.__key = input.iterator().next().getField(0);
         }
 
-//        if(global_new_state == null){
-//
-//            global_new_state = new Calculations();
-//            global_new_state.__key = input.iterator().next().getField(0);
-//        }
 
         for (Tuple3<String, Double,String> in: input) {
             new_state = state.value();
@@ -49,13 +46,9 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple3<String, Doub
                 new_state.__key = in.f0;
             }
             new_state.__gammaFin="Total";
-
             new_state.__count++;
-
             new_state.__sum+=in.f1;
-
             new_state.__sumSquares += Math.pow(in.f1, 2);
-
             new_state.__mean = new_state.__sum/new_state.__count;
 
             double tempMean = new_state.__sumSquares/ new_state.__count;
@@ -76,8 +69,6 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple3<String, Doub
     }
 
 
-
-    //Initialization inside ValueStateDescriptor is Deprecated. Must check null case and initialize in flatMap function
     @Override
     public void open(Configuration config) {
 
@@ -86,10 +77,7 @@ public  class CalcImplemWindow extends ProcessWindowFunction<Tuple3<String, Doub
                 "sum", // the state name
                 TypeInformation.of(new TypeHint<Calculations>() {})); // type information
         state = getRuntimeContext().getState(descriptor);//Access state using getRuntimeContext()
-
-
     }
-
 
 
 }

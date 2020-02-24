@@ -15,11 +15,6 @@ public class StateSample implements Serializable {
         sample =new Vector<>();
 
     }
-
-
-
-
-
     public int getCount() {
         return count;
     }
