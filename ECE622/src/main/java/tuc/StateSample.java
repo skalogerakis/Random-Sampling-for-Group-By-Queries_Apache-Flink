@@ -1,6 +1,5 @@
 package tuc;
 
-import org.apache.flink.api.java.tuple.Tuple11;
 import org.apache.flink.api.java.tuple.Tuple2;
 
 import java.io.Serializable;
@@ -15,6 +14,7 @@ public class StateSample implements Serializable {
         sample =new Vector<>();
 
     }
+
     public int getCount() {
         return count;
     }

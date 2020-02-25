@@ -5,6 +5,7 @@ import org.apache.flink.api.common.functions.JoinFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.*;
+import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -20,47 +21,79 @@ import java.util.*;
 public class FirstAlgorithmPass {
 
     /**
-     * NAME:
+     * NAME:FirstAlgorithmPass
      * DESCRIPTION:This is the implementation of the first required job for our algorithm. In this job we parse data
      * for the first time (bounded stream) and compute required aggregation such as average, count for each stratum
      * (each stratum is formed by each distinct a group by attribute). We also compute values γi for each stratum
      * and γ(sum of γι for all stratum) which are required in the second pass of the algorithm
-     * @param args
+     * @param args [required] -all-attributes(all csv fields) -keys(keys to group by from attributes) -aggr(field for aggregation from attributes)
+     *             [optional] -p(parallellism){default value 1} -input-topic {default value input-topic-job1} -output-topic {default value output-topic-job1}
+     *             -consumer-group {default value KafkaCsvProducer} -ip {default value localhost:9092} -windows-time {default value 60}
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
 
-        //TODO take all of those as parameters
-        String inputTopic = "csvtokafka1";
+        String allAttr = null;
+        String keys = null;
+        String aggr = null;
+        int parallel = 1;
+        ParameterTool parameterTool=null;
 
-        String inputNewTopic = "flinkout1";
-        String outputTopic = "flinkaggr1";
+        try{
+            parameterTool = ParameterTool.fromArgs(args);
+        }catch(IllegalArgumentException io){
+            System.out.println("Error while parsing arguments. Please prefix keys with -- or -. ARGUMENTS: -csv-path <csv_path_file> -topic <KafkaTopic> -ip <KafkaBrokerEndPoint>(Optional) -header-exists <headerExists>(Optional)");
+            System.out.println("ARGUMENTS [required] -all-attributes(all csv fields) -keys(keys to group by from attributes) -aggr(field for aggregation from attributes)\n" +
+                    "                   [optional] -p(parallellism){default value 1} -input-topic {default value input-topic-job1} -output-topic {default value output-topic-job1}\n" +
+                    "                   -consumer-group {default value KafkaCsvProducer} -ip {default value localhost:9092} -windows-time {default value 60}");
+            System.exit(-1);
+        }
 
-        String consumerGroup = "KafkaCsvProducer";
-        String address = "localhost:9092";
+        try{
+            allAttr = parameterTool.getRequired("all-attributes");///csv full path
+            keys = parameterTool.getRequired("keys");//Kafka to write our data
+            aggr = parameterTool.getRequired("aggr");
+
+        }catch (RuntimeException re){
+            System.out.println("Required field not given. ARGUMENTS: -csv-path <csv_path_file> -topic <KafkaTopic> -ip <KafkaBrokerEndPoint>(Optional) -header-exists <headerExists>(Optional)");
+            System.exit(-1);
+        }
+
+        String inputTopic = parameterTool.get("input-topic","input-topic-job1");
+        String inputNewTopic = "_"+inputTopic;
+        String outputTopic = parameterTool.get("output-topic","output-topic-job1");
+        String consumerGroup = parameterTool.get("consumer-group","KafkaCsvProducer");
+
+        parallel = parameterTool.getInt("p",1);
+
+        String address = parameterTool.get("ip","localhost:9092");
+        int windowTime = parameterTool.getInt("windows-time",60);
 
         //For OpenAq dataset
 //        String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
 //        String keys = "location";
 //        String aggr = "value";
 
-        //For population.csv
-        String example = "Year,District.Code,District.Name,Neighborhood.Code,Neighborhood.Name,Gender,Age,Number";
-        String keys = "District.Name";
-        String aggr = "Number";
-
+        //For population.csv CURRENTLY
+//        String example = "Year,District.Code,District.Name,Neighborhood.Code,Neighborhood.Name,Gender,Age,Number";
+//        String keys = "District.Name";
+//        String aggr = "Number";
 
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+        //TODO see how it works
+        //define some global parameters demanded
+        env.getConfig().setGlobalJobParameters(parameterTool);
+
         //parallelism definition
-        env.setParallelism(4);
+        env.setParallelism(parallel);
 
         //Used Ingestion time as time characteristic
         env.setStreamTimeCharacteristic(TimeCharacteristic.IngestionTime);
 
         //Used for dynamic key parsing from command line. More details in attrEval function below
-        HashMap<String,List<Integer>> TotalAttrList = attrEval(example,keys,aggr);
+        HashMap<String,List<Integer>> TotalAttrList = attrEval(allAttr,keys,aggr);
 
         /**
          * IMPORTANT: Messages sent by a kafka producer to a particular topic partition will be appended in the order they are sent.
@@ -71,7 +104,6 @@ public class FirstAlgorithmPass {
 
         FlinkKafkaConsumer<String> flinkKafkaConsumer = createStringConsumerForTopic(
                 inputTopic, address, consumerGroup);
-        //TODO see if we want to enable that
         flinkKafkaConsumer.setStartFromEarliest();
 
 
@@ -122,12 +154,15 @@ public class FirstAlgorithmPass {
                             tempattr.add(words[attrPosList.get(i)]);
                         }
                         String finalAttr = String.join(",",tempattr);
+                        Double finalAggr = 0.0D;
+                        try{
+                            finalAggr = Double.parseDouble(words[tempaggr]);
+                        }catch(NumberFormatException io){
 
-                        Double finalAggr = Double.parseDouble(words[tempaggr]);
+                        }
 
-                        Tuple3<String,Double,String> temp1;
+                        Tuple3<String,Double,String> temp1 = new Tuple3<>(finalKey,finalAggr,finalAttr);;
 
-                        temp1 = new Tuple3<>(finalKey,finalAggr,finalAttr);
                         tempkey.clear();
                         tempattr.clear();
                         out.collect(temp1);
@@ -138,11 +173,10 @@ public class FirstAlgorithmPass {
         //Send transformed data into a new topic so that we can process them and not require the same procedure in job2
         inputTransformer.addSink(flinkKafkaProducerInput);
 
-        //TODO change time to dynamic via input
         //First aggregate computations
         DataStream<Tuple6<String,Double,Double,Double,Double,String>> initAggr = inputTransformer
                 .keyBy(0)
-                .timeWindow(Time.seconds(50))
+                .timeWindow(Time.seconds(windowTime))
                 .process(new initAggrWindow())
                 ;
         initAggr.print();
@@ -159,7 +193,7 @@ public class FirstAlgorithmPass {
                     }
                 })
                 .keyBy(0)
-                .timeWindow(Time.seconds(50))
+                .timeWindow(Time.seconds(windowTime))
                 .sum(1)
                 ;
 
@@ -184,7 +218,7 @@ public class FirstAlgorithmPass {
                         return stringDoubleDoubleDoubleTuple5.f0;
                     }
                 })
-                .window(TumblingEventTimeWindows.of(Time.seconds(50)))
+                .window(TumblingEventTimeWindows.of(Time.seconds(windowTime)))
                 //.allowedLateness(Time.seconds(10))
                 .apply(new JoinFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple5<String,Double,Double,Double,Double>, Tuple6<String, Double, Double, Double, Double,Double>>() {
                     @Override
@@ -206,19 +240,28 @@ public class FirstAlgorithmPass {
     }
 
 
-
+    /**
+     * Consumer that takes data from kafka topic containing data from .csv file
+     * @param topic
+     * @param kafkaAddress
+     * @param kafkaGroup
+     * @return
+     */
     public static FlinkKafkaConsumer<String> createStringConsumerForTopic(
             String topic, String kafkaAddress, String kafkaGroup ) {
-
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
         props.setProperty("group.id",kafkaGroup);
-        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(
-                topic, new SimpleStringSchema(), props);
-
+        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(topic, new SimpleStringSchema(), props);
         return consumer;
     }
 
+    /**
+     * First producer that writes final aggregation data from flink to kafka(pass the to second algorithm pass)
+     * @param topic
+     * @param kafkaAddress
+     * @return
+     */
     public static FlinkKafkaProducer<Tuple6<String,Double,Double,Double,Double,Double>> createStringProducerAggr(
             String topic, String kafkaAddress){
         Properties props = new Properties();
@@ -227,13 +270,18 @@ public class FirstAlgorithmPass {
         return producer;
     }
 
+    /**
+     * Second producer that changes initial stream to a new topic with some modifications. This happens due to our dynamic
+     * key implementation. In order to avoid using the same function used in this section to dynamically find the key
+     * we create a new topic with our desired format
+     * @param topic
+     * @param kafkaAddress
+     * @return
+     */
     public static FlinkKafkaProducer<Tuple3<String,Double,String>> createStringProducerInput(
             String topic, String kafkaAddress){
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", kafkaAddress);
-        //TODO implemented based on this
-        //https://github.com/luweizheng/flink-tutorials/blob/2a72c375d182cc47da016627023083ba85808f96/src/main/java/com/flink/tutorials/java/projects/wordcount/WordCountKafkaInKafkaOut.java
-        //FlinkKafkaProducer producer = new FlinkKafkaProducer<>(topic, (SerializationSchema<Tuple5<String,Double,Double,Double,Double>>) new KafkaTestSchema(),props, FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
         FlinkKafkaProducer<Tuple3<String,Double,String>> producer =  new FlinkKafkaProducer<Tuple3<String,Double,String>>(topic, new KafkaInputSchema(topic),props,FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
         return producer;
     }

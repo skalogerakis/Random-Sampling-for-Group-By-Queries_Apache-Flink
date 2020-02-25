@@ -2,24 +2,20 @@ package KafkaSchemas;
 
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-
 import org.apache.flink.api.java.tuple.Tuple6;
 import org.apache.flink.streaming.connectors.kafka.KafkaDeserializationSchema;
 import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
-
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
-
-
 import javax.annotation.Nullable;
-
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Used to serialize-deserialize data so that can be processed by Kafka. This one is used for our aggregation values to be transferred from job1 to job2
+ */
 public class KafkaTestSchema implements KafkaSerializationSchema<Tuple6<String,Double,Double,Double,Double,Double>>, KafkaDeserializationSchema<String> {
 
     private String topic;
-    public boolean EOS=false;
-
 
     public KafkaTestSchema(String topic) {
         super();
@@ -32,20 +28,18 @@ public class KafkaTestSchema implements KafkaSerializationSchema<Tuple6<String,D
 
     }
 
-
-    //TODO REMOVE THAT
+    /**
+     * Used at some point when trying to identify where stream ended. CURRENTLY NOT USED
+     * @param s
+     * @return
+     */
     @Override
     public boolean isEndOfStream(String s) {
-        //System.out.println("EOS");
-        String regex = "^Total\\,(-)*(\\d.+){1}\\,-1\\.0{1}\\,-1\\.0{1}\\,-1\\.0{1}$";
-        //System.out.println(s);
-        if(s.matches(regex)){
-            System.out.println("Yaeh");
-            this.EOS=true;
-            return true;
-        }
-
-
+//        String regex = "^Total\\,(-)*(\\d.+){1}\\,-1\\.0{1}\\,-1\\.0{1}\\,-1\\.0{1}$";
+//        if(s.matches(regex)){
+//            System.out.println("Yaeh");
+//            return true;
+//        }
         return false;
     }
 

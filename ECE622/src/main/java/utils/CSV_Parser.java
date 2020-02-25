@@ -1,5 +1,6 @@
 package utils;
 
+import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.KafkaException;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -23,45 +24,58 @@ public class CSV_Parser {
     //this is the name of our kafka topic
     private static String KafkaTopic = null;
     private static String CsvFile = null;
-    private static int headerExists = 0;
+    private static int headerExists = 1;
     private static final Logger LOGGER = Logger.getLogger(CSV_Parser.class.getName());
 
 
-    /**
-     *  TODO set a default if not given by the user
-     *  TODO check for input
-     */
-
-    private final static String BOOTSTRAP_SERVERS =
-            "localhost:9092,localhost:9093,localhost:9094";
+    private final static String BOOTSTRAP_SERVERS = "localhost:9092";
 
     /**
      * -------------------------------------------------------------------------------------------------------------------
      * Name:CSV_Parser
      * Description: This class is responsible to parse data from a .csv file and write them to a certain Kafka topic
-     * TODO ADD ARGS
-     * @param args
+     * @param args ARGUMENTS: -csv-path <csv_path_file> -topic <KafkaTopic> -ip <KafkaBrokerEndPoint>(Optional) -header-exists <headerExists>(Optional) (0 when there is no
+     *             header, 1 when there is header to ignore in csv[default])
      * @throws IOException
      * -------------------------------------------------------------------------------------------------------------------
      */
     public static void main(String[] args) throws IOException {
 
+        ParameterTool parameterTool=null;
+
+        try{
+            parameterTool = ParameterTool.fromArgs(args);
+        }catch(IllegalArgumentException io){
+            System.out.println("Error while parsing arguments. Please prefix keys with -- or -. ARGUMENTS: -csv-path <csv_path_file> -topic <KafkaTopic> -ip <KafkaBrokerEndPoint>(Optional) -header-exists <headerExists>(Optional)");
+            System.exit(-1);
+        }
         //Create a logger for debugging purposes
         CSV_Parser csvParser = new CSV_Parser();
         csvParser.LogConfig();
 
-        //File input
-        //TODO add validity checks
-        if (args != null){
-            KafkaBrokerEndpoint = args[0];
-            KafkaTopic = args[1];
-            CsvFile = args[2];
-            headerExists = Integer.parseInt(args[3]);
+        try{
+            CsvFile = parameterTool.getRequired("csv-path");///csv full path
+            KafkaTopic = parameterTool.getRequired("topic");//Kafka to write our data
+        }catch (RuntimeException re){
+            System.out.println("Required field not given. ARGUMENTS: -csv-path <csv_path_file> -topic <KafkaTopic> -ip <KafkaBrokerEndPoint>(Optional) -header-exists <headerExists>(Optional)");
+            System.exit(-1);
+        }
+
+
+        try{
+            headerExists = Integer.parseInt(parameterTool.get("header-exists"));
+        }catch (NumberFormatException ne){
+            System.out.println("Invalid headerExists option. Proceed with the default option(Header exists)");
+        }
+
+        KafkaBrokerEndpoint = parameterTool.get("ip");
+        if(KafkaBrokerEndpoint==null){
+            KafkaBrokerEndpoint = BOOTSTRAP_SERVERS;//default option
         }
 
 
         Properties props = new Properties();
-        csvParser.propConfif(props);
+        csvParser.propConfig(props);
 
         KafkaProducer<String, String> producer = null;
 
@@ -82,6 +96,7 @@ public class CSV_Parser {
                  * ignore first line
                  */
                 if(headerExists==1){
+                    System.out.println("Ignore first header line");
                     headerExists=0;
                     return;
                 }
@@ -102,15 +117,15 @@ public class CSV_Parser {
             /**
              * Final message sent after our stream terminated.CURRENTLY NOT USED
              */
-            //finalProducer.send(new ProducerRecord<>(KafkaTopic, "EndOfStream"));
             finalProducer.flush();
             finalProducer.close();
         }catch (IOException io){
             //Exception occured
-            LOGGER.log(Level.SEVERE, "Exception occured",io);
+            LOGGER.log(Level.SEVERE, "Exception occured. Exiting....",io);
             io.printStackTrace();
         }
 
+        System.out.println("Procedure finished");
         //close kafka producer
         producer.flush();
         producer.close();
@@ -138,7 +153,8 @@ public class CSV_Parser {
         LOGGER.setUseParentHandlers(false);
     }
 
-    public void propConfif(Properties props){
+    public void propConfig(Properties props){
+
         /**
          * Configure properties
          * BOOTSTRAP_SERVERS_CONFIG: Servers that Producer uses to establish initial connection
