@@ -22,9 +22,9 @@ import java.util.Properties;
 public class SecondAlgorithmPass {
 
     /**
-     * TODO that description
-     * NAME:SecongAlgorithmPass
-     * Description:
+     * NAME: SecongAlgorithmPass
+     * Description: In this second pass of the algorithm, we parse once again the initial data stream. Also we use aggregation data extracted from first pass
+     * and combined we execute our demanded algorithm
      * @param args [optional] -p(parallellism){default value 1} -input-topic {default init stream value input-topic-job1} -output-topic {default value output-topic-job2}
      *             -aggr-topic {default init stream value output-topic-job1} -consumer-group {default value KafkaCsvProducer} -ip {default value localhost:9092} -windows-time {default value 60}
      *             -M{default value 20}
@@ -32,7 +32,7 @@ public class SecondAlgorithmPass {
      */
     public static void main(String[] args) throws Exception {
 
-        int parallel = 1;
+        int parallel;
         ParameterTool parameterTool=null;
 
         try{
@@ -55,7 +55,7 @@ public class SecondAlgorithmPass {
         parallel = parameterTool.getInt("p",1);
 
         String address = parameterTool.get("ip","localhost:9092");
-        int windowTime = parameterTool.getInt("windows-time",60);
+        int windowTime = parameterTool.getInt("windows-time",30);
         double M = parameterTool.getDouble("M",20.0D);
 
         // set up the execution environment

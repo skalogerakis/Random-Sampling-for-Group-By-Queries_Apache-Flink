@@ -56,6 +56,9 @@ public class FirstAlgorithmPass {
 
         }catch (RuntimeException re){
             System.out.println("Required field not given. ARGUMENTS: -csv-path <csv_path_file> -topic <KafkaTopic> -ip <KafkaBrokerEndPoint>(Optional) -header-exists <headerExists>(Optional)");
+            System.out.println("ARGUMENTS: [required] -all-attributes(all csv fields) -keys(keys to group by from attributes) -aggr(field for aggregation from attributes)\n" +
+                    "                  [optional] -p(parallellism){default value 1} -input-topic {default value input-topic-job1} -output-topic {default value output-topic-job1}\n" +
+                    "                  -consumer-group {default value KafkaCsvProducer} -ip {default value localhost:9092} -windows-time {default value 60}");
             System.exit(-1);
         }
 
@@ -64,10 +67,10 @@ public class FirstAlgorithmPass {
         String outputTopic = parameterTool.get("output-topic","output-topic-job1");
         String consumerGroup = parameterTool.get("consumer-group","KafkaCsvProducer");
 
-        parallel = parameterTool.getInt("p",1);
+        parallel = parameterTool.getInt("p",4);
 
         String address = parameterTool.get("ip","localhost:9092");
-        int windowTime = parameterTool.getInt("windows-time",60);
+        int windowTime = parameterTool.getInt("windows-time",30);
 
         //For OpenAq dataset
 //        String example = "location,city,country,utc,local,parameter,value,unit,latitude,longitude,attribution";
@@ -82,7 +85,7 @@ public class FirstAlgorithmPass {
         // set up the execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        //TODO see how it works
+        //TODO see if we need that
         //define some global parameters demanded
         env.getConfig().setGlobalJobParameters(parameterTool);
 
@@ -118,9 +121,6 @@ public class FirstAlgorithmPass {
                 inputNewTopic, address);
         flinkKafkaProducerInput.setWriteTimestampToKafka(true);
 
-        //---------------------------------------------------------------------------
-        //                             KAFKA PRODUCERS
-        //---------------------------------------------------------------------------
 
         //Position of attributes, aggregation, keys
         List<Integer> keyPosList = TotalAttrList.get("key");
@@ -226,6 +226,7 @@ public class FirstAlgorithmPass {
                         return new Tuple6<>(join1.f0,join1.f1,join1.f2,join1.f3,join1.f4,join2.f1);
                     }
                 })
+
                 ;
 
         joinedStream.print();
