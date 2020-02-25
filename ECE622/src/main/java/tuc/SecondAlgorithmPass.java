@@ -52,7 +52,7 @@ public class SecondAlgorithmPass {
         String outputTopic = parameterTool.get("output-topic","output-topic-job2");
         String consumerGroup = parameterTool.get("consumer-group","KafkaCsvProducer");
 
-        parallel = parameterTool.getInt("p",1);
+        parallel = parameterTool.getInt("p",4);
 
         String address = parameterTool.get("ip","localhost:9092");
         int windowTime = parameterTool.getInt("windows-time",30);

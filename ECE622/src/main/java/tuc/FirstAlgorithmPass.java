@@ -28,7 +28,7 @@ public class FirstAlgorithmPass {
      * and γ(sum of γι for all stratum) which are required in the second pass of the algorithm
      * @param args [required] -all-attributes(all csv fields) -keys(keys to group by from attributes) -aggr(field for aggregation from attributes)
      *             [optional] -p(parallellism){default value 1} -input-topic {default value input-topic-job1} -output-topic {default value output-topic-job1}
-     *             -consumer-group {default value KafkaCsvProducer} -ip {default value localhost:9092} -windows-time {default value 60}
+     *             -consumer-group {default value KafkaCsvProducer} -ip {default value localhost:9092} -windows-time {default value 30}
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
@@ -236,7 +236,7 @@ public class FirstAlgorithmPass {
         System.out.println(env.getExecutionPlan());
 
         //execute program to see action
-        env.execute("Streaming for Random Sampling");
+        env.execute("Streaming FirstAlgorithmPass");
 
     }
 
