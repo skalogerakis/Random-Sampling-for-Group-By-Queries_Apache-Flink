@@ -1,13 +1,17 @@
 #!/bin/sh
+#/home/skalogerakis/kafka_2.12-2.4.0
+
+kafka=$1
+flink=$2
 
 #Works in gnome-terminal
 #First start zookeeper server
-gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/zookeeper-server-start.sh /home/skalogerakis/kafka_2.12-2.4.0/config/zookeeper.properties;exec bash"
+gnome-terminal -- bash -c "${kafka}/bin/zookeeper-server-start.sh ${kafka}/config/zookeeper.properties;exec bash"
 
 sleep 2
 
 #Then start kafka server
-gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-server-start.sh /home/skalogerakis/kafka_2.12-2.4.0/config/server.properties;exec bash"
+gnome-terminal -- bash -c "${kafka}/bin/kafka-server-start.sh ${kafka}/config/server.properties;exec bash"
 
 sleep 10
 
@@ -18,17 +22,19 @@ sleep 10
 #sleep 10
 
 #Open and view messages in a new terminal
-gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic input-topic-job1 --from-beginning;exec bash"
+gnome-terminal -- bash -c "${kafka}/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic input-topic-job1 --from-beginning;exec bash"
 
 
-gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic _input-topic-job1 --from-beginning;exec bash"
+gnome-terminal -- bash -c "${kafka}/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic _input-topic-job1 --from-beginning;exec bash"
 
 
-gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic output-topic-job1 --from-beginning;exec bash"
+gnome-terminal -- bash -c "${kafka}/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic output-topic-job1 --from-beginning;exec bash"
 
 
-gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic output-topic-job2 --from-beginning;exec bash"
+gnome-terminal -- bash -c "${kafka}/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic output-topic-job2 --from-beginning;exec bash"
 
-#/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic input-topic-job1
+#Command to delete topics
+#/${kafka}/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic input-topic-job1
 
-#/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+#Command to list topics
+#${kafka}/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
