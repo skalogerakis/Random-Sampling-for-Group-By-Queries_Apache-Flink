@@ -58,3 +58,7 @@ In this second pass of the algorithm, we parse once again the initial data strea
 | -windows-time | User-defined time for windows | 30 |
 | -M | Variable demanded in the algorithm | 20 |
 
+
+
+
+https://arxiv.org/pdf/1909.02629.pdf

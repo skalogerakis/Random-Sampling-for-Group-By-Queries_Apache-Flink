@@ -128,6 +128,9 @@ public class FirstAlgorithmPass {
         List<Integer> aggrPosList = TotalAttrList.get("aggr");
 
         //Take input from kafka and transform it in form Tuple3<String, Double,String>, <Keys, AggregationValues,Other Attributes>
+        //env.addSource(flinkKafkaConsumer).rebalance().print();
+        //TODO use rebalance for the case when kafka partitions < flink parallelism kafka partitions < flink parallelism: some flink instances won't receive any messages. To avoid that, you need to call rebalance on your input stream before any operation, which causes data to be re-partitioned
+        //And for the same reason when kafka p>flink p
         DataStream<Tuple3<String, Double,String>> inputTransformer = env.addSource(flinkKafkaConsumer)
                 .flatMap(new FlatMapFunction<String, Tuple3<String,Double,String>>() {
                     @Override
@@ -138,25 +141,31 @@ public class FirstAlgorithmPass {
                         //After we find all of those values, concat them in a single field, comma seperated
                         List<String> tempkey = new ArrayList<String>();
                         List<String> tempattr = new ArrayList<String>();
-                        //List<String> tempaggr = new ArrayList<String>();
 
-                        //TODO works only for one element right now
                         //Currently works for one aggregation
                         int tempaggr = aggrPosList.get(0);
 
-                        String[] words = value.split(",");
+                        /**
+                         * IMPORTANT: Changed that as one of the example files to run was not executed properly.
+                         * In the previous version we used split command with comma(","). However, there was a
+                         * problem when encountered with fields inside quotes it must not split for example in the
+                         * following case "not seperate, this". Solved the problem with regex so that we can ignore
+                         * commas when included in double quotes
+                         */
+                        String[] words = value.trim().split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                         for(int i = 0; i< keyPosList.size(); i++){
-                            tempkey.add(words[keyPosList.get(i)]);
+                            tempkey.add(words[keyPosList.get(i)].replace("\"",""));
                         }
+
                         String finalKey = String.join(",",tempkey);
 
                         for(int i = 0; i< attrPosList.size(); i++){
-                            tempattr.add(words[attrPosList.get(i)]);
+                            tempattr.add(words[attrPosList.get(i)].replace("\"",""));
                         }
                         String finalAttr = String.join(",",tempattr);
                         Double finalAggr = 0.0D;
                         try{
-                            finalAggr = Double.parseDouble(words[tempaggr]);
+                            finalAggr = Double.parseDouble(words[tempaggr].replace("\"",""));
                         }catch(NumberFormatException io){
 
                         }
@@ -179,7 +188,7 @@ public class FirstAlgorithmPass {
                 .timeWindow(Time.seconds(windowTime))
                 .process(new initAggrWindow())
                 ;
-        initAggr.print();
+        //initAggr.print();
 
         //Compute final gamma for all key by values. We use a dummy field to key by in this step.
         DataStream<Tuple5<String,Double,Double,Double,Double>> totalGammaAggr = initAggr
@@ -197,7 +206,7 @@ public class FirstAlgorithmPass {
                 .sum(1)
                 ;
 
-        totalGammaAggr.print();
+        //totalGammaAggr.print();
 
         /**
          * As a final step we compute the final joined stream from the previous steps.
@@ -219,17 +228,28 @@ public class FirstAlgorithmPass {
                     }
                 })
                 .window(TumblingEventTimeWindows.of(Time.seconds(windowTime)))
-                //.allowedLateness(Time.seconds(10))
                 .apply(new JoinFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple5<String,Double,Double,Double,Double>, Tuple6<String, Double, Double, Double, Double,Double>>() {
                     @Override
                     public Tuple6<String, Double, Double, Double, Double,Double> join(Tuple6<String,Double,Double,Double,Double,String> join1, Tuple5<String,Double,Double,Double,Double> join2) throws Exception {
                         return new Tuple6<>(join1.f0,join1.f1,join1.f2,join1.f3,join1.f4,join2.f1);
                     }
                 })
-
                 ;
 
-        joinedStream.print();
+        // flatmap to print mean and var by stratum
+        DataStream<Tuple3<String,String,String>> print = initAggr
+                .keyBy(0)
+                .flatMap(new FlatMapFunction<Tuple6<String,Double,Double,Double,Double,String>, Tuple3<String,String,String>>() {
+                    @Override
+                    public void flatMap(Tuple6<String,Double,Double,Double,Double,String> value, Collector<Tuple3<String,String,String>> out)
+                            throws Exception {
+                        out.collect(new Tuple3<>(value.f0,"Mean= "+value.f1,"Standard deviation= "+value.f2));
+                    }
+                })
+                ;
+
+        print.print();
+        //joinedStream.print();
         joinedStream.addSink(flinkKafkaProducer);
 
         //Print execution plan for visualisation purposes
@@ -335,5 +355,4 @@ public class FirstAlgorithmPass {
 
 
 }
-
 

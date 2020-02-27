@@ -89,22 +89,37 @@ public class SecondAlgorithmPass {
                 outputTopic, address);
         flinkKafkaProducer.setWriteTimestampToKafka(true);
 
-
+        /** read from job's 1 aggr output topic and calc si*/
         DataStream<Tuple4<String,Double,Double,Double>> inputAg = env
                 .addSource(flinkKafkaConsumer)
                 .flatMap(new FlatMapFunction<String, Tuple4<String,Double,Double,Double>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple4<String,Double,Double,Double>> out)
                             throws Exception {
-                        String[] words = value.split(",");
+                        String[] words = value.split(";");
                         double si = Math.round(M * (Double.parseDouble(words[4]) / Double.parseDouble(words[5])));//M*γi/γ
                         out.collect(new Tuple4<>(words[0], Double.parseDouble(words[3]), Double.parseDouble(words[5]), si));
                     }});
 
 
-        //inputAg.print();
+        /** flatmap to print si by stratum*/
+        DataStream<Tuple2<String,String>> print = inputAg
+                .keyBy(0)
+                .flatMap(new FlatMapFunction<Tuple4<String,Double,Double,Double>,Tuple2<String,String>> () {
+                    @Override
+                    public void flatMap(Tuple4<String,Double,Double,Double> value, Collector<Tuple2<String,String>> out)
+                            throws Exception {
+                        out.collect(new Tuple2<>(value.f0,"si= "+value.f3));
+                    }});
 
+        print.print();
+
+
+
+        //inputAg.print();
+        /** read data from job's 1 data output topic */
         DataStream<Tuple2<String,String>> inputStream = env.addSource(flinkKafkaConsumerInput)
+
                 .flatMap(new FlatMapFunction<String, Tuple2<String,String>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple2<String,String>> out)
@@ -120,33 +135,33 @@ public class SecondAlgorithmPass {
                 });
 
         //inputStream.print();
-
-        // key  args   γi     γ      si
+        /** join in every input tuple the data for reservoir sampling*/
+        //                  key   args   γi     γ      si
         DataStream<Tuple5<String,String,Double,Double,Double>> joinedStream= inputStream
                 .join(inputAg)
                 .where(new KeySelector<Tuple2<String, String>, String>() {
                     @Override
-                    public String getKey(Tuple2<String, String> stringStringTuple2) throws Exception {
-                        return stringStringTuple2.f0;
+                    public String getKey(Tuple2<String, String> inputStreamKey) throws Exception {
+                        return inputStreamKey.f0;
                     }
                 })
                 .equalTo(new KeySelector<Tuple4<String, Double, Double, Double>, String>() {
                     @Override
-                    public String getKey(Tuple4<String, Double, Double, Double> stringDoubleDoubleDoubleTuple4) throws Exception {
-                        return stringDoubleDoubleDoubleTuple4.f0;
+                    public String getKey(Tuple4<String, Double, Double, Double> inputAgKey) throws Exception {
+                        return inputAgKey.f0;
                     }
                 })
                 .window(TumblingEventTimeWindows.of(Time.seconds(windowTime)))
                 //.allowedLateness(Time.seconds(10))
                 .apply(new JoinFunction<Tuple2<String, String>, Tuple4<String, Double, Double, Double>, Tuple5<String, String, Double, Double, Double>>() {
                     @Override
-                    public Tuple5<String, String, Double, Double, Double> join(Tuple2<String, String> stringStringTuple2, Tuple4<String, Double, Double, Double> stringDoubleDoubleDoubleTuple4) throws Exception {
-                        return new Tuple5<>(stringStringTuple2.f0,stringStringTuple2.f1,stringDoubleDoubleDoubleTuple4.f1,stringDoubleDoubleDoubleTuple4.f2,stringDoubleDoubleDoubleTuple4.f3);
+                    public Tuple5<String, String, Double, Double, Double> join(Tuple2<String, String> StreamInput, Tuple4<String, Double, Double, Double> AggrInput) throws Exception {
+                        return new Tuple5<>(StreamInput.f0,StreamInput.f1,AggrInput.f1,AggrInput.f2,AggrInput.f3);
                     }
                 })
                 ;
 
-
+        /** execute reservoir sampling by stratum*/
         DataStream<Tuple2<String,String>> sample =joinedStream
                 .keyBy(0)
                 .process(new ReservoirSampler())
@@ -154,7 +169,6 @@ public class SecondAlgorithmPass {
 
 
         sample.keyBy(0).print();
-
         sample.keyBy(0).addSink(flinkKafkaProducer);
 
         //Print execution plan for visualisation purposes

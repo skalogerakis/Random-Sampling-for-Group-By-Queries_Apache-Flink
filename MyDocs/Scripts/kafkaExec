@@ -11,6 +11,7 @@ gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-server-
 
 sleep 10
 
+#We don't need to create new topic here
 #Create new topic with name csvtokafka in localhost:9092
 gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic input-topic-job1;exec bash"
 
@@ -28,3 +29,6 @@ gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console
 
 gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic output-topic-job2 --from-beginning;exec bash"
 
+#/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic input-topic-job1
+
+#/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --list --bootstrap-server localhost:9092

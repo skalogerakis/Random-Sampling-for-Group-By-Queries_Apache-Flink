@@ -167,6 +167,7 @@ public class CSV_Parser {
         //Set acknowledgements for producer requests.
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.RETRIES_CONFIG, 0);
+        
     }
 
 }

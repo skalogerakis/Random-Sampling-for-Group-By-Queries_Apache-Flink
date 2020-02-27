@@ -62,9 +62,7 @@ public  class initAggrWindow extends ProcessWindowFunction<Tuple3<String, Double
 
             double tempMean = new_state.__sumSquares/ new_state.__count;
 
-            //TODO this is variance and commented is standard deviation. Choose which one we want
-            new_state.__var=(tempMean-Math.pow(new_state.__mean,2));
-            //new_state.__var=Math.sqrt(tempMean-Math.pow(new_state.__mean,2)); SD
+            new_state.__var=Math.sqrt(tempMean-Math.pow(new_state.__mean,2));
 
             //TODO maybe add that as parameter from out program
             new_state.__gamma = Math.sqrt(weight) * new_state.__var/new_state.__mean;

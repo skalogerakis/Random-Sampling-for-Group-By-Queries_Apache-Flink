@@ -24,7 +24,7 @@ public class KafkaTestSchema implements KafkaSerializationSchema<Tuple6<String,D
 
     @Override
     public ProducerRecord<byte[], byte[]> serialize(Tuple6<String, Double, Double, Double, Double,Double> element, @Nullable Long timestamp) {
-        return new ProducerRecord<byte[], byte[]>(topic, (element.f0+ ","+element.f1+","+element.f2+","+element.f3+","+element.f4+','+element.f5 ).getBytes(StandardCharsets.UTF_8));
+        return new ProducerRecord<byte[], byte[]>(topic, (element.f0+ ";"+element.f1+";"+element.f2+";"+element.f3+";"+element.f4+';'+element.f5 ).getBytes(StandardCharsets.UTF_8));
 
     }
 
