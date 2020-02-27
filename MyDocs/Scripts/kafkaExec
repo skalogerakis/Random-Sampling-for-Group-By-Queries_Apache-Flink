@@ -13,9 +13,9 @@ sleep 10
 
 #We don't need to create new topic here
 #Create new topic with name csvtokafka in localhost:9092
-gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic input-topic-job1;exec bash"
+#gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic input-topic-job1;exec bash"
 
-sleep 10
+#sleep 10
 
 #Open and view messages in a new terminal
 gnome-terminal -- bash -c "/home/skalogerakis/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic input-topic-job1 --from-beginning;exec bash"
