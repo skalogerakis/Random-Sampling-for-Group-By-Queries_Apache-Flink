@@ -1,5 +1,4 @@
 # Random Sampling for Group-By Queries
-___
 
 Implemented algorithm that dynamically computes a random sampling for a single aggregation, multiple group by using [Apache Flink](https://flink.apache.org/) and [Apache Kafka](https://kafka.apache.org/). The algorithm implementation was based on the following [paper](https://arxiv.org/pdf/1909.02629.pdf).
 
@@ -8,7 +7,6 @@ Our approach parses a stream of twice and perfoms sampling for group by queries.
 Between stages we use Apache Kafka to produce-consume data. The initial stream of data can be parsed from .csv files.
 
 ## Implementation Analysis
-___
 ### CSV_Parser
 
 ##### Description    
@@ -81,7 +79,6 @@ Available arguments are listed below
 
 
 ## Execution Example on Linux
-___
 
 As first step activate zookeeper and kafka servers
 
@@ -207,3 +204,5 @@ We also demonstrate for both jobs the plan visualizer https://flink.apache.org/v
 ```sh
 $ <kafka_path>/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic name> --from-beginning
 ```
+
+> NOTE:To make things easier created two scripts in directory `/MyDocs/Scripts/` jobsExec and kafkaExec. JobsExec demonstrates the example as show above and requires ***three parameters <kafka_path> <flink_path> <project_path>*** to execute. Kafka exec is used to show all the different **default topics** and requires ***one parameter <kafka_path>***
