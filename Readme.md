@@ -110,7 +110,7 @@ To confirm that flink servers started successfully open any browser and type htt
 It should look something like that
 
 
-![ ](/images/0.png)
+![ ](/MyDocs/images/0.png)
 
 ##### Window 4
 
