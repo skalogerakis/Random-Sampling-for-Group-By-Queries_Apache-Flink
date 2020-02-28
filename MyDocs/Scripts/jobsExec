@@ -3,9 +3,11 @@
 # My First Parameter: /home/skalogerakis/kafka_2.12-2.4.0
 # My Second Parameter: /home/skalogerakis/flink-1.9.2-bin-scala_2.12/flink-1.9.2
 # My third Parameter: /home/skalogerakis/TUC_Projects/TUC_Advanced_Database_Systems
+# My forth Parameter: /home/skalogerakis/TUC_Projects/TUC_Advanced_Database_Systems/MyDocs/population.csv
 kafka=$1
 flink=$2
 projectDir=$3
+csvdir=$4
 
 #Works in gnome-terminal
 #stop cluster for a new execution
@@ -24,14 +26,14 @@ gnome-terminal -- bash -c "${flink}/bin/start-cluster.sh;exec bash"
 
 sleep 3
 #Start CSV_Parser for read from Bosnia2.csv and write in topic input-topic-job1
-gnome-terminal -- bash -c "${flink}/bin/flink run -c utils.CSV_Parser ${projectDir}/ECE622/target/ECE622-1.0-SNAPSHOT.jar -csv-path /home/skalogerakis/TUC_Projects/TUC_Advanced_Database_Systems/MyDocs/population.csv -topic input-topic-job1 -p 4;exec bash"
+gnome-terminal -- bash -c "${flink}/bin/flink run -c utils.CSV_Parser ${projectDir}/ECE622/target/ECE622-1.0-SNAPSHOT.jar -csv-path ${csvdir} -topic input-topic-job1 -p 4;exec bash"
 
 
-sleep 20
+sleep 85
 #Start FirstAlgorithmPass for Bosnia2 csv with keys=location and aggr=value , write in topic output-topic-job1
 gnome-terminal -- bash -c "${flink}/bin/flink run -c tuc.FirstAlgorithmPass ${projectDir}/ECE622/target/ECE622-1.0-SNAPSHOT.jar -all-attributes Year,District.Code,District.Name,Neighborhood.Code,Neighborhood.Name,Gender,Age,Number -keys District.Name,District.Code -aggr Number -p 4 -windows-time 60;exec bash"
 
 
-# sleep 40
-# #Start SecondAlgorithmPass,write in topic output-topic-job1
-# gnome-terminal -- bash -c "${flink}/bin/flink run -c tuc.SecondAlgorithmPass ${projectDir}/ECE622/target/ECE622-1.0-SNAPSHOT.jar -p 4 -windows-time 60;exec bash"
+sleep 85
+#Start SecondAlgorithmPass,write in topic output-topic-job1
+gnome-terminal -- bash -c "${flink}/bin/flink run -c tuc.SecondAlgorithmPass ${projectDir}/ECE622/target/ECE622-1.0-SNAPSHOT.jar -p 4 -windows-time 60;exec bash"

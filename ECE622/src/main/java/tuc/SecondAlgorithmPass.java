@@ -92,6 +92,7 @@ public class SecondAlgorithmPass {
         /** read from job's 1 aggr output topic and calc si*/
         DataStream<Tuple4<String,Double,Double,Double>> inputAg = env
                 .addSource(flinkKafkaConsumer)
+                .rebalance()
                 .flatMap(new FlatMapFunction<String, Tuple4<String,Double,Double,Double>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple4<String,Double,Double,Double>> out)
@@ -119,7 +120,7 @@ public class SecondAlgorithmPass {
         //inputAg.print();
         /** read data from job's 1 data output topic */
         DataStream<Tuple2<String,String>> inputStream = env.addSource(flinkKafkaConsumerInput)
-
+                .rebalance()
                 .flatMap(new FlatMapFunction<String, Tuple2<String,String>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple2<String,String>> out)

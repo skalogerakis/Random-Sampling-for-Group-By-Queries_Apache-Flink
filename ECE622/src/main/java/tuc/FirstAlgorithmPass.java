@@ -128,10 +128,12 @@ public class FirstAlgorithmPass {
         List<Integer> aggrPosList = TotalAttrList.get("aggr");
 
         //Take input from kafka and transform it in form Tuple3<String, Double,String>, <Keys, AggregationValues,Other Attributes>
-        //env.addSource(flinkKafkaConsumer).rebalance().print();
-        //TODO use rebalance for the case when kafka partitions < flink parallelism kafka partitions < flink parallelism: some flink instances won't receive any messages. To avoid that, you need to call rebalance on your input stream before any operation, which causes data to be re-partitioned
-        //And for the same reason when kafka p>flink p
+        /**
+         * Use rebalance for the case when kafka partitions < flink parallelism kafka partitions < flink parallelism: some flink instances won't receive any messages.
+         * To avoid that, you need to call rebalance on your input stream before any operation, which causes data to be re-partitioned, And for the same reason when kafka p>flink p
+         */
         DataStream<Tuple3<String, Double,String>> inputTransformer = env.addSource(flinkKafkaConsumer)
+                .rebalance()
                 .flatMap(new FlatMapFunction<String, Tuple3<String,Double,String>>() {
                     @Override
                     public void flatMap(String value, Collector<Tuple3<String, Double,String>> out)

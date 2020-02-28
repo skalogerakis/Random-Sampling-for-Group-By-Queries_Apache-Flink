@@ -7,8 +7,8 @@ Our approach parses a stream of twice and perfoms sampling for group by queries.
 Between stages we use Apache Kafka to produce-consume data. The initial stream of data can be parsed from .csv files.
 
 ## Implementation Analysis
-### CSV_Parser
 
+### CSV_Parser
 ##### Description    
 Class is responsible to parse data from a .csv file and appends them to a certain Kafka topic
 
@@ -36,6 +36,7 @@ This is the implementation of the first required job for our algorithm. In this 
 ##### Arguments
 
 Available arguments are listed below
+
 |  Required  | Description |
 | ------ | ------ |
 | -all-attributes | All fields contained in the parsed .csv file(all csv fields) comma seperated |
@@ -109,7 +110,7 @@ To confirm that flink servers started successfully open any browser and type htt
 It should look something like that
 
 
-![ ](/MyDocs/images/0.png)
+![ ](/images/0.png)
 
 ##### Window 4
 
@@ -201,8 +202,9 @@ We also demonstrate for both jobs the plan visualizer https://flink.apache.org/v
 *SecondAlgorithmPass*
 
 > NOTE: In our examples we didn't create kafka topic. Instead Kafka created topics when a topic that did't exist encountered. In this case, kafka has default values with partition 1 and replication 1. In case you wish to create custom topic use on of the following command
+
 ```sh
 $ <kafka_path>/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic name> --from-beginning
 ```
 
-> NOTE:To make things easier created two scripts in directory `/MyDocs/Scripts/` jobsExec and kafkaExec. JobsExec demonstrates the example as show above and requires ***three parameters <kafka_path> <flink_path> <project_path>*** to execute. Kafka exec is used to show all the different **default topics** and requires ***one parameter <kafka_path>***
+> NOTE:To make things easier created two scripts in directory `/MyDocs/Scripts/` jobsExec and kafkaExec. JobsExec executes the example as shown above and requires ***four parameters <kafka_path> <flink_path> <project_path> <csv_path>*** to execute(open script to check example with parameters). Kafka exec is used to show all the different **default topics** and requires ***one parameter <kafka_path>***
