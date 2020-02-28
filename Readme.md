@@ -207,4 +207,4 @@ We also demonstrate for both jobs the plan visualizer https://flink.apache.org/v
 $ <kafka_path>/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic name> --from-beginning
 ```
 
-> NOTE:To make things easier created two scripts in directory `/MyDocs/Scripts/` jobsExec and kafkaExec. JobsExec executes the example as shown above and requires ***four parameters <kafka_path> <flink_path> <project_path> <csv_path>*** to execute(open script to check example with parameters). Kafka exec is used to show all the different **default topics** and requires ***one parameter <kafka_path>***
+> NOTE:To make things easier created two scripts in directory `/MyDocs/Scripts/` jobsExec and kafkaExec. JobsExec executes the example as shown above and requires ***four parameters <kafka_path> <flink_path> <project_path> <csv_path>*** to execute(open script to check example with parameters) . Kafka exec is used to show all the different **default topics** and requires ***one parameter <kafka_path>***
